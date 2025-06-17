@@ -18,8 +18,8 @@ export function NavMenu() {
         <div className="hidden md:block">
           <div className="ml-10 flex items-center space-x-6">
             <Link href="/" className="text-gray-800 hover:text-black px-3 py-2 text-lg font-medium">Home</Link>
-            <Link href="/product" className="text-gray-800 hover:text-black px-3 py-2 text-lg font-medium">Portfolio</Link>
-            <Link href="/pricing" className="text-gray-800 hover:text-black px-3 py-2 text-lg font-medium">Tournament</Link>
+            <Link href="/portfolio" className="text-gray-800 hover:text-black px-3 py-2 text-lg font-medium">Portfolio</Link>
+            <Link href="/market" className="text-gray-800 hover:text-black px-3 py-2 text-lg font-medium">Market</Link>
             <Link href="/resources" className="text-gray-800 hover:text-black px-3 py-2 text-lg font-medium">Profile</Link>
           </div>
         </div>

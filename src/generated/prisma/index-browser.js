@@ -125,8 +125,8 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   emailVerified: 'emailVerified',
   image: 'image',
-  moneyId: 'moneyId',
-  name: 'name'
+  name: 'name',
+  money: 'money'
 };
 
 exports.Prisma.AccountScalarFieldEnum = {
@@ -157,11 +157,6 @@ exports.Prisma.VerificationTokenScalarFieldEnum = {
   expires: 'expires'
 };
 
-exports.Prisma.MoneyScalarFieldEnum = {
-  id: 'id',
-  amount: 'amount'
-};
-
 exports.Prisma.StockScalarFieldEnum = {
   id: 'id',
   symbol: 'symbol',
@@ -190,7 +185,6 @@ exports.Prisma.ModelName = {
   Account: 'Account',
   Session: 'Session',
   VerificationToken: 'VerificationToken',
-  Money: 'Money',
   Stock: 'Stock'
 };
 

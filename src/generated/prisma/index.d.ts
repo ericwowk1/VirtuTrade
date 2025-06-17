@@ -34,11 +34,6 @@ export type Session = $Result.DefaultSelection<Prisma.$SessionPayload>
  */
 export type VerificationToken = $Result.DefaultSelection<Prisma.$VerificationTokenPayload>
 /**
- * Model Money
- * 
- */
-export type Money = $Result.DefaultSelection<Prisma.$MoneyPayload>
-/**
  * Model Stock
  * 
  */
@@ -208,16 +203,6 @@ export class PrismaClient<
     * ```
     */
   get verificationToken(): Prisma.VerificationTokenDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.money`: Exposes CRUD operations for the **Money** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Monies
-    * const monies = await prisma.money.findMany()
-    * ```
-    */
-  get money(): Prisma.MoneyDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.stock`: Exposes CRUD operations for the **Stock** model.
@@ -672,7 +657,6 @@ export namespace Prisma {
     Account: 'Account',
     Session: 'Session',
     VerificationToken: 'VerificationToken',
-    Money: 'Money',
     Stock: 'Stock'
   };
 
@@ -692,7 +676,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "account" | "session" | "verificationToken" | "money" | "stock"
+      modelProps: "user" | "account" | "session" | "verificationToken" | "stock"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -992,80 +976,6 @@ export namespace Prisma {
           }
         }
       }
-      Money: {
-        payload: Prisma.$MoneyPayload<ExtArgs>
-        fields: Prisma.MoneyFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.MoneyFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MoneyPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.MoneyFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MoneyPayload>
-          }
-          findFirst: {
-            args: Prisma.MoneyFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MoneyPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.MoneyFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MoneyPayload>
-          }
-          findMany: {
-            args: Prisma.MoneyFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MoneyPayload>[]
-          }
-          create: {
-            args: Prisma.MoneyCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MoneyPayload>
-          }
-          createMany: {
-            args: Prisma.MoneyCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.MoneyCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MoneyPayload>[]
-          }
-          delete: {
-            args: Prisma.MoneyDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MoneyPayload>
-          }
-          update: {
-            args: Prisma.MoneyUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MoneyPayload>
-          }
-          deleteMany: {
-            args: Prisma.MoneyDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.MoneyUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.MoneyUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MoneyPayload>[]
-          }
-          upsert: {
-            args: Prisma.MoneyUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$MoneyPayload>
-          }
-          aggregate: {
-            args: Prisma.MoneyAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateMoney>
-          }
-          groupBy: {
-            args: Prisma.MoneyGroupByArgs<ExtArgs>
-            result: $Utils.Optional<MoneyGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.MoneyCountArgs<ExtArgs>
-            result: $Utils.Optional<MoneyCountAggregateOutputType> | number
-          }
-        }
-      }
       Stock: {
         payload: Prisma.$StockPayload<ExtArgs>
         fields: Prisma.StockFieldRefs
@@ -1228,7 +1138,6 @@ export namespace Prisma {
     account?: AccountOmit
     session?: SessionOmit
     verificationToken?: VerificationTokenOmit
-    money?: MoneyOmit
     stock?: StockOmit
   }
 
@@ -1378,8 +1287,18 @@ export namespace Prisma {
 
   export type AggregateUser = {
     _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
+  }
+
+  export type UserAvgAggregateOutputType = {
+    money: number | null
+  }
+
+  export type UserSumAggregateOutputType = {
+    money: number | null
   }
 
   export type UserMinAggregateOutputType = {
@@ -1387,8 +1306,8 @@ export namespace Prisma {
     email: string | null
     emailVerified: Date | null
     image: string | null
-    moneyId: string | null
     name: string | null
+    money: number | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -1396,8 +1315,8 @@ export namespace Prisma {
     email: string | null
     emailVerified: Date | null
     image: string | null
-    moneyId: string | null
     name: string | null
+    money: number | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1405,19 +1324,27 @@ export namespace Prisma {
     email: number
     emailVerified: number
     image: number
-    moneyId: number
     name: number
+    money: number
     _all: number
   }
 
+
+  export type UserAvgAggregateInputType = {
+    money?: true
+  }
+
+  export type UserSumAggregateInputType = {
+    money?: true
+  }
 
   export type UserMinAggregateInputType = {
     id?: true
     email?: true
     emailVerified?: true
     image?: true
-    moneyId?: true
     name?: true
+    money?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -1425,8 +1352,8 @@ export namespace Prisma {
     email?: true
     emailVerified?: true
     image?: true
-    moneyId?: true
     name?: true
+    money?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -1434,8 +1361,8 @@ export namespace Prisma {
     email?: true
     emailVerified?: true
     image?: true
-    moneyId?: true
     name?: true
+    money?: true
     _all?: true
   }
 
@@ -1477,6 +1404,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: UserAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: UserMinAggregateInputType
@@ -1507,6 +1446,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: UserCountAggregateInputType | true
+    _avg?: UserAvgAggregateInputType
+    _sum?: UserSumAggregateInputType
     _min?: UserMinAggregateInputType
     _max?: UserMaxAggregateInputType
   }
@@ -1516,9 +1457,11 @@ export namespace Prisma {
     email: string | null
     emailVerified: Date | null
     image: string | null
-    moneyId: string | null
     name: string | null
+    money: number | null
     _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
   }
@@ -1542,12 +1485,11 @@ export namespace Prisma {
     email?: boolean
     emailVerified?: boolean
     image?: boolean
-    moneyId?: boolean
     name?: boolean
+    money?: boolean
     accounts?: boolean | User$accountsArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     stocks?: boolean | User$stocksArgs<ExtArgs>
-    money?: boolean | User$moneyArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1556,9 +1498,8 @@ export namespace Prisma {
     email?: boolean
     emailVerified?: boolean
     image?: boolean
-    moneyId?: boolean
     name?: boolean
-    money?: boolean | User$moneyArgs<ExtArgs>
+    money?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1566,9 +1507,8 @@ export namespace Prisma {
     email?: boolean
     emailVerified?: boolean
     image?: boolean
-    moneyId?: boolean
     name?: boolean
-    money?: boolean | User$moneyArgs<ExtArgs>
+    money?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -1576,24 +1516,19 @@ export namespace Prisma {
     email?: boolean
     emailVerified?: boolean
     image?: boolean
-    moneyId?: boolean
     name?: boolean
+    money?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "emailVerified" | "image" | "moneyId" | "name", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "emailVerified" | "image" | "name" | "money", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     accounts?: boolean | User$accountsArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     stocks?: boolean | User$stocksArgs<ExtArgs>
-    money?: boolean | User$moneyArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    money?: boolean | User$moneyArgs<ExtArgs>
-  }
-  export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    money?: boolean | User$moneyArgs<ExtArgs>
-  }
+  export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
@@ -1601,15 +1536,14 @@ export namespace Prisma {
       accounts: Prisma.$AccountPayload<ExtArgs>[]
       sessions: Prisma.$SessionPayload<ExtArgs>[]
       stocks: Prisma.$StockPayload<ExtArgs>[]
-      money: Prisma.$MoneyPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       email: string | null
       emailVerified: Date | null
       image: string | null
-      moneyId: string | null
       name: string | null
+      money: number | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -2007,7 +1941,6 @@ export namespace Prisma {
     accounts<T extends User$accountsArgs<ExtArgs> = {}>(args?: Subset<T, User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sessions<T extends User$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     stocks<T extends User$stocksArgs<ExtArgs> = {}>(args?: Subset<T, User$stocksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StockPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    money<T extends User$moneyArgs<ExtArgs> = {}>(args?: Subset<T, User$moneyArgs<ExtArgs>>): Prisma__MoneyClient<$Result.GetResult<Prisma.$MoneyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2041,8 +1974,8 @@ export namespace Prisma {
     readonly email: FieldRef<"User", 'String'>
     readonly emailVerified: FieldRef<"User", 'DateTime'>
     readonly image: FieldRef<"User", 'String'>
-    readonly moneyId: FieldRef<"User", 'String'>
     readonly name: FieldRef<"User", 'String'>
+    readonly money: FieldRef<"User", 'Float'>
   }
     
 
@@ -2292,10 +2225,6 @@ export namespace Prisma {
      */
     data: UserCreateManyInput | UserCreateManyInput[]
     skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -2366,10 +2295,6 @@ export namespace Prisma {
      * Limit how many Users to update.
      */
     limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -2508,25 +2433,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: StockScalarFieldEnum | StockScalarFieldEnum[]
-  }
-
-  /**
-   * User.money
-   */
-  export type User$moneyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Money
-     */
-    select?: MoneySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Money
-     */
-    omit?: MoneyOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MoneyInclude<ExtArgs> | null
-    where?: MoneyWhereInput
   }
 
   /**
@@ -5746,1064 +5652,6 @@ export namespace Prisma {
 
 
   /**
-   * Model Money
-   */
-
-  export type AggregateMoney = {
-    _count: MoneyCountAggregateOutputType | null
-    _avg: MoneyAvgAggregateOutputType | null
-    _sum: MoneySumAggregateOutputType | null
-    _min: MoneyMinAggregateOutputType | null
-    _max: MoneyMaxAggregateOutputType | null
-  }
-
-  export type MoneyAvgAggregateOutputType = {
-    amount: number | null
-  }
-
-  export type MoneySumAggregateOutputType = {
-    amount: number | null
-  }
-
-  export type MoneyMinAggregateOutputType = {
-    id: string | null
-    amount: number | null
-  }
-
-  export type MoneyMaxAggregateOutputType = {
-    id: string | null
-    amount: number | null
-  }
-
-  export type MoneyCountAggregateOutputType = {
-    id: number
-    amount: number
-    _all: number
-  }
-
-
-  export type MoneyAvgAggregateInputType = {
-    amount?: true
-  }
-
-  export type MoneySumAggregateInputType = {
-    amount?: true
-  }
-
-  export type MoneyMinAggregateInputType = {
-    id?: true
-    amount?: true
-  }
-
-  export type MoneyMaxAggregateInputType = {
-    id?: true
-    amount?: true
-  }
-
-  export type MoneyCountAggregateInputType = {
-    id?: true
-    amount?: true
-    _all?: true
-  }
-
-  export type MoneyAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Money to aggregate.
-     */
-    where?: MoneyWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Monies to fetch.
-     */
-    orderBy?: MoneyOrderByWithRelationInput | MoneyOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: MoneyWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Monies from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Monies.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Monies
-    **/
-    _count?: true | MoneyCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: MoneyAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: MoneySumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: MoneyMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: MoneyMaxAggregateInputType
-  }
-
-  export type GetMoneyAggregateType<T extends MoneyAggregateArgs> = {
-        [P in keyof T & keyof AggregateMoney]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateMoney[P]>
-      : GetScalarType<T[P], AggregateMoney[P]>
-  }
-
-
-
-
-  export type MoneyGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: MoneyWhereInput
-    orderBy?: MoneyOrderByWithAggregationInput | MoneyOrderByWithAggregationInput[]
-    by: MoneyScalarFieldEnum[] | MoneyScalarFieldEnum
-    having?: MoneyScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: MoneyCountAggregateInputType | true
-    _avg?: MoneyAvgAggregateInputType
-    _sum?: MoneySumAggregateInputType
-    _min?: MoneyMinAggregateInputType
-    _max?: MoneyMaxAggregateInputType
-  }
-
-  export type MoneyGroupByOutputType = {
-    id: string
-    amount: number
-    _count: MoneyCountAggregateOutputType | null
-    _avg: MoneyAvgAggregateOutputType | null
-    _sum: MoneySumAggregateOutputType | null
-    _min: MoneyMinAggregateOutputType | null
-    _max: MoneyMaxAggregateOutputType | null
-  }
-
-  type GetMoneyGroupByPayload<T extends MoneyGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<MoneyGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof MoneyGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], MoneyGroupByOutputType[P]>
-            : GetScalarType<T[P], MoneyGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type MoneySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    amount?: boolean
-    user?: boolean | Money$userArgs<ExtArgs>
-  }, ExtArgs["result"]["money"]>
-
-  export type MoneySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    amount?: boolean
-  }, ExtArgs["result"]["money"]>
-
-  export type MoneySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    amount?: boolean
-  }, ExtArgs["result"]["money"]>
-
-  export type MoneySelectScalar = {
-    id?: boolean
-    amount?: boolean
-  }
-
-  export type MoneyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "amount", ExtArgs["result"]["money"]>
-  export type MoneyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | Money$userArgs<ExtArgs>
-  }
-  export type MoneyIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type MoneyIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-
-  export type $MoneyPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Money"
-    objects: {
-      user: Prisma.$UserPayload<ExtArgs> | null
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      amount: number
-    }, ExtArgs["result"]["money"]>
-    composites: {}
-  }
-
-  type MoneyGetPayload<S extends boolean | null | undefined | MoneyDefaultArgs> = $Result.GetResult<Prisma.$MoneyPayload, S>
-
-  type MoneyCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<MoneyFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: MoneyCountAggregateInputType | true
-    }
-
-  export interface MoneyDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Money'], meta: { name: 'Money' } }
-    /**
-     * Find zero or one Money that matches the filter.
-     * @param {MoneyFindUniqueArgs} args - Arguments to find a Money
-     * @example
-     * // Get one Money
-     * const money = await prisma.money.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends MoneyFindUniqueArgs>(args: SelectSubset<T, MoneyFindUniqueArgs<ExtArgs>>): Prisma__MoneyClient<$Result.GetResult<Prisma.$MoneyPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Money that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {MoneyFindUniqueOrThrowArgs} args - Arguments to find a Money
-     * @example
-     * // Get one Money
-     * const money = await prisma.money.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends MoneyFindUniqueOrThrowArgs>(args: SelectSubset<T, MoneyFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MoneyClient<$Result.GetResult<Prisma.$MoneyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Money that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {MoneyFindFirstArgs} args - Arguments to find a Money
-     * @example
-     * // Get one Money
-     * const money = await prisma.money.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends MoneyFindFirstArgs>(args?: SelectSubset<T, MoneyFindFirstArgs<ExtArgs>>): Prisma__MoneyClient<$Result.GetResult<Prisma.$MoneyPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Money that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {MoneyFindFirstOrThrowArgs} args - Arguments to find a Money
-     * @example
-     * // Get one Money
-     * const money = await prisma.money.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends MoneyFindFirstOrThrowArgs>(args?: SelectSubset<T, MoneyFindFirstOrThrowArgs<ExtArgs>>): Prisma__MoneyClient<$Result.GetResult<Prisma.$MoneyPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Monies that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {MoneyFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Monies
-     * const monies = await prisma.money.findMany()
-     * 
-     * // Get first 10 Monies
-     * const monies = await prisma.money.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const moneyWithIdOnly = await prisma.money.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends MoneyFindManyArgs>(args?: SelectSubset<T, MoneyFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MoneyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Money.
-     * @param {MoneyCreateArgs} args - Arguments to create a Money.
-     * @example
-     * // Create one Money
-     * const Money = await prisma.money.create({
-     *   data: {
-     *     // ... data to create a Money
-     *   }
-     * })
-     * 
-     */
-    create<T extends MoneyCreateArgs>(args: SelectSubset<T, MoneyCreateArgs<ExtArgs>>): Prisma__MoneyClient<$Result.GetResult<Prisma.$MoneyPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Monies.
-     * @param {MoneyCreateManyArgs} args - Arguments to create many Monies.
-     * @example
-     * // Create many Monies
-     * const money = await prisma.money.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends MoneyCreateManyArgs>(args?: SelectSubset<T, MoneyCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Monies and returns the data saved in the database.
-     * @param {MoneyCreateManyAndReturnArgs} args - Arguments to create many Monies.
-     * @example
-     * // Create many Monies
-     * const money = await prisma.money.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Monies and only return the `id`
-     * const moneyWithIdOnly = await prisma.money.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends MoneyCreateManyAndReturnArgs>(args?: SelectSubset<T, MoneyCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MoneyPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Money.
-     * @param {MoneyDeleteArgs} args - Arguments to delete one Money.
-     * @example
-     * // Delete one Money
-     * const Money = await prisma.money.delete({
-     *   where: {
-     *     // ... filter to delete one Money
-     *   }
-     * })
-     * 
-     */
-    delete<T extends MoneyDeleteArgs>(args: SelectSubset<T, MoneyDeleteArgs<ExtArgs>>): Prisma__MoneyClient<$Result.GetResult<Prisma.$MoneyPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Money.
-     * @param {MoneyUpdateArgs} args - Arguments to update one Money.
-     * @example
-     * // Update one Money
-     * const money = await prisma.money.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends MoneyUpdateArgs>(args: SelectSubset<T, MoneyUpdateArgs<ExtArgs>>): Prisma__MoneyClient<$Result.GetResult<Prisma.$MoneyPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Monies.
-     * @param {MoneyDeleteManyArgs} args - Arguments to filter Monies to delete.
-     * @example
-     * // Delete a few Monies
-     * const { count } = await prisma.money.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends MoneyDeleteManyArgs>(args?: SelectSubset<T, MoneyDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Monies.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {MoneyUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Monies
-     * const money = await prisma.money.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends MoneyUpdateManyArgs>(args: SelectSubset<T, MoneyUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Monies and returns the data updated in the database.
-     * @param {MoneyUpdateManyAndReturnArgs} args - Arguments to update many Monies.
-     * @example
-     * // Update many Monies
-     * const money = await prisma.money.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Monies and only return the `id`
-     * const moneyWithIdOnly = await prisma.money.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends MoneyUpdateManyAndReturnArgs>(args: SelectSubset<T, MoneyUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MoneyPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Money.
-     * @param {MoneyUpsertArgs} args - Arguments to update or create a Money.
-     * @example
-     * // Update or create a Money
-     * const money = await prisma.money.upsert({
-     *   create: {
-     *     // ... data to create a Money
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Money we want to update
-     *   }
-     * })
-     */
-    upsert<T extends MoneyUpsertArgs>(args: SelectSubset<T, MoneyUpsertArgs<ExtArgs>>): Prisma__MoneyClient<$Result.GetResult<Prisma.$MoneyPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Monies.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {MoneyCountArgs} args - Arguments to filter Monies to count.
-     * @example
-     * // Count the number of Monies
-     * const count = await prisma.money.count({
-     *   where: {
-     *     // ... the filter for the Monies we want to count
-     *   }
-     * })
-    **/
-    count<T extends MoneyCountArgs>(
-      args?: Subset<T, MoneyCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], MoneyCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Money.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {MoneyAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends MoneyAggregateArgs>(args: Subset<T, MoneyAggregateArgs>): Prisma.PrismaPromise<GetMoneyAggregateType<T>>
-
-    /**
-     * Group by Money.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {MoneyGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends MoneyGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: MoneyGroupByArgs['orderBy'] }
-        : { orderBy?: MoneyGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, MoneyGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMoneyGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the Money model
-   */
-  readonly fields: MoneyFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for Money.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__MoneyClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends Money$userArgs<ExtArgs> = {}>(args?: Subset<T, Money$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the Money model
-   */
-  interface MoneyFieldRefs {
-    readonly id: FieldRef<"Money", 'String'>
-    readonly amount: FieldRef<"Money", 'Float'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * Money findUnique
-   */
-  export type MoneyFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Money
-     */
-    select?: MoneySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Money
-     */
-    omit?: MoneyOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MoneyInclude<ExtArgs> | null
-    /**
-     * Filter, which Money to fetch.
-     */
-    where: MoneyWhereUniqueInput
-  }
-
-  /**
-   * Money findUniqueOrThrow
-   */
-  export type MoneyFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Money
-     */
-    select?: MoneySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Money
-     */
-    omit?: MoneyOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MoneyInclude<ExtArgs> | null
-    /**
-     * Filter, which Money to fetch.
-     */
-    where: MoneyWhereUniqueInput
-  }
-
-  /**
-   * Money findFirst
-   */
-  export type MoneyFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Money
-     */
-    select?: MoneySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Money
-     */
-    omit?: MoneyOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MoneyInclude<ExtArgs> | null
-    /**
-     * Filter, which Money to fetch.
-     */
-    where?: MoneyWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Monies to fetch.
-     */
-    orderBy?: MoneyOrderByWithRelationInput | MoneyOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Monies.
-     */
-    cursor?: MoneyWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Monies from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Monies.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Monies.
-     */
-    distinct?: MoneyScalarFieldEnum | MoneyScalarFieldEnum[]
-  }
-
-  /**
-   * Money findFirstOrThrow
-   */
-  export type MoneyFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Money
-     */
-    select?: MoneySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Money
-     */
-    omit?: MoneyOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MoneyInclude<ExtArgs> | null
-    /**
-     * Filter, which Money to fetch.
-     */
-    where?: MoneyWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Monies to fetch.
-     */
-    orderBy?: MoneyOrderByWithRelationInput | MoneyOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Monies.
-     */
-    cursor?: MoneyWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Monies from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Monies.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Monies.
-     */
-    distinct?: MoneyScalarFieldEnum | MoneyScalarFieldEnum[]
-  }
-
-  /**
-   * Money findMany
-   */
-  export type MoneyFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Money
-     */
-    select?: MoneySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Money
-     */
-    omit?: MoneyOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MoneyInclude<ExtArgs> | null
-    /**
-     * Filter, which Monies to fetch.
-     */
-    where?: MoneyWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Monies to fetch.
-     */
-    orderBy?: MoneyOrderByWithRelationInput | MoneyOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Monies.
-     */
-    cursor?: MoneyWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Monies from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Monies.
-     */
-    skip?: number
-    distinct?: MoneyScalarFieldEnum | MoneyScalarFieldEnum[]
-  }
-
-  /**
-   * Money create
-   */
-  export type MoneyCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Money
-     */
-    select?: MoneySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Money
-     */
-    omit?: MoneyOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MoneyInclude<ExtArgs> | null
-    /**
-     * The data needed to create a Money.
-     */
-    data: XOR<MoneyCreateInput, MoneyUncheckedCreateInput>
-  }
-
-  /**
-   * Money createMany
-   */
-  export type MoneyCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many Monies.
-     */
-    data: MoneyCreateManyInput | MoneyCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Money createManyAndReturn
-   */
-  export type MoneyCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Money
-     */
-    select?: MoneySelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Money
-     */
-    omit?: MoneyOmit<ExtArgs> | null
-    /**
-     * The data used to create many Monies.
-     */
-    data: MoneyCreateManyInput | MoneyCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Money update
-   */
-  export type MoneyUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Money
-     */
-    select?: MoneySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Money
-     */
-    omit?: MoneyOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MoneyInclude<ExtArgs> | null
-    /**
-     * The data needed to update a Money.
-     */
-    data: XOR<MoneyUpdateInput, MoneyUncheckedUpdateInput>
-    /**
-     * Choose, which Money to update.
-     */
-    where: MoneyWhereUniqueInput
-  }
-
-  /**
-   * Money updateMany
-   */
-  export type MoneyUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update Monies.
-     */
-    data: XOR<MoneyUpdateManyMutationInput, MoneyUncheckedUpdateManyInput>
-    /**
-     * Filter which Monies to update
-     */
-    where?: MoneyWhereInput
-    /**
-     * Limit how many Monies to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Money updateManyAndReturn
-   */
-  export type MoneyUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Money
-     */
-    select?: MoneySelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Money
-     */
-    omit?: MoneyOmit<ExtArgs> | null
-    /**
-     * The data used to update Monies.
-     */
-    data: XOR<MoneyUpdateManyMutationInput, MoneyUncheckedUpdateManyInput>
-    /**
-     * Filter which Monies to update
-     */
-    where?: MoneyWhereInput
-    /**
-     * Limit how many Monies to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Money upsert
-   */
-  export type MoneyUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Money
-     */
-    select?: MoneySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Money
-     */
-    omit?: MoneyOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MoneyInclude<ExtArgs> | null
-    /**
-     * The filter to search for the Money to update in case it exists.
-     */
-    where: MoneyWhereUniqueInput
-    /**
-     * In case the Money found by the `where` argument doesn't exist, create a new Money with this data.
-     */
-    create: XOR<MoneyCreateInput, MoneyUncheckedCreateInput>
-    /**
-     * In case the Money was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<MoneyUpdateInput, MoneyUncheckedUpdateInput>
-  }
-
-  /**
-   * Money delete
-   */
-  export type MoneyDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Money
-     */
-    select?: MoneySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Money
-     */
-    omit?: MoneyOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MoneyInclude<ExtArgs> | null
-    /**
-     * Filter which Money to delete.
-     */
-    where: MoneyWhereUniqueInput
-  }
-
-  /**
-   * Money deleteMany
-   */
-  export type MoneyDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Monies to delete
-     */
-    where?: MoneyWhereInput
-    /**
-     * Limit how many Monies to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * Money.user
-   */
-  export type Money$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the User
-     */
-    omit?: UserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    where?: UserWhereInput
-  }
-
-  /**
-   * Money without action
-   */
-  export type MoneyDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Money
-     */
-    select?: MoneySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Money
-     */
-    omit?: MoneyOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: MoneyInclude<ExtArgs> | null
-  }
-
-
-  /**
    * Model Stock
    */
 
@@ -7901,8 +6749,8 @@ export namespace Prisma {
     email: 'email',
     emailVerified: 'emailVerified',
     image: 'image',
-    moneyId: 'moneyId',
-    name: 'name'
+    name: 'name',
+    money: 'money'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -7943,14 +6791,6 @@ export namespace Prisma {
   };
 
   export type VerificationTokenScalarFieldEnum = (typeof VerificationTokenScalarFieldEnum)[keyof typeof VerificationTokenScalarFieldEnum]
-
-
-  export const MoneyScalarFieldEnum: {
-    id: 'id',
-    amount: 'amount'
-  };
-
-  export type MoneyScalarFieldEnum = (typeof MoneyScalarFieldEnum)[keyof typeof MoneyScalarFieldEnum]
 
 
   export const StockScalarFieldEnum: {
@@ -8021,20 +6861,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Int'
-   */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-  /**
-   * Reference to a field of type 'Int[]'
-   */
-  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
-
-
-  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -8045,6 +6871,20 @@ export namespace Prisma {
    * Reference to a field of type 'Float[]'
    */
   export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int'
+   */
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int[]'
+   */
+  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
   /**
    * Deep Input Types
@@ -8059,12 +6899,11 @@ export namespace Prisma {
     email?: StringNullableFilter<"User"> | string | null
     emailVerified?: DateTimeNullableFilter<"User"> | Date | string | null
     image?: StringNullableFilter<"User"> | string | null
-    moneyId?: StringNullableFilter<"User"> | string | null
     name?: StringNullableFilter<"User"> | string | null
+    money?: FloatNullableFilter<"User"> | number | null
     accounts?: AccountListRelationFilter
     sessions?: SessionListRelationFilter
     stocks?: StockListRelationFilter
-    money?: XOR<MoneyNullableScalarRelationFilter, MoneyWhereInput> | null
   }
 
   export type UserOrderByWithRelationInput = {
@@ -8072,40 +6911,40 @@ export namespace Prisma {
     email?: SortOrderInput | SortOrder
     emailVerified?: SortOrderInput | SortOrder
     image?: SortOrderInput | SortOrder
-    moneyId?: SortOrderInput | SortOrder
     name?: SortOrderInput | SortOrder
+    money?: SortOrderInput | SortOrder
     accounts?: AccountOrderByRelationAggregateInput
     sessions?: SessionOrderByRelationAggregateInput
     stocks?: StockOrderByRelationAggregateInput
-    money?: MoneyOrderByWithRelationInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     email?: string
-    moneyId?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     emailVerified?: DateTimeNullableFilter<"User"> | Date | string | null
     image?: StringNullableFilter<"User"> | string | null
     name?: StringNullableFilter<"User"> | string | null
+    money?: FloatNullableFilter<"User"> | number | null
     accounts?: AccountListRelationFilter
     sessions?: SessionListRelationFilter
     stocks?: StockListRelationFilter
-    money?: XOR<MoneyNullableScalarRelationFilter, MoneyWhereInput> | null
-  }, "id" | "email" | "moneyId">
+  }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
     email?: SortOrderInput | SortOrder
     emailVerified?: SortOrderInput | SortOrder
     image?: SortOrderInput | SortOrder
-    moneyId?: SortOrderInput | SortOrder
     name?: SortOrderInput | SortOrder
+    money?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
+    _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
+    _sum?: UserSumOrderByAggregateInput
   }
 
   export type UserScalarWhereWithAggregatesInput = {
@@ -8116,8 +6955,8 @@ export namespace Prisma {
     email?: StringNullableWithAggregatesFilter<"User"> | string | null
     emailVerified?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     image?: StringNullableWithAggregatesFilter<"User"> | string | null
-    moneyId?: StringNullableWithAggregatesFilter<"User"> | string | null
     name?: StringNullableWithAggregatesFilter<"User"> | string | null
+    money?: FloatNullableWithAggregatesFilter<"User"> | number | null
   }
 
   export type AccountWhereInput = {
@@ -8306,48 +7145,6 @@ export namespace Prisma {
     expires?: DateTimeWithAggregatesFilter<"VerificationToken"> | Date | string
   }
 
-  export type MoneyWhereInput = {
-    AND?: MoneyWhereInput | MoneyWhereInput[]
-    OR?: MoneyWhereInput[]
-    NOT?: MoneyWhereInput | MoneyWhereInput[]
-    id?: StringFilter<"Money"> | string
-    amount?: FloatFilter<"Money"> | number
-    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
-  }
-
-  export type MoneyOrderByWithRelationInput = {
-    id?: SortOrder
-    amount?: SortOrder
-    user?: UserOrderByWithRelationInput
-  }
-
-  export type MoneyWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    AND?: MoneyWhereInput | MoneyWhereInput[]
-    OR?: MoneyWhereInput[]
-    NOT?: MoneyWhereInput | MoneyWhereInput[]
-    amount?: FloatFilter<"Money"> | number
-    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
-  }, "id">
-
-  export type MoneyOrderByWithAggregationInput = {
-    id?: SortOrder
-    amount?: SortOrder
-    _count?: MoneyCountOrderByAggregateInput
-    _avg?: MoneyAvgOrderByAggregateInput
-    _max?: MoneyMaxOrderByAggregateInput
-    _min?: MoneyMinOrderByAggregateInput
-    _sum?: MoneySumOrderByAggregateInput
-  }
-
-  export type MoneyScalarWhereWithAggregatesInput = {
-    AND?: MoneyScalarWhereWithAggregatesInput | MoneyScalarWhereWithAggregatesInput[]
-    OR?: MoneyScalarWhereWithAggregatesInput[]
-    NOT?: MoneyScalarWhereWithAggregatesInput | MoneyScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Money"> | string
-    amount?: FloatWithAggregatesFilter<"Money"> | number
-  }
-
   export type StockWhereInput = {
     AND?: StockWhereInput | StockWhereInput[]
     OR?: StockWhereInput[]
@@ -8406,10 +7203,10 @@ export namespace Prisma {
     emailVerified?: Date | string | null
     image?: string | null
     name?: string | null
+    money?: number | null
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     stocks?: StockCreateNestedManyWithoutUserInput
-    money?: MoneyCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -8417,8 +7214,8 @@ export namespace Prisma {
     email?: string | null
     emailVerified?: Date | string | null
     image?: string | null
-    moneyId?: string | null
     name?: string | null
+    money?: number | null
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     stocks?: StockUncheckedCreateNestedManyWithoutUserInput
@@ -8430,10 +7227,10 @@ export namespace Prisma {
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    money?: NullableFloatFieldUpdateOperationsInput | number | null
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     stocks?: StockUpdateManyWithoutUserNestedInput
-    money?: MoneyUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -8441,8 +7238,8 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    moneyId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    money?: NullableFloatFieldUpdateOperationsInput | number | null
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     stocks?: StockUncheckedUpdateManyWithoutUserNestedInput
@@ -8453,8 +7250,8 @@ export namespace Prisma {
     email?: string | null
     emailVerified?: Date | string | null
     image?: string | null
-    moneyId?: string | null
     name?: string | null
+    money?: number | null
   }
 
   export type UserUpdateManyMutationInput = {
@@ -8463,6 +7260,7 @@ export namespace Prisma {
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    money?: NullableFloatFieldUpdateOperationsInput | number | null
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -8470,8 +7268,8 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    moneyId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    money?: NullableFloatFieldUpdateOperationsInput | number | null
   }
 
   export type AccountCreateInput = {
@@ -8668,45 +7466,6 @@ export namespace Prisma {
     expires?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type MoneyCreateInput = {
-    id?: string
-    amount: number
-    user?: UserCreateNestedOneWithoutMoneyInput
-  }
-
-  export type MoneyUncheckedCreateInput = {
-    id?: string
-    amount: number
-    user?: UserUncheckedCreateNestedOneWithoutMoneyInput
-  }
-
-  export type MoneyUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    amount?: FloatFieldUpdateOperationsInput | number
-    user?: UserUpdateOneWithoutMoneyNestedInput
-  }
-
-  export type MoneyUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    amount?: FloatFieldUpdateOperationsInput | number
-    user?: UserUncheckedUpdateOneWithoutMoneyNestedInput
-  }
-
-  export type MoneyCreateManyInput = {
-    id?: string
-    amount: number
-  }
-
-  export type MoneyUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    amount?: FloatFieldUpdateOperationsInput | number
-  }
-
-  export type MoneyUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    amount?: FloatFieldUpdateOperationsInput | number
-  }
-
   export type StockCreateInput = {
     id?: string
     symbol: string
@@ -8796,6 +7555,17 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
+  export type FloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
   export type AccountListRelationFilter = {
     every?: AccountWhereInput
     some?: AccountWhereInput
@@ -8812,11 +7582,6 @@ export namespace Prisma {
     every?: StockWhereInput
     some?: StockWhereInput
     none?: StockWhereInput
-  }
-
-  export type MoneyNullableScalarRelationFilter = {
-    is?: MoneyWhereInput | null
-    isNot?: MoneyWhereInput | null
   }
 
   export type SortOrderInput = {
@@ -8841,8 +7606,12 @@ export namespace Prisma {
     email?: SortOrder
     emailVerified?: SortOrder
     image?: SortOrder
-    moneyId?: SortOrder
     name?: SortOrder
+    money?: SortOrder
+  }
+
+  export type UserAvgOrderByAggregateInput = {
+    money?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -8850,8 +7619,8 @@ export namespace Prisma {
     email?: SortOrder
     emailVerified?: SortOrder
     image?: SortOrder
-    moneyId?: SortOrder
     name?: SortOrder
+    money?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -8859,8 +7628,12 @@ export namespace Prisma {
     email?: SortOrder
     emailVerified?: SortOrder
     image?: SortOrder
-    moneyId?: SortOrder
     name?: SortOrder
+    money?: SortOrder
+  }
+
+  export type UserSumOrderByAggregateInput = {
+    money?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -8911,6 +7684,22 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
   export type IntNullableFilter<$PrismaModel = never> = {
@@ -9072,61 +7861,6 @@ export namespace Prisma {
     expires?: SortOrder
   }
 
-  export type FloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
-  export type UserNullableScalarRelationFilter = {
-    is?: UserWhereInput | null
-    isNot?: UserWhereInput | null
-  }
-
-  export type MoneyCountOrderByAggregateInput = {
-    id?: SortOrder
-    amount?: SortOrder
-  }
-
-  export type MoneyAvgOrderByAggregateInput = {
-    amount?: SortOrder
-  }
-
-  export type MoneyMaxOrderByAggregateInput = {
-    id?: SortOrder
-    amount?: SortOrder
-  }
-
-  export type MoneyMinOrderByAggregateInput = {
-    id?: SortOrder
-    amount?: SortOrder
-  }
-
-  export type MoneySumOrderByAggregateInput = {
-    amount?: SortOrder
-  }
-
-  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
-  }
-
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -9204,12 +7938,6 @@ export namespace Prisma {
     connect?: StockWhereUniqueInput | StockWhereUniqueInput[]
   }
 
-  export type MoneyCreateNestedOneWithoutUserInput = {
-    create?: XOR<MoneyCreateWithoutUserInput, MoneyUncheckedCreateWithoutUserInput>
-    connectOrCreate?: MoneyCreateOrConnectWithoutUserInput
-    connect?: MoneyWhereUniqueInput
-  }
-
   export type AccountUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -9241,6 +7969,14 @@ export namespace Prisma {
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
+  }
+
+  export type NullableFloatFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type AccountUpdateManyWithoutUserNestedInput = {
@@ -9283,16 +8019,6 @@ export namespace Prisma {
     update?: StockUpdateWithWhereUniqueWithoutUserInput | StockUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: StockUpdateManyWithWhereWithoutUserInput | StockUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: StockScalarWhereInput | StockScalarWhereInput[]
-  }
-
-  export type MoneyUpdateOneWithoutUserNestedInput = {
-    create?: XOR<MoneyCreateWithoutUserInput, MoneyUncheckedCreateWithoutUserInput>
-    connectOrCreate?: MoneyCreateOrConnectWithoutUserInput
-    upsert?: MoneyUpsertWithoutUserInput
-    disconnect?: MoneyWhereInput | boolean
-    delete?: MoneyWhereInput | boolean
-    connect?: MoneyWhereUniqueInput
-    update?: XOR<XOR<MoneyUpdateToOneWithWhereWithoutUserInput, MoneyUpdateWithoutUserInput>, MoneyUncheckedUpdateWithoutUserInput>
   }
 
   export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
@@ -9377,46 +8103,6 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSessionsInput, UserUpdateWithoutSessionsInput>, UserUncheckedUpdateWithoutSessionsInput>
   }
 
-  export type UserCreateNestedOneWithoutMoneyInput = {
-    create?: XOR<UserCreateWithoutMoneyInput, UserUncheckedCreateWithoutMoneyInput>
-    connectOrCreate?: UserCreateOrConnectWithoutMoneyInput
-    connect?: UserWhereUniqueInput
-  }
-
-  export type UserUncheckedCreateNestedOneWithoutMoneyInput = {
-    create?: XOR<UserCreateWithoutMoneyInput, UserUncheckedCreateWithoutMoneyInput>
-    connectOrCreate?: UserCreateOrConnectWithoutMoneyInput
-    connect?: UserWhereUniqueInput
-  }
-
-  export type FloatFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
-  export type UserUpdateOneWithoutMoneyNestedInput = {
-    create?: XOR<UserCreateWithoutMoneyInput, UserUncheckedCreateWithoutMoneyInput>
-    connectOrCreate?: UserCreateOrConnectWithoutMoneyInput
-    upsert?: UserUpsertWithoutMoneyInput
-    disconnect?: UserWhereInput | boolean
-    delete?: UserWhereInput | boolean
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutMoneyInput, UserUpdateWithoutMoneyInput>, UserUncheckedUpdateWithoutMoneyInput>
-  }
-
-  export type UserUncheckedUpdateOneWithoutMoneyNestedInput = {
-    create?: XOR<UserCreateWithoutMoneyInput, UserUncheckedCreateWithoutMoneyInput>
-    connectOrCreate?: UserCreateOrConnectWithoutMoneyInput
-    upsert?: UserUpsertWithoutMoneyInput
-    disconnect?: UserWhereInput | boolean
-    delete?: UserWhereInput | boolean
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutMoneyInput, UserUpdateWithoutMoneyInput>, UserUncheckedUpdateWithoutMoneyInput>
-  }
-
   export type UserCreateNestedOneWithoutStocksInput = {
     create?: XOR<UserCreateWithoutStocksInput, UserUncheckedCreateWithoutStocksInput>
     connectOrCreate?: UserCreateOrConnectWithoutStocksInput
@@ -9476,6 +8162,17 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -9548,6 +8245,22 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -9562,17 +8275,6 @@ export namespace Prisma {
     _sum?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedIntNullableFilter<$PrismaModel>
     _max?: NestedIntNullableFilter<$PrismaModel>
-  }
-
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -9600,33 +8302,6 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
-  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
-  }
-
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -9641,6 +8316,17 @@ export namespace Prisma {
     _sum?: NestedIntFilter<$PrismaModel>
     _min?: NestedIntFilter<$PrismaModel>
     _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type AccountCreateWithoutUserInput = {
@@ -9723,21 +8409,6 @@ export namespace Prisma {
   export type StockCreateManyUserInputEnvelope = {
     data: StockCreateManyUserInput | StockCreateManyUserInput[]
     skipDuplicates?: boolean
-  }
-
-  export type MoneyCreateWithoutUserInput = {
-    id?: string
-    amount: number
-  }
-
-  export type MoneyUncheckedCreateWithoutUserInput = {
-    id?: string
-    amount: number
-  }
-
-  export type MoneyCreateOrConnectWithoutUserInput = {
-    where: MoneyWhereUniqueInput
-    create: XOR<MoneyCreateWithoutUserInput, MoneyUncheckedCreateWithoutUserInput>
   }
 
   export type AccountUpsertWithWhereUniqueWithoutUserInput = {
@@ -9826,36 +8497,15 @@ export namespace Prisma {
     userId?: StringFilter<"Stock"> | string
   }
 
-  export type MoneyUpsertWithoutUserInput = {
-    update: XOR<MoneyUpdateWithoutUserInput, MoneyUncheckedUpdateWithoutUserInput>
-    create: XOR<MoneyCreateWithoutUserInput, MoneyUncheckedCreateWithoutUserInput>
-    where?: MoneyWhereInput
-  }
-
-  export type MoneyUpdateToOneWithWhereWithoutUserInput = {
-    where?: MoneyWhereInput
-    data: XOR<MoneyUpdateWithoutUserInput, MoneyUncheckedUpdateWithoutUserInput>
-  }
-
-  export type MoneyUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    amount?: FloatFieldUpdateOperationsInput | number
-  }
-
-  export type MoneyUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    amount?: FloatFieldUpdateOperationsInput | number
-  }
-
   export type UserCreateWithoutAccountsInput = {
     id?: string
     email?: string | null
     emailVerified?: Date | string | null
     image?: string | null
     name?: string | null
+    money?: number | null
     sessions?: SessionCreateNestedManyWithoutUserInput
     stocks?: StockCreateNestedManyWithoutUserInput
-    money?: MoneyCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -9863,8 +8513,8 @@ export namespace Prisma {
     email?: string | null
     emailVerified?: Date | string | null
     image?: string | null
-    moneyId?: string | null
     name?: string | null
+    money?: number | null
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     stocks?: StockUncheckedCreateNestedManyWithoutUserInput
   }
@@ -9891,9 +8541,9 @@ export namespace Prisma {
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    money?: NullableFloatFieldUpdateOperationsInput | number | null
     sessions?: SessionUpdateManyWithoutUserNestedInput
     stocks?: StockUpdateManyWithoutUserNestedInput
-    money?: MoneyUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -9901,8 +8551,8 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    moneyId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    money?: NullableFloatFieldUpdateOperationsInput | number | null
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     stocks?: StockUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -9913,9 +8563,9 @@ export namespace Prisma {
     emailVerified?: Date | string | null
     image?: string | null
     name?: string | null
+    money?: number | null
     accounts?: AccountCreateNestedManyWithoutUserInput
     stocks?: StockCreateNestedManyWithoutUserInput
-    money?: MoneyCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -9923,8 +8573,8 @@ export namespace Prisma {
     email?: string | null
     emailVerified?: Date | string | null
     image?: string | null
-    moneyId?: string | null
     name?: string | null
+    money?: number | null
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     stocks?: StockUncheckedCreateNestedManyWithoutUserInput
   }
@@ -9951,9 +8601,9 @@ export namespace Prisma {
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    money?: NullableFloatFieldUpdateOperationsInput | number | null
     accounts?: AccountUpdateManyWithoutUserNestedInput
     stocks?: StockUpdateManyWithoutUserNestedInput
-    money?: MoneyUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -9961,69 +8611,9 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    moneyId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    money?: NullableFloatFieldUpdateOperationsInput | number | null
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
-    stocks?: StockUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserCreateWithoutMoneyInput = {
-    id?: string
-    email?: string | null
-    emailVerified?: Date | string | null
-    image?: string | null
-    name?: string | null
-    accounts?: AccountCreateNestedManyWithoutUserInput
-    sessions?: SessionCreateNestedManyWithoutUserInput
-    stocks?: StockCreateNestedManyWithoutUserInput
-  }
-
-  export type UserUncheckedCreateWithoutMoneyInput = {
-    id?: string
-    email?: string | null
-    emailVerified?: Date | string | null
-    image?: string | null
-    name?: string | null
-    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
-    stocks?: StockUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type UserCreateOrConnectWithoutMoneyInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutMoneyInput, UserUncheckedCreateWithoutMoneyInput>
-  }
-
-  export type UserUpsertWithoutMoneyInput = {
-    update: XOR<UserUpdateWithoutMoneyInput, UserUncheckedUpdateWithoutMoneyInput>
-    create: XOR<UserCreateWithoutMoneyInput, UserUncheckedCreateWithoutMoneyInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutMoneyInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutMoneyInput, UserUncheckedUpdateWithoutMoneyInput>
-  }
-
-  export type UserUpdateWithoutMoneyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    accounts?: AccountUpdateManyWithoutUserNestedInput
-    sessions?: SessionUpdateManyWithoutUserNestedInput
-    stocks?: StockUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutMoneyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     stocks?: StockUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -10033,9 +8623,9 @@ export namespace Prisma {
     emailVerified?: Date | string | null
     image?: string | null
     name?: string | null
+    money?: number | null
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
-    money?: MoneyCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutStocksInput = {
@@ -10043,8 +8633,8 @@ export namespace Prisma {
     email?: string | null
     emailVerified?: Date | string | null
     image?: string | null
-    moneyId?: string | null
     name?: string | null
+    money?: number | null
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
   }
@@ -10071,9 +8661,9 @@ export namespace Prisma {
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    money?: NullableFloatFieldUpdateOperationsInput | number | null
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
-    money?: MoneyUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutStocksInput = {
@@ -10081,8 +8671,8 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    moneyId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    money?: NullableFloatFieldUpdateOperationsInput | number | null
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
   }

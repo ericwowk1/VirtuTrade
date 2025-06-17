@@ -29,25 +29,32 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async signIn({ user, account, profile }) {
-      // Check if user has a money record
-      const existingUser = await prisma.user.findUnique({
-        where: { id: user.id },
-        include: { money: true }
-      })
-      
-      // If no money record exists, create one
-      if (!existingUser?.money) {
-        const money = await prisma.money.create({
-          data: {
-            amount: 1000000, // Starting amount
-            user: {
-              connect: { id: user.id }
-            }
-          }
+      try {
+        // Check if user has a money record
+        const existingUser = await prisma.user.findUnique({
+          where: { id: user.id },
+          include: { money: true }
         })
+        
+        // If no money record exists, create one
+        if (!existingUser?.money) {
+          await prisma.money.create({
+            data: {
+              amount: 1000000, // Starting amount
+              user: {
+                connect: {
+                  id: user.id
+                }
+              }
+            }
+          })
+        }
+        
+        return true
+      } catch (error) {
+        console.error('Error in signIn callback:', error)
+        return true // Still allow sign in even if money creation fails
       }
-      
-      return true
     }
   },
 

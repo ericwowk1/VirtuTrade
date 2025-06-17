@@ -13,12 +13,11 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
-  moneyId       String?   @unique
   name          String?
   accounts      Account[]
   sessions      Session[]
   stocks        Stock[]
-  money         Money?    @relation(fields: [moneyId], references: [id])
+  money         Float?    @default(1000000)
 }
 
 model Account {
@@ -55,18 +54,13 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Money {
-  id     String @id @default(cuid())
-  amount Float
-  user   User?
-}
-
 model Stock {
-  id       String @id @default(cuid())
-  symbol   String
-  quantity Int
-  userId   String
-  user     User   @relation(fields: [userId], references: [id])
+  id           String @id @default(cuid())
+  symbol       String
+  quantity     Int
+  averagePrice Float
+  userId       String
+  user         User   @relation(fields: [userId], references: [id])
 
   @@index([userId])
 }
