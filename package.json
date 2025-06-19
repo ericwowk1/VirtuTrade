@@ -14,6 +14,7 @@
     "@emotion/styled": "^11.14.0",
     "@mui/material": "^7.1.1",
     "@prisma/client": "^6.7.0",
+    "finnhub": "^1.2.19",
     "next": "^15.3.0",
     "next-auth": "^4.24.11",
     "peerview": "file:",
@@ -26,7 +27,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
+    "@types/node": "^20.19.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
