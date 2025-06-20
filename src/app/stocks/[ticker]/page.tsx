@@ -71,14 +71,14 @@ export default function Ticker() {
    
       {/* first row's columns - made smaller with left padding */}
       
-      <div className="flex flex-row w-2/3 pl-32  ">
+      <div className="flex flex-row w-2/3 pl-16 py-30 items-center">
         {/* Logo - made smaller */}
         {companyInfo?.logo && (
-          <img src={companyInfo.logo} alt={`${ticker} logo`} className="w-42 h-42 mr-4 py-25" />
+          <img src={companyInfo.logo} alt={`${ticker} logo`} className="w-32 h-32 mr-4" />
         )}
         
         {/* Text content container */}
-        <div className="flex flex-col py-30">
+        <div className="flex flex-col">
           {/* Name row - made smaller */}
           <h1 className="text-3xl mb-8">{name} ({ticker})</h1>
           
@@ -94,16 +94,9 @@ export default function Ticker() {
       </div>
    
     {/* 2nd column - Trading Widget with right padding */}
-    <div className="flex flex-col w-1/3 pr-32 py-25">
+    <div className="flex flex-col w-1/3 pr-16">
       <TradingWidget ticker={ticker} currentPrice={quoteData.c} />
-
-      {/* Add to Watchlist */}
-      <button className="mt-4 text-purple-400 hover:text-purple-300 text-lg py-4 border-3 border-purple-400 rounded-md w-150 font-bold">
-  Add to Watchlist
-</button>
     </div>
-
-    
     </div>
   );
  
