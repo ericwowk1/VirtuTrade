@@ -20,7 +20,25 @@ export async function getStockData(ticker: string) {
         console.error("Finnhub Error:", error);
         reject(error);
       } else {
-        console.log("Finnhub Data:", data);
+        console.log("Stock Data", data);
+        resolve(data);
+      }
+    });
+  });
+}
+
+export async function getStockInfo(ticker: string) {
+  console.log('Fetching data for ticker:', ticker); // Add this line
+  count = count + 1;
+  console.log("count", count)
+  
+  return new Promise((resolve, reject) => {
+    finnhubClient.companyProfile2({'symbol': `${ticker}`}, (error, data, response) => {
+      if (error) {
+        console.error("Finnhub Error:", error);
+        reject(error);
+      } else {
+        console.log("Company Profile", data);
         resolve(data);
       }
     });
