@@ -22,7 +22,7 @@ export async function getStockHistory(symbol: string): Promise<ChartDataPoint[]>
 
   console.log("symbol", symbol)
   const apikey =process.env.TWELVEDATA_API_KEY
-  const rawData = await axios.get(`https://api.twelvedata.com/time_series?symbol=${symbol}&interval=1month&outputsize=${30}&apikey=${apikey}`);
+  const rawData = await axios.get(`https://api.twelvedata.com/time_series?symbol=${symbol}&interval=1month&outputsize=${120}&apikey=${apikey}`);
 
 
 
