@@ -1,6 +1,6 @@
 
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/auth";
+import { authOptions } from "@/services/auth";
 import { LandingPage} from "./components/LandingPage"
 import { HomePage } from "./components/HomePage"
 

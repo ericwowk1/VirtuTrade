@@ -1,6 +1,6 @@
 import React from 'react';
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/auth";
+import { authOptions } from "@/services/auth";
 import { prisma } from "@/services/prisma";
 
 

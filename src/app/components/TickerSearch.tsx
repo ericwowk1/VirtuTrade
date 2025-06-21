@@ -6708,12 +6708,10 @@ export function TickerSearch() {
   const [open, setOpen] = useState(false);
 
   const handleSelection = (event: any, value: any) => {
-    if(value.ticker == null || value.ticker == undefined) {
-      return;
-    }
-    console.log("router push ran");
-      router.push(`/stocks/${value.ticker}`);
-  };
+  if (value?.ticker) {
+    router.push(`/stocks/${value.ticker}?name=${encodeURIComponent(value.name)}`);
+  }
+};
 
 
   return (

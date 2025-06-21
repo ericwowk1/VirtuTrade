@@ -1,4 +1,5 @@
 import { prisma } from "@/services/prisma";
+import { GetBalance } from "@/app/components/GetBalance"
 
 interface TradingWidgetProps {
    ticker: string;
@@ -8,7 +9,7 @@ interface TradingWidgetProps {
 export function TradingWidget({ ticker, currentPrice }: TradingWidgetProps) {
 
    return (   
-     <div className="flex flex-col p-6 bg-gray-800 rounded-lg mr-8 w-150 h-200">
+     <div className="flex flex-col p-6 bg-gray-800 rounded-lg mr-8 w-150 h-210">
        {/* Header Tabs */}
        <div className="flex flex-row mb-6 border-b border-gray-600">
          <button className="text-white pb-6 py-6 mr-6 border-b-2 border-teal-500 text-2xl font-bold">
@@ -44,7 +45,7 @@ export function TradingWidget({ ticker, currentPrice }: TradingWidgetProps) {
 
        {/* Estimated Cost */}
        <div className="mb-6">
-         <div className="flex justify-between text-gray-300 text-3xl mb-2 py-6">
+         <div className="flex justify-between text-gray-300 text-3xl mb-12 py-6">
            <span>Estimated Cost</span>
            <span>$0</span>
          </div>
@@ -56,13 +57,13 @@ export function TradingWidget({ ticker, currentPrice }: TradingWidgetProps) {
        </button>
 
        {/* Available Funds */}
-       <div className="text-center text-green-400 text-lg py-6 mb-4">
-         Available funds: $70,729.68
+       <div className="text-center text-green-400 text-2xl py-6 mb-4">
+         <GetBalance />
        </div>
 
        
        <div className="py-24 text-sm">
-       <h4>Prices do not update frequently and can be slightly innacurate due to API limits </h4>
+       <h4>Stocks Prices do not update frequently and can be innacurate due to free API limits </h4>
        
       </div>
        

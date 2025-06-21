@@ -1,7 +1,7 @@
 import React from 'react';
-import { getBalance} from '@/lib/getBalance'
+import { getBalance} from '@/services/getBalance'
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/auth";
+import { authOptions } from "@/services/auth";
 import { redirect } from "next/navigation";
 import { AccountDetails } from "@/app/components/AccountDetails";
 import { StocksOwned } from "@/app/components/StocksOwned";

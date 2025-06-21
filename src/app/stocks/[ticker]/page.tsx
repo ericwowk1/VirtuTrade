@@ -2,6 +2,8 @@
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useState, useEffect } from "react";
 import { TradingWidget } from "@/app/components/TradingWidget"
+import { StockChart } from "@/app/components/StockChart"
+
 
 interface StockQuote {
   c: number; // current price
@@ -65,39 +67,45 @@ export default function Ticker() {
 
   // Destructure the combined data
   const { data: quoteData, info: companyInfo } = stockData;
-  return (
-    
-    <div className="flex flex-row text-white">
+
+  console.log("This is stockData object", stockData)
+   console.log("This is quoteData object", quoteData)
+     console.log("This is companyInfo object", companyInfo)
+
    
-      {/* first row's columns - made smaller with left padding */}
-      
-      <div className="flex flex-row w-2/3 pl-16 py-30 items-center">
-        {/* Logo - made smaller */}
+  return (
+  <div className="flex flex-row text-white min-h-screen">
+    {/* First column - Stock info and chart */}
+    <div className="flex flex-col w-2/3 pl-32 py-12">
+      {/* Top row - Logo and basic info */}
+      <div className="flex flex-row items-start mb-8">
         {companyInfo?.logo && (
-          <img src={companyInfo.logo} alt={`${ticker} logo`} className="w-32 h-32 mr-4" />
+          <img src={companyInfo.logo} alt={`${ticker} logo`} className="w-32 h-32 mr-8" />
         )}
         
-        {/* Text content container */}
         <div className="flex flex-col">
-          {/* Name row - made smaller */}
-          <h1 className="text-3xl mb-8">{name} ({ticker})</h1>
-          
-          {/* Price and change row - made smaller */}
+          <h1 className="text-4xl font-bold mb-2">{name} ({ticker})</h1>
           <div className="flex flex-row items-center">
-            <h1 className="text-4xl">${quoteData.c.toFixed(2)}</h1>
+            <h1 className="text-5xl font-semibold">${quoteData.c.toFixed(2)}</h1>
             {quoteData.d < 0 ? 
-              <h1 className="text-red-500 text-xl pl-4">$-{Math.abs(quoteData.d).toFixed(2)} ({quoteData.dp.toFixed(2)}%)</h1> : 
-              <h1 className="text-green-500 text-xl pl-4">$+{quoteData.d.toFixed(2)} ({quoteData.dp.toFixed(2)}%)</h1>
+              <h1 className="text-red-500 text-2xl pl-6">$-{Math.abs(quoteData.d).toFixed(2)} ({quoteData.dp.toFixed(2)}%)</h1> : 
+              <h1 className="text-green-500 text-2xl pl-6">$+{quoteData.d.toFixed(2)} ({quoteData.dp.toFixed(2)}%)</h1>
             }
           </div>
         </div>
       </div>
-   
-    {/* 2nd column - Trading Widget with right padding */}
-    <div className="flex flex-col w-1/3 pr-16">
+
+      {/* Chart */}
+      <div className="" >
+        <StockChart ticker={ticker} />
+      </div>
+    </div>
+
+    {/* Second column - Trading Widget */}
+    <div className="flex flex-col w-1/3  ml-12 py-12">
       <TradingWidget ticker={ticker} currentPrice={quoteData.c} />
     </div>
-    </div>
-  );
+  </div>
+);
  
 }
