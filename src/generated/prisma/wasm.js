@@ -161,6 +161,7 @@ exports.Prisma.StockScalarFieldEnum = {
   id: 'id',
   symbol: 'symbol',
   quantity: 'quantity',
+  averagePrice: 'averagePrice',
   userId: 'userId'
 };
 

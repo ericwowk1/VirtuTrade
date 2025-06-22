@@ -5665,16 +5665,19 @@ export namespace Prisma {
 
   export type StockAvgAggregateOutputType = {
     quantity: number | null
+    averagePrice: number | null
   }
 
   export type StockSumAggregateOutputType = {
     quantity: number | null
+    averagePrice: number | null
   }
 
   export type StockMinAggregateOutputType = {
     id: string | null
     symbol: string | null
     quantity: number | null
+    averagePrice: number | null
     userId: string | null
   }
 
@@ -5682,6 +5685,7 @@ export namespace Prisma {
     id: string | null
     symbol: string | null
     quantity: number | null
+    averagePrice: number | null
     userId: string | null
   }
 
@@ -5689,6 +5693,7 @@ export namespace Prisma {
     id: number
     symbol: number
     quantity: number
+    averagePrice: number
     userId: number
     _all: number
   }
@@ -5696,16 +5701,19 @@ export namespace Prisma {
 
   export type StockAvgAggregateInputType = {
     quantity?: true
+    averagePrice?: true
   }
 
   export type StockSumAggregateInputType = {
     quantity?: true
+    averagePrice?: true
   }
 
   export type StockMinAggregateInputType = {
     id?: true
     symbol?: true
     quantity?: true
+    averagePrice?: true
     userId?: true
   }
 
@@ -5713,6 +5721,7 @@ export namespace Prisma {
     id?: true
     symbol?: true
     quantity?: true
+    averagePrice?: true
     userId?: true
   }
 
@@ -5720,6 +5729,7 @@ export namespace Prisma {
     id?: true
     symbol?: true
     quantity?: true
+    averagePrice?: true
     userId?: true
     _all?: true
   }
@@ -5814,6 +5824,7 @@ export namespace Prisma {
     id: string
     symbol: string
     quantity: number
+    averagePrice: number
     userId: string
     _count: StockCountAggregateOutputType | null
     _avg: StockAvgAggregateOutputType | null
@@ -5840,6 +5851,7 @@ export namespace Prisma {
     id?: boolean
     symbol?: boolean
     quantity?: boolean
+    averagePrice?: boolean
     userId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["stock"]>
@@ -5848,6 +5860,7 @@ export namespace Prisma {
     id?: boolean
     symbol?: boolean
     quantity?: boolean
+    averagePrice?: boolean
     userId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["stock"]>
@@ -5856,6 +5869,7 @@ export namespace Prisma {
     id?: boolean
     symbol?: boolean
     quantity?: boolean
+    averagePrice?: boolean
     userId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["stock"]>
@@ -5864,10 +5878,11 @@ export namespace Prisma {
     id?: boolean
     symbol?: boolean
     quantity?: boolean
+    averagePrice?: boolean
     userId?: boolean
   }
 
-  export type StockOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "symbol" | "quantity" | "userId", ExtArgs["result"]["stock"]>
+  export type StockOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "symbol" | "quantity" | "averagePrice" | "userId", ExtArgs["result"]["stock"]>
   export type StockInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -5887,6 +5902,7 @@ export namespace Prisma {
       id: string
       symbol: string
       quantity: number
+      averagePrice: number
       userId: string
     }, ExtArgs["result"]["stock"]>
     composites: {}
@@ -6315,6 +6331,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Stock", 'String'>
     readonly symbol: FieldRef<"Stock", 'String'>
     readonly quantity: FieldRef<"Stock", 'Int'>
+    readonly averagePrice: FieldRef<"Stock", 'Float'>
     readonly userId: FieldRef<"Stock", 'String'>
   }
     
@@ -6797,6 +6814,7 @@ export namespace Prisma {
     id: 'id',
     symbol: 'symbol',
     quantity: 'quantity',
+    averagePrice: 'averagePrice',
     userId: 'userId'
   };
 
@@ -7152,6 +7170,7 @@ export namespace Prisma {
     id?: StringFilter<"Stock"> | string
     symbol?: StringFilter<"Stock"> | string
     quantity?: IntFilter<"Stock"> | number
+    averagePrice?: FloatFilter<"Stock"> | number
     userId?: StringFilter<"Stock"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
@@ -7160,6 +7179,7 @@ export namespace Prisma {
     id?: SortOrder
     symbol?: SortOrder
     quantity?: SortOrder
+    averagePrice?: SortOrder
     userId?: SortOrder
     user?: UserOrderByWithRelationInput
   }
@@ -7171,6 +7191,7 @@ export namespace Prisma {
     NOT?: StockWhereInput | StockWhereInput[]
     symbol?: StringFilter<"Stock"> | string
     quantity?: IntFilter<"Stock"> | number
+    averagePrice?: FloatFilter<"Stock"> | number
     userId?: StringFilter<"Stock"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
@@ -7179,6 +7200,7 @@ export namespace Prisma {
     id?: SortOrder
     symbol?: SortOrder
     quantity?: SortOrder
+    averagePrice?: SortOrder
     userId?: SortOrder
     _count?: StockCountOrderByAggregateInput
     _avg?: StockAvgOrderByAggregateInput
@@ -7194,6 +7216,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Stock"> | string
     symbol?: StringWithAggregatesFilter<"Stock"> | string
     quantity?: IntWithAggregatesFilter<"Stock"> | number
+    averagePrice?: FloatWithAggregatesFilter<"Stock"> | number
     userId?: StringWithAggregatesFilter<"Stock"> | string
   }
 
@@ -7470,6 +7493,7 @@ export namespace Prisma {
     id?: string
     symbol: string
     quantity: number
+    averagePrice: number
     user: UserCreateNestedOneWithoutStocksInput
   }
 
@@ -7477,6 +7501,7 @@ export namespace Prisma {
     id?: string
     symbol: string
     quantity: number
+    averagePrice: number
     userId: string
   }
 
@@ -7484,6 +7509,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     symbol?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
+    averagePrice?: FloatFieldUpdateOperationsInput | number
     user?: UserUpdateOneRequiredWithoutStocksNestedInput
   }
 
@@ -7491,6 +7517,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     symbol?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
+    averagePrice?: FloatFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -7498,6 +7525,7 @@ export namespace Prisma {
     id?: string
     symbol: string
     quantity: number
+    averagePrice: number
     userId: string
   }
 
@@ -7505,12 +7533,14 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     symbol?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
+    averagePrice?: FloatFieldUpdateOperationsInput | number
   }
 
   export type StockUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     symbol?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
+    averagePrice?: FloatFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -7872,21 +7902,35 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
   export type StockCountOrderByAggregateInput = {
     id?: SortOrder
     symbol?: SortOrder
     quantity?: SortOrder
+    averagePrice?: SortOrder
     userId?: SortOrder
   }
 
   export type StockAvgOrderByAggregateInput = {
     quantity?: SortOrder
+    averagePrice?: SortOrder
   }
 
   export type StockMaxOrderByAggregateInput = {
     id?: SortOrder
     symbol?: SortOrder
     quantity?: SortOrder
+    averagePrice?: SortOrder
     userId?: SortOrder
   }
 
@@ -7894,11 +7938,13 @@ export namespace Prisma {
     id?: SortOrder
     symbol?: SortOrder
     quantity?: SortOrder
+    averagePrice?: SortOrder
     userId?: SortOrder
   }
 
   export type StockSumOrderByAggregateInput = {
     quantity?: SortOrder
+    averagePrice?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -7915,6 +7961,22 @@ export namespace Prisma {
     _sum?: NestedIntFilter<$PrismaModel>
     _min?: NestedIntFilter<$PrismaModel>
     _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type AccountCreateNestedManyWithoutUserInput = {
@@ -8117,6 +8179,14 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type UserUpdateOneRequiredWithoutStocksNestedInput = {
     create?: XOR<UserCreateWithoutStocksInput, UserUncheckedCreateWithoutStocksInput>
     connectOrCreate?: UserCreateOrConnectWithoutStocksInput
@@ -8302,6 +8372,17 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -8318,7 +8399,7 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
-  export type NestedFloatFilter<$PrismaModel = never> = {
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[] | ListFloatFieldRefInput<$PrismaModel>
     notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
@@ -8326,7 +8407,12 @@ export namespace Prisma {
     lte?: number | FloatFieldRefInput<$PrismaModel>
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type AccountCreateWithoutUserInput = {
@@ -8393,12 +8479,14 @@ export namespace Prisma {
     id?: string
     symbol: string
     quantity: number
+    averagePrice: number
   }
 
   export type StockUncheckedCreateWithoutUserInput = {
     id?: string
     symbol: string
     quantity: number
+    averagePrice: number
   }
 
   export type StockCreateOrConnectWithoutUserInput = {
@@ -8494,6 +8582,7 @@ export namespace Prisma {
     id?: StringFilter<"Stock"> | string
     symbol?: StringFilter<"Stock"> | string
     quantity?: IntFilter<"Stock"> | number
+    averagePrice?: FloatFilter<"Stock"> | number
     userId?: StringFilter<"Stock"> | string
   }
 
@@ -8701,6 +8790,7 @@ export namespace Prisma {
     id?: string
     symbol: string
     quantity: number
+    averagePrice: number
   }
 
   export type AccountUpdateWithoutUserInput = {
@@ -8767,18 +8857,21 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     symbol?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
+    averagePrice?: FloatFieldUpdateOperationsInput | number
   }
 
   export type StockUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     symbol?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
+    averagePrice?: FloatFieldUpdateOperationsInput | number
   }
 
   export type StockUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     symbol?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
+    averagePrice?: FloatFieldUpdateOperationsInput | number
   }
 
 

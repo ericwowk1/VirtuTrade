@@ -55,11 +55,12 @@ model VerificationToken {
 }
 
 model Stock {
-  id       String @id @default(cuid())
-  symbol   String
-  quantity Int
-  userId   String
-  user     User   @relation(fields: [userId], references: [id])
+  id           String @id @default(cuid())
+  symbol       String
+  quantity     Int
+  averagePrice Float
+  userId       String
+  user         User   @relation(fields: [userId], references: [id])
 
   @@index([userId])
 }
