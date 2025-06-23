@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { TradingWidget } from "@/app/components/TradingWidget"
 import { StockChart } from "@/app/components/StockChart"
 
-
 interface StockQuote {
   c: number; // current price
   d: number; // change
@@ -21,6 +20,8 @@ interface CombinedStockData {
   info: StockInfo;
 }
 
+type TimePeriod = '1D' | '1M' | '1Y' | 'ALL';
+
 export default function Ticker() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -29,6 +30,7 @@ export default function Ticker() {
   const [stockData, setStockData] = useState<CombinedStockData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedPeriod, setSelectedPeriod] = useState<TimePeriod>('1D');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -69,9 +71,10 @@ export default function Ticker() {
   const { data: quoteData, info: companyInfo } = stockData;
 
   console.log("This is stockData object", stockData)
-   console.log("This is quoteData object", quoteData)
-     console.log("This is companyInfo object", companyInfo)
+  console.log("This is quoteData object", quoteData)
+  console.log("This is companyInfo object", companyInfo)
 
+  const timePeriods: TimePeriod[] = ['1D', '1M', '1Y', 'ALL'];
    
   return (
   <div className="flex flex-row text-white min-h-screen">
@@ -96,13 +99,33 @@ export default function Ticker() {
       </div>
 
       {/* Chart */}
-      <div className="" >
-        <StockChart ticker={ticker} />
+      <div className="">
+        <StockChart ticker={ticker} period={selectedPeriod}/>
+      </div>
+
+      {/* Time Period Buttons */}
+      <div className="flex flex-row gap-4 mt-6">
+        {timePeriods.map((period) => (
+          <button
+            key={period}
+            onClick={() => setSelectedPeriod(period)}
+            className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              selectedPeriod === period
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+            }`}
+          >
+            {period === '1D' ? '1 Day' : 
+             period === '1M' ? '1 Month' : 
+             period === '1Y' ? '1 Year' : 
+             'All Time'}
+          </button>
+        ))}
       </div>
     </div>
 
     {/* Second column - Trading Widget */}
-    <div className="flex flex-col w-1/3  ml-12 py-12">
+    <div className="flex flex-col w-1/3 ml-12 py-12">
       <TradingWidget ticker={ticker} currentPrice={quoteData.c} />
     </div>
   </div>

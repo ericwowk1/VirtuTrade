@@ -1,51 +1,68 @@
 import { AreaSeries, createChart, ColorType } from 'lightweight-charts';
 import React, { useEffect, useRef, useState } from 'react';
 
-export function StockChart({ ticker }: { ticker: string }) {
+export type TimeRange = '1D' | '1M' | '1Y' | 'ALL';
+
+type StockChartProps = {
+   ticker: string;
+   period: TimeRange;
+   onTimeRangeChange?: (range: TimeRange) => void;
+};
+
+export function StockChart({ ticker, period, onTimeRangeChange }: StockChartProps) {
    const chartContainerRef = useRef<HTMLDivElement>(null);
    const [chartData, setChartData] = useState<any[]>([]);
    const [isLoading, setIsLoading] = useState(true);
+   const [error, setError] = useState<string | null>(null);
 
-   useEffect(() => {
-       const fetchData = async () => {
-           setIsLoading(true);
-           try {
-               const response = await fetch(`/api/stockHistoryApi?ticker=${encodeURIComponent(ticker)}`);
-               const data = await response.json();
-               console.log("data3343", data);
-               
-               if (data && data.values) {
-                   const formattedData = data.values
-                       .map((item: any) => ({
-                           time: item.datetime,
-                           value: parseFloat(item.close)
-                       }))
-                       .reverse();
-                   
-                   console.log("formatted data:", formattedData);
-                   setChartData(formattedData);
-               }
-           } catch (error) {
-               console.error('Error fetching stock data:', error);
-               setChartData([]); // Set empty array on error
-           }
-           setIsLoading(false);
-       };
+  useEffect(() => {
+    const fetchData = async () => {
+        setIsLoading(true);
+        setError(null);
+        try {
+            const response = await fetch(
+                `/api/stockHistoryApi?ticker=${encodeURIComponent(ticker)}&timeRange=${period}`
+            );
+            const data = await response.json();
+            
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to fetch data');
+            }
+            
+            console.log('Raw API response:', data); // Debug line
+            
+           const dataArray = data.values || data; // Check for .values first, fallback to data
 
-       if (ticker) {
-           fetchData();
-       }
-   }, [ticker]);
+if (dataArray && dataArray.length > 0) {
+    const formattedData = dataArray.map((item: any) => ({
+        time: item.time,
+        value: item.value
+    }));
+    console.log('Formatted chart data:', formattedData.slice(0, 3));
+    setChartData(formattedData);
+} else {
+    console.log('No data array found');
+    setChartData([]);
+}
+        } catch (error) {
+            console.error('Error fetching stock data:', error);
+            setError(error instanceof Error ? error.message : 'Failed to fetch data');
+            setChartData([]);
+        }
+        setIsLoading(false);
+    };
+
+    if (ticker) {
+        fetchData();
+    }
+}, [ticker, period]);
 
    useEffect(() => {
        if (!chartContainerRef.current || chartData.length === 0) return;
 
        const chart = createChart(chartContainerRef.current, {
            layout: {
-               background: {
-                   type: ColorType.Solid,
-                   color: 'transparent',
-               },
+               background: { type: ColorType.Solid, color: 'transparent' },
                textColor: 'white',
            },
            grid: {
@@ -53,17 +70,9 @@ export function StockChart({ ticker }: { ticker: string }) {
                horzLines: { visible: false },
            },
            width: chartContainerRef.current.clientWidth,
-           height: 700,
-           rightPriceScale: {
-               borderVisible: false,
-               scaleMargins: {
-                   top: 0.1,
-                   bottom: 0.1,
-               },
-           },
-           timeScale: {
-               borderVisible: false,
-           },
+           height: 400,
+           rightPriceScale: { borderVisible: false },
+           timeScale: { borderVisible: false },
        });
 
        const series = chart.addSeries(AreaSeries, {
@@ -76,15 +85,10 @@ export function StockChart({ ticker }: { ticker: string }) {
        series.setData(chartData);
        chart.timeScale().fitContent();
 
-       chart.applyOptions({
-           layout: {
-               fontSize: 18,
-           },
-       });
-
        const handleResize = () => {
-           if (!chartContainerRef.current) return;
-           chart.applyOptions({ width: chartContainerRef.current.clientWidth });
+           if (chartContainerRef.current) {
+               chart.applyOptions({ width: chartContainerRef.current.clientWidth });
+           }
        };
 
        window.addEventListener('resize', handleResize);
@@ -95,50 +99,86 @@ export function StockChart({ ticker }: { ticker: string }) {
        };
    }, [chartData]);
 
+   const TimeRangeButtons = () => {
+       const ranges: { value: TimeRange; label: string }[] = [
+           { value: '1D', label: '1D' },
+           { value: '1M', label: '1M' },
+           { value: '1Y', label: '1Y' },
+           { value: 'ALL', label: 'ALL' }
+       ];
+
+       return (
+           <div style={{ 
+               display: 'flex', 
+               gap: '8px', 
+               marginBottom: '16px',
+               justifyContent: 'center'
+           }}>
+               {ranges.map((range) => (
+                   <button
+                       key={range.value}
+                       onClick={() => onTimeRangeChange?.(range.value)}
+                       style={{
+                           padding: '8px 16px',
+                           border: '1px solid #444',
+                           borderRadius: '4px',
+                           background: period === range.value ? '#2962FF' : 'transparent',
+                           color: 'white',
+                           cursor: 'pointer',
+                           fontSize: '14px',
+                       }}
+                   >
+                       {range.label}
+                   </button>
+               ))}
+           </div>
+       );
+   };
+
+   const chartStyle = { 
+       width: '100%', 
+       height: '400px',
+       background: 'transparent',
+       display: 'flex',
+       alignItems: 'center',
+       justifyContent: 'center',
+       color: 'white'
+   };
+
    if (isLoading) {
        return (
-           <div 
-               style={{ 
-                   width: '100%', 
-                   height: '300px',
-                   background: 'transparent',
-                   display: 'flex',
-                   alignItems: 'center',
-                   justifyContent: 'center',
-                   color: 'white'
-               }}
-           >
-               Loading chart...
+           <div>
+               {onTimeRangeChange && <TimeRangeButtons />}
+               <div style={chartStyle}>Loading {ticker} chart...</div>
+           </div>
+       );
+   }
+
+   if (error) {
+       return (
+           <div>
+               {onTimeRangeChange && <TimeRangeButtons />}
+               <div style={{...chartStyle, color: '#ff6b6b', flexDirection: 'column' as const}}>
+                   <div>Error loading chart</div>
+                   <div style={{ fontSize: '12px', opacity: 0.7 }}>{error}</div>
+               </div>
            </div>
        );
    }
 
    if (chartData.length === 0) {
        return (
-           <div 
-               style={{ 
-                   width: '100%', 
-                   height: '300px',
-                   background: 'transparent',
-                   display: 'flex',
-                   alignItems: 'center',
-                   justifyContent: 'center',
-                   color: 'white'
-               }}
-           >
-               No data available
+           <div>
+               {onTimeRangeChange && <TimeRangeButtons />}
+               <div style={chartStyle}>No data available for {ticker}</div>
            </div>
        );
    }
 
    return (
-       <div 
-           ref={chartContainerRef}
-           style={{ 
-               width: '100%', 
-               height: '300px',
-               background: 'transparent',
-           }}
-       />
+       <div>
+           {onTimeRangeChange && <TimeRangeButtons />}
+           <div ref={chartContainerRef} style={{ width: '100%', height: '400px', background: 'transparent' }} />
+       </div>
    );
 }
