@@ -6,10 +6,9 @@ export type TimeRange = '1D' | '1M' | '1Y' | 'ALL';
 type StockChartProps = {
    ticker: string;
    period: TimeRange;
-   onTimeRangeChange?: (range: TimeRange) => void;
 };
 
-export function StockChart({ ticker, period, onTimeRangeChange }: StockChartProps) {
+export function StockChart({ ticker, period }: StockChartProps) {
    const chartContainerRef = useRef<HTMLDivElement>(null);
    const [chartData, setChartData] = useState<any[]>([]);
    const [isLoading, setIsLoading] = useState(true);
@@ -29,21 +28,21 @@ export function StockChart({ ticker, period, onTimeRangeChange }: StockChartProp
                 throw new Error(data.error || 'Failed to fetch data');
             }
             
-            console.log('Raw API response:', data); // Debug line
+            console.log('Raw API response:', data);
             
-           const dataArray = data.values || data; // Check for .values first, fallback to data
+           const dataArray = data.values || data;
 
-if (dataArray && dataArray.length > 0) {
-    const formattedData = dataArray.map((item: any) => ({
-        time: item.time,
-        value: item.value
-    }));
-    console.log('Formatted chart data:', formattedData.slice(0, 3));
-    setChartData(formattedData);
-} else {
-    console.log('No data array found');
-    setChartData([]);
-}
+            if (dataArray && dataArray.length > 0) {
+                const formattedData = dataArray.map((item: any) => ({
+                    time: item.time,
+                    value: item.value
+                }));
+                console.log('Formatted chart data:', formattedData.slice(0, 3));
+                setChartData(formattedData);
+            } else {
+                console.log('No data array found');
+                setChartData([]);
+            }
         } catch (error) {
             console.error('Error fetching stock data:', error);
             setError(error instanceof Error ? error.message : 'Failed to fetch data');
@@ -57,87 +56,89 @@ if (dataArray && dataArray.length > 0) {
     }
 }, [ticker, period]);
 
-   useEffect(() => {
-       if (!chartContainerRef.current || chartData.length === 0) return;
+useEffect(() => {
+    if (!chartContainerRef.current || chartData.length === 0) return;
 
-       const chart = createChart(chartContainerRef.current, {
-           layout: {
-               background: { type: ColorType.Solid, color: 'transparent' },
-               textColor: 'white',
-           },
-           grid: {
-               vertLines: { visible: false },
-               horzLines: { visible: false },
-           },
-           width: chartContainerRef.current.clientWidth,
-           height: 400,
-           rightPriceScale: { borderVisible: false },
-           timeScale: { borderVisible: false },
-       });
+    const chart = createChart(chartContainerRef.current, {
+        layout: {
+            background: { type: ColorType.Solid, color: 'transparent' },
+            textColor: 'white',
+        },
+        grid: {
+            vertLines: { visible: false },
+            horzLines: { visible: false },
+        },
+        width: chartContainerRef.current.clientWidth,
+        height: 625, 
+        rightPriceScale: { 
+            borderVisible: false,
+            textColor: 'white',
+        },
+        timeScale: { 
+            borderVisible: false,
+            timeVisible: true,
+            secondsVisible: false,
+            
+            tickMarkFormatter: (time) => {
+                const date = new Date(time * 1000);
+                // For 1 month view, show month/day format consistently
+                if (period === '1M') {
+                    return date.toLocaleDateString('en-US', { 
+                        month: 'short', 
+                        day: 'numeric' 
+                    });
+                }
+                // For 1 day view
+                if (period === '1D') {
+                    return date.toLocaleTimeString('en-US', { 
+                        hour: 'numeric', 
+                        minute: '2-digit',
+                        hour12: true 
+                    });
+                }
+                // For 1 year view
+                if (period === '1Y') {
+                    return date.toLocaleDateString('en-US', { 
+                        month: 'short',
+                        year: '2-digit'
+                    });
+                }
+                // Default for ALL time
+                return date.toLocaleDateString('en-US', { 
+                    year: 'numeric',
+                    month: 'short'
+                });
+            }
+        },
+    });
 
-       const series = chart.addSeries(AreaSeries, {
-           lineColor: '#2962FF',
-           topColor: '#2962FF',
-           bottomColor: 'rgba(197, 101, 221, 0.28)',
-           lineWidth: 2,
-       });
+    const series = chart.addSeries(AreaSeries, {
+        lineColor: '#2962FF',
+        topColor: '#2962FF',
+        bottomColor: 'rgba(197, 101, 221, 0.28)',
+        lineWidth: 2,
+    });
 
-       series.setData(chartData);
-       chart.timeScale().fitContent();
+    series.setData(chartData);
+    chart.timeScale().fitContent();
 
-       const handleResize = () => {
-           if (chartContainerRef.current) {
-               chart.applyOptions({ width: chartContainerRef.current.clientWidth });
-           }
-       };
+    const handleResize = () => {
+        if (chartContainerRef.current) {
+            chart.applyOptions({ width: chartContainerRef.current.clientWidth });
+        }
+    };
 
-       window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResize);
 
-       return () => {
-           window.removeEventListener('resize', handleResize);
-           chart.remove();
-       };
-   }, [chartData]);
-
-   const TimeRangeButtons = () => {
-       const ranges: { value: TimeRange; label: string }[] = [
-           { value: '1D', label: '1D' },
-           { value: '1M', label: '1M' },
-           { value: '1Y', label: '1Y' },
-           { value: 'ALL', label: 'ALL' }
-       ];
-
-       return (
-           <div style={{ 
-               display: 'flex', 
-               gap: '8px', 
-               marginBottom: '16px',
-               justifyContent: 'center'
-           }}>
-               {ranges.map((range) => (
-                   <button
-                       key={range.value}
-                       onClick={() => onTimeRangeChange?.(range.value)}
-                       style={{
-                           padding: '8px 16px',
-                           border: '1px solid #444',
-                           borderRadius: '4px',
-                           background: period === range.value ? '#2962FF' : 'transparent',
-                           color: 'white',
-                           cursor: 'pointer',
-                           fontSize: '14px',
-                       }}
-                   >
-                       {range.label}
-                   </button>
-               ))}
-           </div>
-       );
-   };
+    return () => {
+        window.removeEventListener('resize', handleResize);
+        chart.remove();
+    };
+}, [chartData, period]);
 
    const chartStyle = { 
        width: '100%', 
-       height: '400px',
+       height: '600px', 
        background: 'transparent',
        display: 'flex',
        alignItems: 'center',
@@ -147,38 +148,28 @@ if (dataArray && dataArray.length > 0) {
 
    if (isLoading) {
        return (
-           <div>
-               {onTimeRangeChange && <TimeRangeButtons />}
-               <div style={chartStyle}>Loading {ticker} chart...</div>
-           </div>
+           <div style={chartStyle}>Loading {ticker} chart...</div>
        );
    }
 
    if (error) {
        return (
-           <div>
-               {onTimeRangeChange && <TimeRangeButtons />}
-               <div style={{...chartStyle, color: '#ff6b6b', flexDirection: 'column' as const}}>
-                   <div>Error loading chart</div>
-                   <div style={{ fontSize: '12px', opacity: 0.7 }}>{error}</div>
-               </div>
+           <div style={{...chartStyle, color: '#ff6b6b', flexDirection: 'column' as const}}>
+               <div>Error loading chart</div>
+               <div style={{ fontSize: '12px', opacity: 0.7 }}>{error}</div>
            </div>
        );
    }
 
    if (chartData.length === 0) {
        return (
-           <div>
-               {onTimeRangeChange && <TimeRangeButtons />}
-               <div style={chartStyle}>No data available for {ticker}</div>
-           </div>
+           <div style={chartStyle}>No data available for {ticker}</div>
        );
    }
 
    return (
        <div>
-           {onTimeRangeChange && <TimeRangeButtons />}
-           <div ref={chartContainerRef} style={{ width: '100%', height: '400px', background: 'transparent' }} />
+           <div ref={chartContainerRef} style={{ width: '100%', height: '625px', background: 'transparent' }} />
        </div>
    );
 }

@@ -109,11 +109,11 @@ export default function Ticker() {
           <button
             key={period}
             onClick={() => setSelectedPeriod(period)}
-            className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-              selectedPeriod === period
-                ? 'bg-blue-600 text-white'
-                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-            }`}
+            className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+  selectedPeriod === period
+    ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/25'
+    : 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white border border-gray-600'
+}`}
           >
             {period === '1D' ? '1 Day' : 
              period === '1M' ? '1 Month' : 
