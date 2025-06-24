@@ -79,7 +79,7 @@ useEffect(() => {
             timeVisible: true,
             secondsVisible: false,
             
-            tickMarkFormatter: (time) => {
+            tickMarkFormatter: (time:any) => {
                 const date = new Date(time * 1000);
                 // For 1 month view, show month/day format consistently
                 if (period === '1M') {

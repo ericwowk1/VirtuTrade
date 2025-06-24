@@ -13,6 +13,7 @@ interface Position {
 interface StockData {
   c: number; // current price
   pc: number; // previous close
+  dp: number; // daily percent change
 }
 
 interface StockInfo {
@@ -34,7 +35,7 @@ interface StockPositionsTableProps {
 
 const prisma = new PrismaClient();
 
-async function getPositionsData(userId: string): Promise<Position[]> {
+export async function getPositionsData(userId: string): Promise<Position[]> {
   try {
     const positions = await prisma.stock.findMany({
       where: { 
@@ -131,20 +132,19 @@ export async function StockPositionsTable({ userId }: StockPositionsTableProps) 
       };
     }
 
-    const currentPrice: number = stockData.c;
-    const shares: number = Number(position.quantity) || 0;
-    const avgPrice: number = Number(position.averagePrice) || 0;
-    
+    const currentPrice: number = Math.round(stockData.c * 100) / 100; 
+  const shares: number = Number(position.quantity) || 0;
+  const avgPrice: number = Math.round(position.averagePrice * 100) / 100; 
     const totalValue: number = shares * currentPrice;
     const totalCost: number = shares * avgPrice;
     
     const allTimeGainLoss: number = totalValue - totalCost;
     const allTimeGainLossPercent: number = totalCost > 0 ? (allTimeGainLoss / totalCost) * 100 : 0;
     
-    // For today's change - using previous close (pc) from Finnhub
+    // For today's change - using pre-calculated daily percent change
     const previousClose: number = stockData.pc || currentPrice;
     const todayGainLoss: number = shares * (currentPrice - previousClose);
-    const todayGainLossPercent: number = previousClose > 0 ? ((currentPrice - previousClose) / previousClose) * 100 : 0;
+    const todayGainLossPercent: number = stockData.dp || 0;
 
     return {
       currentPrice,
@@ -182,10 +182,10 @@ return (
             <th className="text-left py-4 px-3">Price</th>
             <th className="text-left py-4 px-3">Avg. PPS</th>
             <th className="text-left py-4 px-3">Value</th>
-            <th className="text-left py-4 px-3">$ All-Time</th>
-            <th className="text-left py-4 px-3">% All-Time</th>
             <th className="text-left py-4 px-3">$ Today</th>
             <th className="text-left py-4 px-3">% Today</th>
+            <th className="text-left py-4 px-3">$ All-Time</th>
+            <th className="text-left py-4 px-3">% All-Time</th>
           </tr>
         </thead>
         <tbody className="text-white">
@@ -212,17 +212,17 @@ return (
                 <td className="py-4 px-3">
                   {stockData ? formatCurrency(metrics.totalValue) : 'Loading...'}
                 </td>
-                <td className={`py-4 px-3 ${metrics.allTimeGainLoss >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                  {stockData ? `${metrics.allTimeGainLoss >= 0 ? '+' : '-'}${formatCurrency(metrics.allTimeGainLoss)}` : 'Loading...'}
-                </td>
-                <td className={`py-4 px-3 ${metrics.allTimeGainLossPercent >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                  {stockData ? formatPercent(metrics.allTimeGainLossPercent) : 'Loading...'}
-                </td>
                 <td className={`py-4 px-3 ${metrics.todayGainLoss >= 0 ? 'text-green-400' : 'text-red-400'}`}>
                   {stockData ? `${metrics.todayGainLoss >= 0 ? '+' : '-'}${formatCurrency(metrics.todayGainLoss)}` : 'Loading...'}
                 </td>
                 <td className={`py-4 px-3 ${metrics.todayGainLossPercent >= 0 ? 'text-green-400' : 'text-red-400'}`}>
                   {stockData ? formatPercent(metrics.todayGainLossPercent) : 'Loading...'}
+                </td>
+                <td className={`py-4 px-3 ${metrics.allTimeGainLoss >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                  {stockData ? `${metrics.allTimeGainLoss >= 0 ? '+' : '-'}${formatCurrency(metrics.allTimeGainLoss)}` : 'Loading...'}
+                </td>
+                <td className={`py-4 px-3 ${metrics.allTimeGainLossPercent >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                  {stockData ? formatPercent(metrics.allTimeGainLossPercent) : 'Loading...'}
                 </td>
               </tr>
             );

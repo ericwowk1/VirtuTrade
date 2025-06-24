@@ -3,8 +3,15 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/services/auth";
 import { PrismaClient } from "@/generated/prisma";
+import { getStockData } from '@/services/getStockData'; // ✅ Import the same function
 
 const prisma = new PrismaClient();
+
+interface StockData {
+  c: number; // current price
+  pc: number; // previous close
+  dp: number; // daily percent change
+}
 
 export async function GET(request: NextRequest) {
   try {
@@ -36,18 +43,35 @@ export async function GET(request: NextRequest) {
       }
     });
 
-    const positions = stocks.map(stock => {
-      const currentPrice = stock.averagePrice;
-      const currentValue = stock.quantity * currentPrice;
-      
-      return {
-        symbol: stock.symbol,
-        quantity: stock.quantity,
-        averagePrice: stock.averagePrice,
-        currentPrice,
-        currentValue
-      };
-    });
+   
+    const positions = await Promise.all(
+      stocks.map(async (stock) => {
+        try {
+          // Fetch live stock price
+          const stockData = await getStockData(stock.symbol) as StockData;
+          const currentPrice = stockData.c; // Live current price
+          const currentValue = stock.quantity * currentPrice;
+          
+          return {
+            symbol: stock.symbol,
+            quantity: stock.quantity,
+            averagePrice: stock.averagePrice,
+            currentPrice,
+            currentValue
+          };
+        } catch (error) {
+          console.error(`Error fetching ${stock.symbol}:`, error);
+        
+          return {
+            symbol: stock.symbol,
+            quantity: stock.quantity,
+            averagePrice: stock.averagePrice,
+            currentPrice: stock.averagePrice,
+            currentValue: stock.averagePrice * stock.quantity
+          };
+        }
+      })
+    );
 
     // Add cash as a position
     const cashAmount = user?.money || 0;
@@ -67,7 +91,7 @@ export async function GET(request: NextRequest) {
     // Add percentage to each position
     const positionsWithPercentage = positions.map(position => ({
       ...position,
-      percentage: (position.currentValue / totalValue) * 100
+      percentage: totalValue > 0 ? (position.currentValue / totalValue) * 100 : 0
     }));
 
     return NextResponse.json({ 

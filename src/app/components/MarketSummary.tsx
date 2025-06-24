@@ -1,16 +1,31 @@
 import React from 'react';
 import { getStockData } from '@/services/getStockData';
 
+interface StockData {
+  c: number;  // current price
+  pc: number; // previous close
+  dp: number; // daily percent change
+}
+
+interface MarketDataItem {
+  price: number | null;
+  percent: string | null;
+}
+
+interface MarketData {
+  [key: string]: MarketDataItem;
+}
+
 export async function MarketSummary() {
   // Fetch data on the server
-  const fetchMarketData = async () => {
+  const fetchMarketData = async (): Promise<MarketData> => {
     const tickers = ['SPY', 'NDAQ', 'DIA'];
-    const results = {};
+    const results: MarketData = {};
     
     for (const ticker of tickers) {
       try {
-        const data = await getStockData(ticker);
-        const percent = ((data.c - data.pc) / data.pc * 100).toFixed(2);
+        const data = await getStockData(ticker) as StockData;
+        const percent = data.dp.toFixed(2); // Use pre-calculated percent change
         results[ticker] = {
           price: data.c,
           percent: percent
@@ -25,52 +40,64 @@ export async function MarketSummary() {
 
   const marketData = await fetchMarketData();
 
-  const formatPrice = (price) => price ? price.toFixed(2) : '--';
-  const formatPercent = (percent) => {
+  const formatPrice = (price: number | null): string => price ? `$${price.toFixed(2)}` : '--';
+  
+  const formatPercent = (percent: string | null): string => {
     if (!percent) return '--%';
     const sign = parseFloat(percent) >= 0 ? '+' : '';
     return `${sign}${percent}%`;
   };
-  const getPercentColor = (percent) => {
-    if (!percent) return 'text-white/60';
+  
+  const getPercentColor = (percent: string | null): string => {
+    if (!percent) return 'text-gray-400';
     return parseFloat(percent) >= 0 ? 'text-green-400' : 'text-red-400';
   };
 
   return (
-    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
-      <h3 className="text-xl font-semibold text-white mb-4 flex items-center">
-        📈 Market Summary
-      </h3>
+    <div className="bg-gray-900 rounded-lg p-6">
+      <h2 className="text-2xl font-bold text-white mb-6">Market Summary</h2>
+      
       <div className="space-y-3">
-        <div className="flex justify-between items-center p-3 bg-white/5 rounded border border-white/10">
-          <span className="font-medium text-white">S&P 500 (SPY)</span>
+        <div className="flex items-center justify-between bg-gray-800 rounded-lg p-3 hover:bg-gray-750 transition-colors">
+          <div>
+            <div className="font-medium text-white">S&P 500</div>
+            <div className="text-sm text-gray-400">SPY</div>
+          </div>
           <div className="text-right">
-            <div className="font-semibold text-white">
-              ${formatPrice(marketData.SPY?.price)}
+            <div className="font-medium text-white">
+              {formatPrice(marketData.SPY?.price)}
             </div>
-            <div className={`text-sm ${getPercentColor(marketData.SPY?.percent)}`}>
+            <div className={`text-sm font-medium ${getPercentColor(marketData.SPY?.percent)}`}>
               {formatPercent(marketData.SPY?.percent)}
             </div>
           </div>
         </div>
-        <div className="flex justify-between items-center p-3 bg-white/5 rounded border border-white/10">
-          <span className="font-medium text-white">NASDAQ Inc</span>
+
+        <div className="flex items-center justify-between bg-gray-800 rounded-lg p-3 hover:bg-gray-750 transition-colors">
+          <div>
+            <div className="font-medium text-white">NASDAQ</div>
+            <div className="text-sm text-gray-400">NDAQ</div>
+          </div>
           <div className="text-right">
-            <div className="font-semibold text-white">
-              ${formatPrice(marketData.NDAQ?.price)}
+            <div className="font-medium text-white">
+              {formatPrice(marketData.NDAQ?.price)}
             </div>
-            <div className={`text-sm ${getPercentColor(marketData.NDAQ?.percent)}`}>
+            <div className={`text-sm font-medium ${getPercentColor(marketData.NDAQ?.percent)}`}>
               {formatPercent(marketData.NDAQ?.percent)}
             </div>
           </div>
         </div>
-        <div className="flex justify-between items-center p-3 bg-white/5 rounded border border-white/10">
-          <span className="font-medium text-white">Dow Jones (DIA)</span>
+
+        <div className="flex items-center justify-between bg-gray-800 rounded-lg p-3 hover:bg-gray-750 transition-colors">
+          <div>
+            <div className="font-medium text-white">Dow Jones</div>
+            <div className="text-sm text-gray-400">DIA</div>
+          </div>
           <div className="text-right">
-            <div className="font-semibold text-white">
-              ${formatPrice(marketData.DIA?.price)}
+            <div className="font-medium text-white">
+              {formatPrice(marketData.DIA?.price)}
             </div>
-            <div className={`text-sm ${getPercentColor(marketData.DIA?.percent)}`}>
+            <div className={`text-sm font-medium ${getPercentColor(marketData.DIA?.percent)}`}>
               {formatPercent(marketData.DIA?.percent)}
             </div>
           </div>

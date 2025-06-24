@@ -1,33 +1,58 @@
 import React from 'react';
 import { MarketSummary } from './MarketSummary';
 import { Leaderboard } from './Leaderboard';
-import { Brain, TrendingDown } from 'lucide-react';
+import { PositionOverview } from './PositionOverview';
+import { Brain, TrendingUp, TrendingDown, DollarSign, PieChart } from 'lucide-react';
+import { TopStockMovers } from './TopStockMovers';
 
 export function HomePage() {
+  const formatCurrency = (amount: number) => `$${Math.abs(amount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
   return (
     <div className="min-h-screen bg-slate-900 p-6">
       
-      {/* Clean Portfolio Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg text-white shadow-lg mb-8 px-12 py-10">
-        <h2 className="text-2xl font-medium mb-2">Mike's Portfolio</h2>
-        <h1 className="text-5xl font-bold mb-4">$127,845.32</h1>
-        <div className="flex items-center space-x-2 text-lg">
-          <TrendingDown size={20} className="text-red-300" />
-          <span className="text-red-300 font-semibold">-2.11%</span>
-          <span className="text-blue-200">All-Time</span>
-        </div>
+    {/* Portfolio Overview Header */}
+<div className="bg-gray-900 rounded-lg  mb-8">
+  <div className="mb-6">
+    <h1 className="text-3xl font-bold text-white mb-4">User's Dashboard</h1>
+    <div className="flex items-baseline space-x-6">
+      <div className="text-3xl font-bold text-white">$127,845.32</div>
+      <div className="flex items-center space-x-2">
+        <TrendingDown size={16} className="text-red-400" />
+        <span className="font-semibold text-red-400">
+          -$2,715.43 (-2.11%)
+        </span>
+        <span className="text-gray-400">Today</span>
       </div>
-
-      {/* Simple 2-Column Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl">
+    </div>
+  </div>
+</div>
+      {/* Main Content Grid */}
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
         
-        {/* Left Column */}
-        <div className="space-y-8">
-          
+        {/* Left Column - Market Data */}
+        <div className="">
           <MarketSummary />
 
-          {/* Simple AI Assistant */}
-          <div className="bg-slate-800 rounded-lg p-6">
+            {/* Middle Column - Market Movers */}
+        <div className="space-y-8">
+          <TopStockMovers />
+          
+         
+        </div>
+          
+          
+        </div>
+
+        {/*Portfolio summary */}
+        <PositionOverview />
+
+        {/* Right Column - Leaderboard & News */}
+        <div className="space-y-8">
+          <Leaderboard />
+
+          {/* AI Assistant */}
+          <div className="bg-gray-900 rounded-lg ">
             <div className="flex items-center space-x-3 mb-6">
               <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
                 <Brain className="text-white" size={20} />
@@ -35,43 +60,17 @@ export function HomePage() {
               <h3 className="text-xl font-semibold text-white">FinanceAI</h3>
             </div>
             
-            <div className="bg-slate-700 rounded-lg p-4 mb-4">
-              <p className="text-slate-200">
-                Based on your portfolio, consider diversifying into tech stocks. 
-                NVDA and TSLA show strong growth potential.
+            <div className="bg-gray-800 rounded-lg p-4 mb-4">
+              <p className="text-gray-200">
+                Your portfolio analysis will appear here once connected.
               </p>
             </div>
 
             <input
               type="text"
-              placeholder="Ask me anything about your portfolio..."
-              className="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:border-blue-500"
+              placeholder="Ask me about your portfolio..."
+              className="w-full bg-gray-800 border border-gray-600 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 transition-colors"
             />
-          </div>
-
-        </div>
-
-        {/* Right Column */}
-        <div className="space-y-8">
-          
-          <Leaderboard />
-
-          {/* Clean News Section */}
-          <div className="bg-slate-800 rounded-lg p-6">
-            <h3 className="text-xl font-semibold text-white mb-6">Market News</h3>
-            
-            <div className="space-y-4">
-              {[
-                "Fed signals potential rate cuts amid inflation concerns",
-                "Tech stocks rally on strong earnings reports", 
-                "Oil prices surge following OPEC+ production cuts"
-              ].map((headline, index) => (
-                <div key={index} className="py-3 border-b border-slate-700 last:border-b-0">
-                  <h4 className="text-slate-200 font-medium mb-1">{headline}</h4>
-                  <p className="text-slate-400 text-sm">{2 + index * 13} minutes ago</p>
-                </div>
-              ))}
-            </div>
           </div>
 
         </div>
