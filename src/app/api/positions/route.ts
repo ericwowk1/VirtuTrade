@@ -4,7 +4,8 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/services/auth";
 import { PrismaClient } from "@/generated/prisma";
 import { getStockHistory } from "@/services/getStockHistory";
-import { getStockData, getStockInfo } from "@/services/getStockData";
+import { getStockData } from "@/services/getStockData";
+import { getStockInfo } from "@/services/getStockInfo";
 import { getCachedLogo, cacheLogo } from "@/services/logoCache";
 
 const prisma = new PrismaClient();

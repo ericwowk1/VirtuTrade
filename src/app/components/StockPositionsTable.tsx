@@ -1,6 +1,7 @@
 import React from 'react';
 import { PrismaClient } from "@/generated/prisma";
-import { getStockData, getStockInfo } from "@/services/getStockData";
+import { getStockData } from "@/services/getStockData";
+import { getStockInfo } from "@/services/getStockInfo";
 
 // Type definitions
 interface Position {

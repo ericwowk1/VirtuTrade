@@ -4,20 +4,14 @@ import { useState, useEffect } from "react";
 import { TradingWidget } from "@/app/components/TradingWidget"
 import { StockChart } from "@/app/components/StockChart"
 
-interface StockQuote {
+interface StockData {
+  ticker: string;
   c: number; // current price
+  pc: number; // previous close
   d: number; // change
   dp: number; // percent change
-}
-
-interface StockInfo {
-  logo: string;
-}
-
-interface CombinedStockData {
-  ticker: string;
-  data: StockQuote;
-  info: StockInfo;
+  logo: string | null;
+  name: string | null;
 }
 
 type TimePeriod = '1D' | '1M' | '1Y' | 'ALL';
@@ -27,7 +21,7 @@ export default function Ticker() {
   const searchParams = useSearchParams();
   const ticker = pathname.split("/")[2];
   const name = searchParams.get('name');
-  const [stockData, setStockData] = useState<CombinedStockData | null>(null);
+  const [stockData, setStockData] = useState<StockData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedPeriod, setSelectedPeriod] = useState<TimePeriod>('1D');
@@ -67,12 +61,7 @@ export default function Ticker() {
     </div>
   );
 
-  // Destructure the combined data
-  const { data: quoteData, info: companyInfo } = stockData;
-
   console.log("This is stockData object", stockData)
-  console.log("This is quoteData object", quoteData)
-  console.log("This is companyInfo object", companyInfo)
 
   const timePeriods: TimePeriod[] = ['1D', '1M', '1Y', 'ALL'];
    
@@ -82,17 +71,17 @@ export default function Ticker() {
     <div className="flex flex-col w-2/3 pl-32 py-12">
       {/* Top row - Logo and basic info */}
       <div className="flex flex-row items-start mb-8">
-        {companyInfo?.logo && (
-          <img src={companyInfo.logo} alt={`${ticker} logo`} className="w-32 h-32 mr-8" />
+        {stockData.logo && (
+          <img src={stockData.logo} alt={`${ticker} logo`} className="w-32 h-32 mr-8" />
         )}
         
         <div className="flex flex-col">
-          <h1 className="text-4xl font-bold mb-2">{name} ({ticker})</h1>
+          <h1 className="text-4xl font-bold mb-2">{stockData.name || name} ({ticker})</h1>
           <div className="flex flex-row items-center">
-            <h1 className="text-5xl font-semibold">${quoteData.c.toFixed(2)}</h1>
-            {quoteData.d < 0 ? 
-              <h1 className="text-red-500 text-2xl pl-6">$-{Math.abs(quoteData.d).toFixed(2)} ({quoteData.dp.toFixed(2)}%)</h1> : 
-              <h1 className="text-green-500 text-2xl pl-6">$+{quoteData.d.toFixed(2)} ({quoteData.dp.toFixed(2)}%)</h1>
+            <h1 className="text-5xl font-semibold">${stockData.c.toFixed(2)}</h1>
+            {stockData.d < 0 ? 
+              <h1 className="text-red-500 text-2xl pl-6">$-{Math.abs(stockData.d).toFixed(2)} ({stockData.dp.toFixed(2)}%)</h1> : 
+              <h1 className="text-green-500 text-2xl pl-6">$+{stockData.d.toFixed(2)} ({stockData.dp.toFixed(2)}%)</h1>
             }
           </div>
         </div>
@@ -126,7 +115,7 @@ export default function Ticker() {
 
     {/* Second column - Trading Widget */}
     <div className="flex flex-col w-1/3 ml-12 py-12">
-      <TradingWidget ticker={ticker} currentPrice={quoteData.c} />
+      <TradingWidget ticker={ticker} currentPrice={stockData.c} />
     </div>
   </div>
 );
