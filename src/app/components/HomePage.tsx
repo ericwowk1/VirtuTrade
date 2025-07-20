@@ -14,7 +14,7 @@ export function HomePage() {
     {/* Portfolio Overview Header */}
 <div className="bg-gray-900 rounded-lg  mb-8">
   <div className="mb-6">
-    <h1 className="text-3xl font-bold text-white mb-4">User's Dashboard</h1>
+    <h1 className="text-3xl font-bold text-white mb-4">Users Dashboard</h1>
     <div className="flex items-baseline space-x-6">
       <div className="text-3xl font-bold text-white">$127,845.32</div>
       <div className="flex items-center space-x-2">
