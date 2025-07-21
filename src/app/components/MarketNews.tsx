@@ -68,6 +68,9 @@ export function MarketNews() {
     return null;
   };
 
+  // Calculate if we need scrolling (more than 3 articles)
+  const needsScrolling = news.length > 3;
+
   return (
     <div className="bg-[#1E293B] rounded-lg">
       {/* Header */}
@@ -80,8 +83,8 @@ export function MarketNews() {
         </h2>
       </div>
 
-      {/* News List - Scrollable */}
-      <div className="overflow-y-20 custom-scrollbar">
+      {/* News List - Conditionally Scrollable */}
+      <div className={needsScrolling ? "overflow-y-auto custom-scrollbar h-100" : "overflow-y-visible"}>
         <div className="p-4 space-y-4">
           {news.map((article) => (
             <article 
