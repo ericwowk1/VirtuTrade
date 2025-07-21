@@ -12,9 +12,15 @@ export function NavMenu() {
       <div className="flex items-center h-[60px] bg-[#101828] shadow-lg">
         
         {/* Logo - At the very start */}
-        <div className="pl-4">
-          <img src="/logo.png" alt="Logo" className="max-w-70" />
-        </div>
+        
+
+        <div className="h-65 w-65 ">
+  <img 
+    src="/logo.png" 
+    alt="An example image"
+    className="h-full w-full" 
+  />
+</div>
 
         {/* Main content area with original padding */}
         <div className="flex items-center justify-between flex-1 px-[90px]">
