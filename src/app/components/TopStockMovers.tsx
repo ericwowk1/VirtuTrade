@@ -1,3 +1,8 @@
+"use client";
+
+import { useState, useEffect } from 'react';
+import { TrendingUp, TrendingDown } from 'lucide-react';
+
 interface Mover {
   symbol: string;
   percent_change: number;
@@ -11,100 +16,127 @@ interface MoversResponse {
   market_type: string;
   last_updated: string;
 }
-const apiKey = process.env.ALPACA_API_KEY;
-  const apiSecret = process.env.ALPACA_API_SECRET;
 
-export async function TopStockMovers() {
-  const options = {
-    method: 'GET',
-    headers: {
-      accept: 'application/json',
-      'APCA-API-KEY-ID': apiKey!,
-      'APCA-API-SECRET-KEY': apiSecret!
-    }
-  };
+export function TopStockMovers() {
+  const [activeTab, setActiveTab] = useState<'gainers' | 'losers'>('gainers');
+  const [movers, setMovers] = useState<MoversResponse | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const response = await fetch('https://data.alpaca.markets/v1beta1/screener/stocks/movers?top=15', options);
-  
-  if (!response.ok) {
-    return <div className="text-red-400">Failed to load market movers</div>;
-  }
+  useEffect(() => {
+    const fetchMovers = async () => {
+      try {
+        const response = await fetch('/api/stock-movers');
+        if (!response.ok) {
+          throw new Error('Failed to fetch movers');
+        }
+        const data = await response.json();
+        setMovers(data);
+      } catch (err) {
+        console.error('Error fetching movers:', err);
+        setError(err instanceof Error ? err.message : 'Failed to load data');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const movers: MoversResponse = await response.json();
-  const topGainers = movers.gainers.slice(0, 5);
-  const topLosers = movers.losers.slice(0, 5);
+    fetchMovers();
+  }, []);
 
   const formatPrice = (price: number) => `$${price.toFixed(2)}`;
   const formatPercent = (percent: number) => `${percent.toFixed(2)}%`;
   const formatChange = (change: number) => `$${Math.abs(change).toFixed(2)}`;
 
+  if (loading) {
+    return (
+      <div className="bg-slate-800 rounded-xl p-6 border border-slate-700">
+        <div className="animate-pulse">
+          <div className="flex items-center justify-between mb-4">
+            <div className="h-6 bg-slate-700 rounded w-48"></div>
+            <div className="h-4 bg-slate-700 rounded w-32"></div>
+          </div>
+          <div className="h-10 bg-slate-700 rounded mb-4"></div>
+          <div className="space-y-3">
+            {[1,2,3,4].map(i => (
+              <div key={i} className="h-12 bg-slate-700 rounded"></div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !movers) {
+    return (
+      <div className="bg-slate-800 rounded-xl p-6 border border-slate-700">
+        <div className="text-red-400">Failed to load market movers</div>
+      </div>
+    );
+  }
+
+  const topGainers = movers.gainers.slice(0, 4);
+  const topLosers = movers.losers.slice(0, 4);
+  const currentData = activeTab === 'gainers' ? topGainers : topLosers;
+
   return (
-    <div className="bg-gray-900 rounded-lg p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-white">Top Market Movers</h2>
-        <div className="text-sm text-gray-400">
-          Last updated: {new Date(movers.last_updated).toLocaleTimeString()}
+    <div className="bg-[#1E293B] rounded-xl p-6 border border-slate-700">
+      <div className="flex items-center justify-between mb-4">
+        <div className="border-b-2 border-white w-full">
+        <h3 className="text-xl text-white mb-4">Top Market Movers</h3>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Top Gainers */}
-        <div>
-          <h3 className="text-lg font-semibold text-green-400 mb-4 flex items-center">
-            <span className="w-2 h-2 bg-green-400 rounded-full mr-2"></span>
-            Top Gainers
-          </h3>
-          <div className="space-y-3">
-            {topGainers.map((stock, index) => (
-              <div key={stock.symbol} className="flex items-center justify-between bg-gray-800 rounded-lg p-3 hover:bg-gray-750 transition-colors">
-                <div className="flex items-center">
-                  <div className="text-xs text-gray-400 w-6 mr-3">#{index + 1}</div>
-                  <div>
-                    <div className="font-medium text-white">{stock.symbol}</div>
-                    <div className="text-sm text-gray-400">{formatPrice(stock.price)}</div>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div className="text-green-400 font-medium">
-                    +{formatPercent(stock.percent_change)}
-                  </div>
-                  <div className="text-sm text-green-400">
-                    +{formatChange(stock.change)}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+      {/* Tab Navigation */}
+      <div className="flex space-x-1 mb-4 bg-slate-900 rounded-lg p-1">
+        <button
+          onClick={() => setActiveTab('gainers')}
+          className={`flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 flex-1 justify-center ${
+            activeTab === 'gainers'
+              ? 'bg-emerald-600 text-white'
+              : 'text-slate-300 hover:text-white'
+          }`}
+        >
+          <TrendingUp className="w-4 h-4" />
+          <span>Top Gainers</span>
+        </button>
+        <button
+          onClick={() => setActiveTab('losers')}
+          className={`flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 flex-1 justify-center ${
+            activeTab === 'losers'
+              ? 'bg-red-600 text-white'
+              : 'text-slate-300 hover:text-white'
+          }`}
+        >
+          <TrendingDown className="w-4 h-4" />
+          <span>Top Losers</span>
+        </button>
+      </div>
 
-        {/* Top Losers */}
-        <div>
-          <h3 className="text-lg font-semibold text-red-400 mb-4 flex items-center">
-            <span className="w-2 h-2 bg-red-400 rounded-full mr-2"></span>
-            Top Losers
-          </h3>
-          <div className="space-y-3">
-            {topLosers.map((stock, index) => (
-              <div key={stock.symbol} className="flex items-center justify-between bg-gray-800 rounded-lg p-3 hover:bg-gray-750 transition-colors">
-                <div className="flex items-center">
-                  <div className="text-xs text-gray-400 w-6 mr-3">#{index + 1}</div>
-                  <div>
-                    <div className="font-medium text-white">{stock.symbol}</div>
-                    <div className="text-sm text-gray-400">{formatPrice(stock.price)}</div>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div className="text-red-400 font-medium">
-                    {formatPercent(stock.percent_change)}
-                  </div>
-                  <div className="text-sm text-red-400">
-                    -{formatChange(stock.change)}
-                  </div>
-                </div>
+      {/* Content */}
+      <div className="space-y-3">
+        {currentData.map((stock, index) => (
+          <div key={stock.symbol} className="flex items-center justify-between py-2 hover:bg-slate-700/30 rounded-lg px-2 transition-colors duration-200">
+            <div className="flex items-center space-x-3">
+              <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
+                activeTab === 'gainers' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'
+              }`}>
+                #{index + 1}
               </div>
-            ))}
+              <div>
+                <div className="text-white font-medium">{stock.symbol}</div>
+                <div className="text-slate-400 text-sm">{formatPrice(stock.price)}</div>
+              </div>
+            </div>
+            <div className="text-right">
+              <div className={`font-medium ${activeTab === 'gainers' ? 'text-emerald-400' : 'text-red-400'}`}>
+                {activeTab === 'gainers' ? '+' : ''}{formatPercent(stock.percent_change)}
+              </div>
+              <div className={`text-sm ${activeTab === 'gainers' ? 'text-emerald-400' : 'text-red-400'}`}>
+                {activeTab === 'gainers' ? '+' : '-'}{formatChange(stock.change)}
+              </div>
+            </div>
           </div>
-        </div>
+        ))}
       </div>
     </div>
   );

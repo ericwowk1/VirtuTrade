@@ -69,7 +69,7 @@ useEffect(() => {
             horzLines: { visible: false },
         },
         width: chartContainerRef.current.clientWidth,
-        height: 625, 
+        height: 470, 
         rightPriceScale: { 
             borderVisible: false,
             textColor: 'white',
@@ -138,7 +138,7 @@ useEffect(() => {
 
    const chartStyle = { 
        width: '100%', 
-       height: '600px', 
+       height: '470px', 
        background: 'transparent',
        display: 'flex',
        alignItems: 'center',
@@ -169,7 +169,7 @@ useEffect(() => {
 
    return (
        <div>
-           <div ref={chartContainerRef} style={{ width: '100%', height: '625px', background: 'transparent' }} />
+           <div ref={chartContainerRef} style={{ width: '100%', height: '470px', background: 'transparent' }} />
        </div>
    );
 }

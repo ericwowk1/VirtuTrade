@@ -10,8 +10,8 @@ interface StockData {
   pc: number; // previous close
   d: number; // change
   dp: number; // percent change
-  logo: string | null;
-  name: string | null;
+  logo: string;
+  name: string;
 }
 
 type TimePeriod = '1D' | '1M' | '1Y' | 'ALL';
@@ -114,8 +114,8 @@ export default function Ticker() {
     </div>
 
     {/* Second column - Trading Widget */}
-    <div className="flex flex-col w-1/3 ml-12 py-12">
-      <TradingWidget ticker={ticker} currentPrice={stockData.c} />
+    <div className="flex flex-col w-1/4 ml-12 py-12">
+      <TradingWidget ticker={ticker} currentPrice={stockData.c} logo={stockData.logo} name={stockData.name}/>
     </div>
   </div>
 );

@@ -26,15 +26,15 @@ export default function RootLayout({
         <Providers>
           <div
             className="fixed inset-0 -z-10 bg-no-repeat"
-            style={{ backgroundColor: "#101828" }}
+            style={{ backgroundColor: "#0F172A" }}
             aria-hidden="true"
           />
           
-          <header className="w-full py-4 relative z-10">
+          <header className="w-full py-4 relative z-10 px-8 sm:px-12 md:px-24 lg:px-42">
             <NavMenu />
           </header>
           
-          <main className="relative z-0">
+          <main className="relative z-0 px-8 sm:px-12 md:px-24 lg:px-42">
             {children}
           </main>
         </Providers>

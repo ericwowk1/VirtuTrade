@@ -3,9 +3,15 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import TextField from '@mui/material/TextField';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
+import { Search} from 'lucide-react';
 
 
-const options = [
+interface TickerOption {
+  ticker: string;
+  name: string;
+}
+
+const options: TickerOption[] = [
   { ticker: 'A', name: 'Agilent Technologies Inc. Common Stock' },
   { ticker: 'AA', name: 'Alcoa Corporation Common Stock ' },
   { ticker: 'AACT', name: 'Ares Acquisition Corporation II Class A Ordinary Shares' },
@@ -6697,28 +6703,32 @@ const options = [
 ];
 
 
+
 const filter = createFilterOptions({
   matchFrom: 'any',
-  stringify: (option) => `${option.ticker} ${option.name}`,
+  stringify: (option: TickerOption) => `${option.ticker} ${option.name}`,
   limit: 30,
 });
 
 export function TickerSearch() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
 
   const handleSelection = (event: any, value: any) => {
-  if (value?.ticker) {
-    router.push(`/stocks/${value.ticker}?name=${encodeURIComponent(value.name)}`);
-  }
-};
-
+    if (value?.ticker) {
+      router.push(`/stocks/${value.ticker}?name=${encodeURIComponent(value.name)}`);
+      setValue(null);
+    }
+  };
 
   return (
-    <div className="flex border-[3px] rounded-sm border-[#d1d5dc] w-1/3 ml-8">
+    <div className="relative w-3/7 ">
+      <Search className="absolute" />
       <Autocomplete
         disablePortal
         options={options}
+        value={value}
         open={open}
         onInputChange={(_, value) => {
           if (value.length === 0) {
@@ -6731,11 +6741,6 @@ export function TickerSearch() {
         onChange={handleSelection}
         getOptionLabel={(option) => `${option.ticker} - ${option.name}`}
         filterOptions={filter}
-        renderOption={(props, option) => (
-          <li {...props}>
-            <strong>{option.ticker}</strong> - {option.name}
-          </li>
-        )}
         sx={{ 
           width: '100%',
           '& .MuiOutlinedInput-root': {
@@ -6750,32 +6755,106 @@ export function TickerSearch() {
               border: 'none',
             },
           },
+          '& .MuiPaper-root': {
+            backgroundColor: '#1e3a8a !important',
+            border: '1px solid #98a8c2ff',
+            borderRadius: '0.5rem',
+            marginTop: '0.25rem',
+            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.1)',
+            maxHeight: '300px',
+            overflow: 'hidden',
+          },
+          '& .MuiAutocomplete-listbox': {
+            padding: '0.25rem',
+            backgroundColor: '#1e3a8a !important',
+            maxHeight: '270px',
+            overflow: 'auto',
+            '& .MuiAutocomplete-option': {
+              borderRadius: '0.375rem',
+              margin: '0.125rem 0',
+              padding: '0.75rem',
+              color: 'white !important',
+              minHeight: 'auto',
+              '&:hover': {
+                backgroundColor: '#98a8c2ff !important',
+              },
+              '&.Mui-focused': {
+                backgroundColor: '#98a8c2ff !important',
+              },
+              '&[aria-selected="true"]': {
+                backgroundColor: '#98a8c2ff !important',
+                '&:hover': {
+                  backgroundColor: '#98a8c2ff !important',
+                },
+              },
+            },
+          },
+          '& .MuiAutocomplete-noOptions': {
+            color: '#ffffff !important',
+            padding: '0.75rem',
+            backgroundColor: '#1e3a8a !important',
+          },
         }}
+        slotProps={{
+          paper: {
+            sx: {
+              backgroundColor: '#1E293B',
+              color: 'white',
+              border: '1px solid #98a8c2ff',
+              borderRadius: '0.5rem',
+              marginTop: '0.25rem',
+              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.1)',
+              maxHeight: '300px',
+              overflow: 'hidden',
+            }
+          }
+        }}
+        renderOption={(props, option) => (
+          <li {...props}>
+            <div className="flex-1 min-w-0">
+              <div className="font-semibold text-white">{option.ticker}</div>
+              <div className="text-sm text-gray-300 truncate">{option.name}</div>
+            </div>
+          </li>
+        )}
         renderInput={(params) => (
           <TextField 
             {...params} 
             placeholder="Search Stock Tickers..."
             sx={{
               '& .MuiOutlinedInput-root': {
-                backgroundColor: '#45556c',
+                backgroundColor: '#1e293b',
                 color: 'white',
-                fontSize: '1.125rem',
-                padding: '12px 16px',
-                '& input::placeholder': {
-                  color: '#9ca3af',
-                  opacity: 1,
+                borderRadius: '0.5rem',
+                height: '40px',
+                minHeight: '40px',
+                border: '1px solid #475569',
+                transition: 'all 0.2s',
+                '&:hover': {
+                  borderColor: '#64748b',
+                },
+                '&.Mui-focused': {
+                  borderColor: 'transparent',
+                  boxShadow: '0 0 0 2px #3b82f6',
+                },
+                '& input': {
+                  padding: '0',
+                  height: '38px',
+                  fontSize: '0.875rem',
+                  '&::placeholder': {
+                    color: '#94a3b8',
+                    opacity: 1,
+
+                  },
                 },
               },
             }}
           />
         )}
       />
-      <button type='button' className="flex items-center justify-center bg-[#314158] px-5 cursor-pointer">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192.904 192.904" width="16px" className="fill-white">
-          <path d="m190.707 180.101-47.078-47.077c11.702-14.072 18.752-32.142 18.752-51.831C162.381 36.423 125.959 0 81.191 0 36.422 0 0 36.423 0 81.193c0 44.767 36.422 81.187 81.191 81.187 19.688 0 37.759-7.049 51.831-18.751l47.079 47.078a7.474 7.474 0 0 0 5.303 2.197 7.498 7.498 0 0 0 5.303-12.803zM15 81.193C15 44.694 44.693 15 81.191 15c36.497 0 66.189 29.694 66.189 66.193 0 36.496-29.692 66.187-66.189 66.187C44.693 147.38 15 117.689 15 81.193z">
-          </path>
-        </svg>
+      <button className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 hover:bg-slate-700 rounded transition-colors duration-200">
+        <Search className="w-4 h-4 text-slate-400" />
       </button>
     </div>
-  )
+  );
 }

@@ -126,7 +126,9 @@ exports.Prisma.UserScalarFieldEnum = {
   emailVerified: 'emailVerified',
   image: 'image',
   name: 'name',
-  money: 'money'
+  money: 'money',
+  lastCheckedValue: 'lastCheckedValue',
+  portfolioHistory: 'portfolioHistory'
 };
 
 exports.Prisma.AccountScalarFieldEnum = {

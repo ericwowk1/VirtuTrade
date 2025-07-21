@@ -18,7 +18,7 @@ export function GetBalance() {
 
   if (loading) return <div>Loading...</div>;
   
-  return <div>Balance: ${balance?.toLocaleString('en-US', { 
+  return <div>${balance?.toLocaleString('en-US', { 
     minimumFractionDigits: 2, 
     maximumFractionDigits: 2 
   }) || '0.00'}</div>;

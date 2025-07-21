@@ -21,6 +21,7 @@
     "next": "^15.3.0",
     "next-auth": "^4.24.11",
     "peerview": "file:",
+    "postgres": "^3.4.7",
     "prisma": "^6.7.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

@@ -54,20 +54,21 @@ export async function MarketSummary() {
   };
 
   return (
-    <div className="bg-gray-900 rounded-lg p-6">
-      <h2 className="text-2xl font-bold text-white mb-6">Market Summary</h2>
-      
-      <div className="space-y-3">
-        <div className="flex items-center justify-between bg-gray-800 rounded-lg p-3 hover:bg-gray-750 transition-colors">
+    <div className=" rounded-lg p-6 bg-[#1E293B] border border-slate-700">
+      <div className="border-b-2 border-white w-full">
+      <h2 className=" text-2xl text-white mb-4">Market Summary</h2>
+      </div>
+      <div className="space-y-3 ">
+        <div className="flex items-center justify-between rounded-lg p-3">
           <div>
-            <div className="font-medium text-white">S&P 500</div>
+            <div className="font-medium text-white ">S&P 500</div>
             <div className="text-sm text-gray-400">SPY</div>
           </div>
-          <div className="text-right">
+          <div className="">
             <div className="font-medium text-white">
               {formatPrice(marketData.SPY?.price)}
             </div>
-            <div className={`text-sm font-medium ${getPercentColor(marketData.SPY?.percent)}`}>
+            <div className={`text-right text-sm font-medium ${getPercentColor(marketData.SPY?.percent)}`}>
               {formatPercent(marketData.SPY?.percent)}
             </div>
           </div>

@@ -1,4 +1,4 @@
-// app/components/PositionOverview.tsx
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -127,11 +127,11 @@ export function PositionOverview() {
 
   if (loading) {
     return (
-      <div className="bg-gray-800 rounded-lg p-6 text-white">
+      <div className="bg-[#1E293B] rounded-lg p-6 text-white ">
         <h3 className="text-2xl font-semibold mb-6">Positions Overview</h3>
         
         {/* Header */}
-        <div className="grid  gap-4 px-4 py-3 text-sm text-gray-400 border-b border-gray-600 mb-4">
+        <div className="grid  gap-4 px-4 py-3 text-sm text-gray-400 border-b border-gray-600 mb-4 ">
           <div></div> {/* Empty for logo column */}
           <div>Symbol</div>
           <div>Current Price</div>

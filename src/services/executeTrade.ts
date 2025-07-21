@@ -1,8 +1,8 @@
 // services/tradeService.ts
 
-import { PrismaClient } from "@/generated/prisma";
+import { prisma } from '@/services/prisma'
 
-const prisma = new PrismaClient();
+
 
 interface TradeData {
   userId: string;

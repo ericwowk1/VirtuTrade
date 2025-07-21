@@ -9,15 +9,17 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  name          String?
-  accounts      Account[]
-  sessions      Session[]
-  stocks        Stock[]
-  money         Float?    @default(1000000)
+  id               String    @id @default(cuid())
+  email            String?   @unique
+  emailVerified    DateTime?
+  image            String?
+  name             String?
+  money            Float?    @default(100000)
+  lastCheckedValue Float?    @default(100000)
+  portfolioHistory Json[]    @default([])
+  accounts         Account[]
+  sessions         Session[]
+  stocks           Stock[]
 }
 
 model Account {

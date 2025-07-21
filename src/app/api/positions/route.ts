@@ -2,13 +2,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/services/auth";
-import { PrismaClient } from "@/generated/prisma";
+import { prisma } from "@/services/prisma";
 import { getStockHistory } from "@/services/getStockHistory";
 import { getStockData } from "@/services/getStockData";
 import { getStockInfo } from "@/services/getStockInfo";
 import { getCachedLogo, cacheLogo } from "@/services/logoCache";
 
-const prisma = new PrismaClient();
+
 
 // Add type definition for company info
 interface CompanyInfo {

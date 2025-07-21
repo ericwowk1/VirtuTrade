@@ -1295,10 +1295,12 @@ export namespace Prisma {
 
   export type UserAvgAggregateOutputType = {
     money: number | null
+    lastCheckedValue: number | null
   }
 
   export type UserSumAggregateOutputType = {
     money: number | null
+    lastCheckedValue: number | null
   }
 
   export type UserMinAggregateOutputType = {
@@ -1308,6 +1310,7 @@ export namespace Prisma {
     image: string | null
     name: string | null
     money: number | null
+    lastCheckedValue: number | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -1317,6 +1320,7 @@ export namespace Prisma {
     image: string | null
     name: string | null
     money: number | null
+    lastCheckedValue: number | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1326,16 +1330,20 @@ export namespace Prisma {
     image: number
     name: number
     money: number
+    lastCheckedValue: number
+    portfolioHistory: number
     _all: number
   }
 
 
   export type UserAvgAggregateInputType = {
     money?: true
+    lastCheckedValue?: true
   }
 
   export type UserSumAggregateInputType = {
     money?: true
+    lastCheckedValue?: true
   }
 
   export type UserMinAggregateInputType = {
@@ -1345,6 +1353,7 @@ export namespace Prisma {
     image?: true
     name?: true
     money?: true
+    lastCheckedValue?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -1354,6 +1363,7 @@ export namespace Prisma {
     image?: true
     name?: true
     money?: true
+    lastCheckedValue?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -1363,6 +1373,8 @@ export namespace Prisma {
     image?: true
     name?: true
     money?: true
+    lastCheckedValue?: true
+    portfolioHistory?: true
     _all?: true
   }
 
@@ -1459,6 +1471,8 @@ export namespace Prisma {
     image: string | null
     name: string | null
     money: number | null
+    lastCheckedValue: number | null
+    portfolioHistory: JsonValue[]
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
     _sum: UserSumAggregateOutputType | null
@@ -1487,6 +1501,8 @@ export namespace Prisma {
     image?: boolean
     name?: boolean
     money?: boolean
+    lastCheckedValue?: boolean
+    portfolioHistory?: boolean
     accounts?: boolean | User$accountsArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     stocks?: boolean | User$stocksArgs<ExtArgs>
@@ -1500,6 +1516,8 @@ export namespace Prisma {
     image?: boolean
     name?: boolean
     money?: boolean
+    lastCheckedValue?: boolean
+    portfolioHistory?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1509,6 +1527,8 @@ export namespace Prisma {
     image?: boolean
     name?: boolean
     money?: boolean
+    lastCheckedValue?: boolean
+    portfolioHistory?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -1518,9 +1538,11 @@ export namespace Prisma {
     image?: boolean
     name?: boolean
     money?: boolean
+    lastCheckedValue?: boolean
+    portfolioHistory?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "emailVerified" | "image" | "name" | "money", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "emailVerified" | "image" | "name" | "money" | "lastCheckedValue" | "portfolioHistory", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     accounts?: boolean | User$accountsArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
@@ -1544,6 +1566,8 @@ export namespace Prisma {
       image: string | null
       name: string | null
       money: number | null
+      lastCheckedValue: number | null
+      portfolioHistory: Prisma.JsonValue[]
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -1976,6 +2000,8 @@ export namespace Prisma {
     readonly image: FieldRef<"User", 'String'>
     readonly name: FieldRef<"User", 'String'>
     readonly money: FieldRef<"User", 'Float'>
+    readonly lastCheckedValue: FieldRef<"User", 'Float'>
+    readonly portfolioHistory: FieldRef<"User", 'Json[]'>
   }
     
 
@@ -6767,7 +6793,9 @@ export namespace Prisma {
     emailVerified: 'emailVerified',
     image: 'image',
     name: 'name',
-    money: 'money'
+    money: 'money',
+    lastCheckedValue: 'lastCheckedValue',
+    portfolioHistory: 'portfolioHistory'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -6893,6 +6921,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Json[]'
+   */
+  export type ListJsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -6919,6 +6961,8 @@ export namespace Prisma {
     image?: StringNullableFilter<"User"> | string | null
     name?: StringNullableFilter<"User"> | string | null
     money?: FloatNullableFilter<"User"> | number | null
+    lastCheckedValue?: FloatNullableFilter<"User"> | number | null
+    portfolioHistory?: JsonNullableListFilter<"User">
     accounts?: AccountListRelationFilter
     sessions?: SessionListRelationFilter
     stocks?: StockListRelationFilter
@@ -6931,6 +6975,8 @@ export namespace Prisma {
     image?: SortOrderInput | SortOrder
     name?: SortOrderInput | SortOrder
     money?: SortOrderInput | SortOrder
+    lastCheckedValue?: SortOrderInput | SortOrder
+    portfolioHistory?: SortOrder
     accounts?: AccountOrderByRelationAggregateInput
     sessions?: SessionOrderByRelationAggregateInput
     stocks?: StockOrderByRelationAggregateInput
@@ -6946,6 +6992,8 @@ export namespace Prisma {
     image?: StringNullableFilter<"User"> | string | null
     name?: StringNullableFilter<"User"> | string | null
     money?: FloatNullableFilter<"User"> | number | null
+    lastCheckedValue?: FloatNullableFilter<"User"> | number | null
+    portfolioHistory?: JsonNullableListFilter<"User">
     accounts?: AccountListRelationFilter
     sessions?: SessionListRelationFilter
     stocks?: StockListRelationFilter
@@ -6958,6 +7006,8 @@ export namespace Prisma {
     image?: SortOrderInput | SortOrder
     name?: SortOrderInput | SortOrder
     money?: SortOrderInput | SortOrder
+    lastCheckedValue?: SortOrderInput | SortOrder
+    portfolioHistory?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -6975,6 +7025,8 @@ export namespace Prisma {
     image?: StringNullableWithAggregatesFilter<"User"> | string | null
     name?: StringNullableWithAggregatesFilter<"User"> | string | null
     money?: FloatNullableWithAggregatesFilter<"User"> | number | null
+    lastCheckedValue?: FloatNullableWithAggregatesFilter<"User"> | number | null
+    portfolioHistory?: JsonNullableListFilter<"User">
   }
 
   export type AccountWhereInput = {
@@ -7227,6 +7279,8 @@ export namespace Prisma {
     image?: string | null
     name?: string | null
     money?: number | null
+    lastCheckedValue?: number | null
+    portfolioHistory?: UserCreateportfolioHistoryInput | InputJsonValue[]
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     stocks?: StockCreateNestedManyWithoutUserInput
@@ -7239,6 +7293,8 @@ export namespace Prisma {
     image?: string | null
     name?: string | null
     money?: number | null
+    lastCheckedValue?: number | null
+    portfolioHistory?: UserCreateportfolioHistoryInput | InputJsonValue[]
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     stocks?: StockUncheckedCreateNestedManyWithoutUserInput
@@ -7251,6 +7307,8 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     money?: NullableFloatFieldUpdateOperationsInput | number | null
+    lastCheckedValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    portfolioHistory?: UserUpdateportfolioHistoryInput | InputJsonValue[]
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     stocks?: StockUpdateManyWithoutUserNestedInput
@@ -7263,6 +7321,8 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     money?: NullableFloatFieldUpdateOperationsInput | number | null
+    lastCheckedValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    portfolioHistory?: UserUpdateportfolioHistoryInput | InputJsonValue[]
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     stocks?: StockUncheckedUpdateManyWithoutUserNestedInput
@@ -7275,6 +7335,8 @@ export namespace Prisma {
     image?: string | null
     name?: string | null
     money?: number | null
+    lastCheckedValue?: number | null
+    portfolioHistory?: UserCreateportfolioHistoryInput | InputJsonValue[]
   }
 
   export type UserUpdateManyMutationInput = {
@@ -7284,6 +7346,8 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     money?: NullableFloatFieldUpdateOperationsInput | number | null
+    lastCheckedValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    portfolioHistory?: UserUpdateportfolioHistoryInput | InputJsonValue[]
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -7293,6 +7357,8 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     money?: NullableFloatFieldUpdateOperationsInput | number | null
+    lastCheckedValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    portfolioHistory?: UserUpdateportfolioHistoryInput | InputJsonValue[]
   }
 
   export type AccountCreateInput = {
@@ -7595,6 +7661,20 @@ export namespace Prisma {
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
+  export type JsonNullableListFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableListFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableListFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableListFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableListFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableListFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue[] | ListJsonFieldRefInput<$PrismaModel> | null
+    has?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    hasEvery?: InputJsonValue[] | ListJsonFieldRefInput<$PrismaModel>
+    hasSome?: InputJsonValue[] | ListJsonFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
 
   export type AccountListRelationFilter = {
     every?: AccountWhereInput
@@ -7638,10 +7718,13 @@ export namespace Prisma {
     image?: SortOrder
     name?: SortOrder
     money?: SortOrder
+    lastCheckedValue?: SortOrder
+    portfolioHistory?: SortOrder
   }
 
   export type UserAvgOrderByAggregateInput = {
     money?: SortOrder
+    lastCheckedValue?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -7651,6 +7734,7 @@ export namespace Prisma {
     image?: SortOrder
     name?: SortOrder
     money?: SortOrder
+    lastCheckedValue?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -7660,10 +7744,12 @@ export namespace Prisma {
     image?: SortOrder
     name?: SortOrder
     money?: SortOrder
+    lastCheckedValue?: SortOrder
   }
 
   export type UserSumOrderByAggregateInput = {
     money?: SortOrder
+    lastCheckedValue?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -7979,6 +8065,10 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
+  export type UserCreateportfolioHistoryInput = {
+    set: InputJsonValue[]
+  }
+
   export type AccountCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -8039,6 +8129,11 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type UserUpdateportfolioHistoryInput = {
+    set?: InputJsonValue[]
+    push?: InputJsonValue | InputJsonValue[]
   }
 
   export type AccountUpdateManyWithoutUserNestedInput = {
@@ -8593,6 +8688,8 @@ export namespace Prisma {
     image?: string | null
     name?: string | null
     money?: number | null
+    lastCheckedValue?: number | null
+    portfolioHistory?: UserCreateportfolioHistoryInput | InputJsonValue[]
     sessions?: SessionCreateNestedManyWithoutUserInput
     stocks?: StockCreateNestedManyWithoutUserInput
   }
@@ -8604,6 +8701,8 @@ export namespace Prisma {
     image?: string | null
     name?: string | null
     money?: number | null
+    lastCheckedValue?: number | null
+    portfolioHistory?: UserCreateportfolioHistoryInput | InputJsonValue[]
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     stocks?: StockUncheckedCreateNestedManyWithoutUserInput
   }
@@ -8631,6 +8730,8 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     money?: NullableFloatFieldUpdateOperationsInput | number | null
+    lastCheckedValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    portfolioHistory?: UserUpdateportfolioHistoryInput | InputJsonValue[]
     sessions?: SessionUpdateManyWithoutUserNestedInput
     stocks?: StockUpdateManyWithoutUserNestedInput
   }
@@ -8642,6 +8743,8 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     money?: NullableFloatFieldUpdateOperationsInput | number | null
+    lastCheckedValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    portfolioHistory?: UserUpdateportfolioHistoryInput | InputJsonValue[]
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     stocks?: StockUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -8653,6 +8756,8 @@ export namespace Prisma {
     image?: string | null
     name?: string | null
     money?: number | null
+    lastCheckedValue?: number | null
+    portfolioHistory?: UserCreateportfolioHistoryInput | InputJsonValue[]
     accounts?: AccountCreateNestedManyWithoutUserInput
     stocks?: StockCreateNestedManyWithoutUserInput
   }
@@ -8664,6 +8769,8 @@ export namespace Prisma {
     image?: string | null
     name?: string | null
     money?: number | null
+    lastCheckedValue?: number | null
+    portfolioHistory?: UserCreateportfolioHistoryInput | InputJsonValue[]
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     stocks?: StockUncheckedCreateNestedManyWithoutUserInput
   }
@@ -8691,6 +8798,8 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     money?: NullableFloatFieldUpdateOperationsInput | number | null
+    lastCheckedValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    portfolioHistory?: UserUpdateportfolioHistoryInput | InputJsonValue[]
     accounts?: AccountUpdateManyWithoutUserNestedInput
     stocks?: StockUpdateManyWithoutUserNestedInput
   }
@@ -8702,6 +8811,8 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     money?: NullableFloatFieldUpdateOperationsInput | number | null
+    lastCheckedValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    portfolioHistory?: UserUpdateportfolioHistoryInput | InputJsonValue[]
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     stocks?: StockUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -8713,6 +8824,8 @@ export namespace Prisma {
     image?: string | null
     name?: string | null
     money?: number | null
+    lastCheckedValue?: number | null
+    portfolioHistory?: UserCreateportfolioHistoryInput | InputJsonValue[]
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
   }
@@ -8724,6 +8837,8 @@ export namespace Prisma {
     image?: string | null
     name?: string | null
     money?: number | null
+    lastCheckedValue?: number | null
+    portfolioHistory?: UserCreateportfolioHistoryInput | InputJsonValue[]
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
   }
@@ -8751,6 +8866,8 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     money?: NullableFloatFieldUpdateOperationsInput | number | null
+    lastCheckedValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    portfolioHistory?: UserUpdateportfolioHistoryInput | InputJsonValue[]
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
   }
@@ -8762,6 +8879,8 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     money?: NullableFloatFieldUpdateOperationsInput | number | null
+    lastCheckedValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    portfolioHistory?: UserUpdateportfolioHistoryInput | InputJsonValue[]
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
   }
