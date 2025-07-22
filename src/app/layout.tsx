@@ -25,7 +25,7 @@ export default function RootLayout({
       <body className="font-sans antialiased relative">
         <Providers>
           <div
-            className="fixed inset-0 -z-10 bg-no-repeat"
+            className="fixed inset-0  bg-no-repeat"
             style={{ backgroundColor: "#0F172A" }}
             aria-hidden="true"
           />
@@ -34,7 +34,7 @@ export default function RootLayout({
             <NavMenu />
           </header>
           
-          <main className="relative z-0 px-8 sm:px-12 md:px-24 lg:px-42">
+          <main className="">
             {children}
           </main>
         </Providers>

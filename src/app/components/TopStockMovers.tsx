@@ -50,7 +50,7 @@ export function TopStockMovers() {
   if (loading) {
     return (
       <div className="bg-slate-800 rounded-xl p-6 border border-slate-700">
-        <div className="animate-pulse">
+        
           <div className="flex items-center justify-between mb-4">
             <div className="h-6 bg-slate-700 rounded w-48"></div>
             <div className="h-4 bg-slate-700 rounded w-32"></div>
@@ -61,7 +61,7 @@ export function TopStockMovers() {
               <div key={i} className="h-12 bg-slate-700 rounded"></div>
             ))}
           </div>
-        </div>
+        
       </div>
     );
   }
@@ -79,7 +79,7 @@ export function TopStockMovers() {
   const currentData = activeTab === 'gainers' ? topGainers : topLosers;
 
   return (
-    <div className="bg-[#1E293B] rounded-xl p-6 border border-slate-700">
+    <div className="bg-[#1E293B] rounded-xl p-6 border border-slate-700 h-[30rem] mt-14.5">
       <div className="flex items-center justify-between mb-4">
         <div className="border-b-2 border-white w-full">
         <h3 className="text-xl text-white mb-4">Top Market Movers</h3>
@@ -87,10 +87,10 @@ export function TopStockMovers() {
       </div>
 
       {/* Tab Navigation */}
-      <div className="flex space-x-1 mb-4 bg-slate-900 rounded-lg p-1">
+      <div className="flex space-x-1  bg-slate-900 rounded-lg p-1 mt-[2rem]">
         <button
           onClick={() => setActiveTab('gainers')}
-          className={`flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 flex-1 justify-center ${
+          className={`flex items-center space-x-2 px-3 py-2  rounded-md text-sm font-medium transition-all duration-200 flex-1 justify-center ${
             activeTab === 'gainers'
               ? 'bg-emerald-600 text-white'
               : 'text-slate-300 hover:text-white'
@@ -107,15 +107,15 @@ export function TopStockMovers() {
               : 'text-slate-300 hover:text-white'
           }`}
         >
-          <TrendingDown className="w-4 h-4" />
+          <TrendingDown className="w-4 h-4 " />
           <span>Top Losers</span>
         </button>
       </div>
 
       {/* Content */}
-      <div className="space-y-3">
+      <div className="space-y-3 ">
         {currentData.map((stock, index) => (
-          <div key={stock.symbol} className="flex items-center justify-between py-2 hover:bg-slate-700/30 rounded-lg px-2 transition-colors duration-200">
+          <div key={stock.symbol} className="flex items-center justify-between mt-2 py-2 hover:bg-slate-700/30 rounded-lg px-2 transition-colors duration-200">
             <div className="flex items-center space-x-3">
               <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
                 activeTab === 'gainers' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'

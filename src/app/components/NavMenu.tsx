@@ -8,8 +8,8 @@ export function NavMenu() {
   const { data: session } = useSession();
 
   return (
-    <nav className="w-full">
-      <div className="flex items-center h-[60px] bg-[#101828] shadow-lg">
+    <nav className="w-full ">
+      <div className="flex items-center h-[60px] bg-[#101828] shadow-lg ">
         
         {/* Logo - At the very start */}
         
@@ -23,7 +23,7 @@ export function NavMenu() {
 </div>
 
         {/* Main content area with original padding */}
-        <div className="flex items-center justify-between flex-1 px-[90px]">
+        <div className="flex items-center justify-between flex-1">
           
           {/* Search Bar */}
           <TickerSearch />

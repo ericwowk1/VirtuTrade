@@ -119,7 +119,7 @@ export function PositionOverview() {
           </div>
 
           {/* Positions List */}
-          <div className="space-y-1 max-h-[20.4rem] overflow-y-auto custom-scrollbar">
+          <div className="space-y-1 max-h-[17.5rem] overflow-y-auto custom-scrollbar">
             {positions.map((position) => {
               const isPositive = position.change >= 0;
               const hasData = position.historicalPrices.length > 1;
@@ -129,7 +129,7 @@ export function PositionOverview() {
               return (
                 <div 
                   key={position.symbol} 
-                  className="grid grid-cols-[auto_1fr_1fr_1fr_1fr_1fr] gap-3 py-2 px-3 bg-gray-700/50 hover:bg-gray-700 rounded transition-colors duration-200 items-center"
+                  className="grid grid-cols-[auto_1fr_1fr_1fr_1fr_1fr] gap-3 py-2 px-3 bg-[#0F172A] hover:bg-gray-700 rounded transition-colors duration-200 items-center"
                 >
                   {/* Company Logo */}
                   <div className="flex items-center">
