@@ -223,7 +223,7 @@ useEffect(() => {
 }, [timeRange]);
   if (loading) {
     return (
-      <div className="bg-slate-800/80 border border-slate-700 rounded-lg p-6 text-center h-96 flex items-center justify-center">
+      <div className="bg-slate-800/60 border border-slate-700 rounded-lg p-6 text-center h-96 flex items-center justify-center">
         <p className="text-slate-400">Loading Chart...</p>
       </div>
     );
@@ -231,7 +231,7 @@ useEffect(() => {
 
   if (data.length < 1) {
     return (
-      <div className="bg-slate-800/80 border border-slate-700 rounded-lg p-6 text-center h-96 flex flex-col items-center justify-center">
+      <div className="bg-slate-800/60 border border-slate-700 rounded-lg p-6 text-center h-96 flex flex-col items-center justify-center">
         <TrendingUp className="mx-auto h-12 w-12 text-slate-500 mb-4" />
         <h3 className="text-lg font-semibold text-white">Not Enough Data</h3>
         <p className="text-slate-400">Could not retrieve portfolio history at this time.</p>
@@ -240,7 +240,7 @@ useEffect(() => {
   }
 
   return (
-    <div className="bg-[#1E293B] backdrop-blur-sm border border-slate-700 rounded-lg shadow-lg p-4">
+    <div className="bg-slate-800/60 backdrop-blur-sm border border-slate-700 rounded-lg shadow-lg p-4">
       <div className='flex justify-between'>
       <div className='text-white text-xl '>Portfolio Value</div>
       

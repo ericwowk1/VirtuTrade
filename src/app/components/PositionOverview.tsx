@@ -83,7 +83,7 @@ export function PositionOverview() {
 
   if (loading) {
     return (
-      <div className="bg-[#1E293B] rounded-lg p-6 text-white">
+      <div className="bg-slate-800/60 rounded-lg p-6 text-white">
         <h3 className="text-xl font-semibold mb-6">Positions Overview</h3>
         {/* Skeleton UI */}
       </div>
@@ -99,7 +99,7 @@ export function PositionOverview() {
   }
 
   return (
-    <div className="bg-[#1E293B] rounded-lg p-4 text-white">
+    <div className="bg-slate-800/60 rounded-lg p-4 text-white">
       <h3 className="text-xl font-semibold mb-3">Positions Overview</h3>
       
       {positions.length === 0 ? (

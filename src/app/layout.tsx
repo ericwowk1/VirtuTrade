@@ -22,15 +22,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className="font-sans antialiased relative">
+      <body 
+        className="font-sans antialiased relative "
+        style={{ backgroundColor: "#0F172A" }}
+      >
         <Providers>
-          <div
-            className="fixed inset-0  bg-no-repeat"
-            style={{ backgroundColor: "#0F172A" }}
-            aria-hidden="true"
-          />
-          
-          <header className="w-full py-4 relative z-10 px-8 sm:px-12 md:px-24 lg:px-42">
+          <header className="w-full py-4 relative ">
             <NavMenu />
           </header>
           

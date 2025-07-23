@@ -201,6 +201,7 @@ export default async function Leaderboard() {
  };
 
  const getRankIcon = (rank: number) => {
+  console.log( "rank",rank);
    switch (rank) {
      case 1:
        return <Trophy className="h-5 w-5 text-yellow-400" />;
@@ -236,7 +237,7 @@ export default async function Leaderboard() {
      .toUpperCase();
      
    return (
-     <div className={`${size} bg-slate-600 rounded-full flex items-center justify-center border-2 border-slate-600`}>
+      <div className={`${size} bg-slate-600 rounded-full flex items-center justify-center border-2 border-slate-600`}>
        <span className="text-white font-semibold text-sm">
          {initials}
        </span>
@@ -245,7 +246,7 @@ export default async function Leaderboard() {
  };
 
  return (
-   <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-4 md:p-6">
+   <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-600 p-4 md:p-6">
      <div className="max-w-6xl mx-auto space-y-6">
        
        {/* User Stats Card */}

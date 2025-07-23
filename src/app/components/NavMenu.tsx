@@ -9,7 +9,7 @@ export function NavMenu() {
 
   return (
     <nav className="w-full ">
-      <div className="flex items-center h-[60px] bg-[#101828] shadow-lg ">
+      <div className="flex items-center h-[60px] bg-[#101828] shadow-lg px-8 sm:px-12 md:px-24 lg:px-42">
         
         {/* Logo - At the very start */}
         

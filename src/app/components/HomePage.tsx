@@ -8,16 +8,18 @@ import { MarketNews } from './MarketNews';
 
 export function HomePage() {
   return (
-    <div className="min-h-screen p-2 xl:p-4">
+    <div className="min-h-screen py-2 xl:py-4 px-24 xl:px-64  to-slate-500">
       <div className="mx-auto">
-        <div className="grid grid-cols-11 grid-rows-[auto_1fr] gap-2 xl:gap-3 min-h-[calc(100vh-1rem)] xl:min-h-[calc(100vh-2rem)]">
-          {/* Left Column - Market Summary and Top Movers <TopStockMovers /> <MarketSummary /> */}
-          <div className="col-span-11 lg:col-span-2 lg:row-span-2 space-y-3 xl:space-y-4">
-            
-            <div className="bg-[#1E293B] rounded-lg">
-              
+        
+        <div className="grid grid-cols-11 grid-rows-[auto_1fr] gap-3.5 min-h-screen">
+          {/* Top Row */}
+          {/* Left Column - Market Summary and Top Movers */}
+          <div className="col-span-2 row-span-2 pr-3.5">
+            <MarketSummary />
+            <div className=" rounded-lg mt-5">
+              <TopStockMovers />
             </div>
-          </div>
+            </div>
 
           {/* Middle Column - Portfolio Chart */}
           <div className="col-span-11 lg:col-span-6 lg:row-span-1">
@@ -25,7 +27,7 @@ export function HomePage() {
           </div>
 
           {/* Right Column - Position Overview */}
-          <div className="col-span-11 lg:col-span-3 lg:row-span-1">
+         <div className="col-span-11 lg:col-span-3 lg:col-start-9 lg:row-span-1">
             <PositionOverview />
           </div>
 
@@ -35,6 +37,8 @@ export function HomePage() {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+      
+   
   );
 }
