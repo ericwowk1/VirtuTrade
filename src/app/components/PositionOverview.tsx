@@ -84,7 +84,7 @@ export function PositionOverview() {
   if (loading) {
     return (
       <div className="bg-slate-800/60 rounded-lg p-6 text-white">
-        <h3 className="text-xl font-semibold mb-6">Positions Overview</h3>
+        <h3 className="text-2xl font-semibold mb-6">Positions Overview</h3>
         {/* Skeleton UI */}
       </div>
     );
@@ -92,15 +92,15 @@ export function PositionOverview() {
   if (error) {
     return (
       <div className="bg-gray-800 rounded-lg p-6 text-white">
-        <h3 className="text-xl font-semibold mb-4">Positions Overview</h3>
+        <h3 className="text-2xl font-semibold mb-4">Positions Overview</h3>
         {/* Error UI */}
       </div>
     );
   }
 
   return (
-    <div className="bg-slate-800/60 rounded-lg p-4 text-white">
-      <h3 className="text-xl font-semibold mb-3">Positions Overview</h3>
+    <div className="bg-slate-800/60 rounded-lg p-4 text-white border border-slate-700 h-[27.5rem] ">
+      <h3 className="text-2xl font-semibold mb-3">Positions Overview</h3>
       
       {positions.length === 0 ? (
         <div className="text-center py-8">
@@ -119,7 +119,7 @@ export function PositionOverview() {
           </div>
 
           {/* Positions List */}
-          <div className="space-y-1 max-h-[17.5rem] overflow-y-auto custom-scrollbar">
+          <div className="space-y-1 max-h-[21rem] overflow-y-auto custom-scrollbar ">
             {positions.map((position) => {
               const isPositive = position.change >= 0;
               const hasData = position.historicalPrices.length > 1;

@@ -18,7 +18,7 @@ export async function GET() {
 
   try {
     const response = await axios.get(
-      `https://data.alpaca.markets/v1beta1/news?sort=desc&limit=6`,
+      `https://data.alpaca.markets/v1beta1/news?sort=desc&limit=50`,
       {
         headers: {
           'APCA-API-KEY-ID': apiKey,

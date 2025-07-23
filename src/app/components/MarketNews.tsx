@@ -9,6 +9,7 @@ type Article = {
   url: string;
   created_at: string;
   source: string;
+  symbols: string[];
   images?: Array<{
     size: string;
     url: string;
@@ -30,6 +31,7 @@ export function MarketNews() {
         }
 
         const data = await response.json();
+        console.log("articles", data)
         setNews(data.news);
       } catch (err: any) {
         setError(err.message);
@@ -43,7 +45,7 @@ export function MarketNews() {
 
   if (loading) {
     return (
-      <div className="bg-[#1E293B] rounded-lg h-full flex justify-center items-center">
+      <div className=" rounded-lg h-full flex justify-center items-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
       </div>
     );
@@ -51,7 +53,7 @@ export function MarketNews() {
 
   if (error) {
     return (
-      <div className="bg-[#1E293B] rounded-lg h-full p-4">
+      <div className=" rounded-lg h-full p-4">
         <div className="bg-red-900/20 border border-red-600 text-red-400 px-4 py-3 rounded-lg">
           <p className="font-semibold">Error fetching news</p>
           <p className="text-sm">{error}</p>
@@ -68,30 +70,27 @@ export function MarketNews() {
     return null;
   };
 
-  // Calculate if we need scrolling (more than 3 articles)
-  const needsScrolling = news.length > 3;
+
 
   return (
-    <div className="bg-[#1E293B] rounded-lg">
+    <div className=" rounded-lg ">
       {/* Header */}
-      <div className="p-4 border-b border-gray-700">
-        <h2 className="text-xl font-bold text-white flex items-center gap-2">
-          <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-          </svg>
-          Today's Market News
+      <div className="p-1 ">
+        <h2 className="text-2xl font-bold text-white flex items-center ">
+          
+          Latest Market News
         </h2>
       </div>
 
       {/* News List - Conditionally Scrollable */}
-      <div className={needsScrolling ? "overflow-y-auto custom-scrollbar h-100" : "overflow-y-visible"}>
-        <div className="p-4 space-y-4">
-          {news.map((article) => (
+      <div className="h-[17rem] overflow-y-auto custom-scrollbar">
+        <div className="space-y-1">
+          {news.filter(article => article.images && article.images.length > 0).map((article) => (
             <article 
               key={article.id} 
-              className="bg-[#0F172A] rounded-lg p-4 hover:bg-gray-800/70 transition-all duration-200 border border-gray-700 hover:border-gray-600"
+              className="bg-[#0F172A] rounded-lg py-2 pl-1 hover:bg-gray-800/70 transition-all duration-200 border border-gray-700 hover:border-gray-600"
             >
-              <div className="flex gap-4">
+              <div className="flex gap-4 ">
                 {/* Article Image */}
                 {getImageUrl(article) && (
                   <div className="flex-shrink-0">
@@ -107,23 +106,38 @@ export function MarketNews() {
                 )}
                 
                 {/* Article Content */}
-                <div className="flex-1 min-w-0">
-                  {/* Source and Time */}
-                  <div className="flex items-center gap-2 text-xs text-gray-400 mb-1">
-                    <span className="font-semibold text-blue-400 uppercase">{article.source}</span>
-                    <span>•</span>
-                    <time dateTime={article.created_at}>
-                      {new Date(article.created_at).toLocaleString('en-US', {
-                        month: 'short',
-                        day: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                      })}
-                    </time>
-                  </div>
+                <div className="flex-1 min-w-0 ">
+                                     {/* Source and Time */}
+                   <div className="flex items-center gap-2 text-xs text-gray-400 mb-1">
+                     <span className="font-semibold text-blue-400 uppercase">{article.source}</span>
+                     <span>•</span>
+                     <time dateTime={article.created_at}>
+                       {new Date(article.created_at).toLocaleString('en-US', {
+                         month: 'short',
+                         day: 'numeric',
+                         hour: '2-digit',
+                         minute: '2-digit'
+                       })}
+                     </time>
+                     {article.symbols && article.symbols.length > 0 && (
+                       <>
+                         <span>•</span>
+                         <div className="flex gap-1">
+                           {article.symbols.map((symbol, index) => (
+                             <span 
+                               key={index}
+                               className="bg-blue-500/20 text-blue-400 px-1.5 py-0.5 rounded text-xs font-medium"
+                             >
+                              ${symbol}
+                             </span>
+                           ))}
+                         </div>
+                       </>
+                     )}
+                   </div>
 
                   {/* Headline */}
-                  <h3 className="mb-2">
+                  <h3 className="mb-2 ">
                     <a 
                       href={article.url} 
                       target="_blank" 

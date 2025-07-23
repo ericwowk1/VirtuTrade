@@ -204,13 +204,13 @@ export default async function Leaderboard() {
   console.log( "rank",rank);
    switch (rank) {
      case 1:
-       return <Trophy className="h-5 w-5 text-yellow-400" />;
+       return <Trophy className="h-8 w-8 text-yellow-400" />;
      case 2:
-       return <Medal className="h-5 w-5 text-gray-300" />;
+       return <Medal className="h-8 w-8 text-gray-300" />;
      case 3:
-       return <Award className="h-5 w-5 text-amber-500" />;
+       return <Award className="h-8 w-8 text-amber-500" />;
      default:
-       return <span className="text-sm font-semibold text-slate-400">#{rank}</span>;
+       return <span className="text-sm font-semibold text-white">#{rank}</span>;
    }
  };
 
@@ -246,7 +246,7 @@ export default async function Leaderboard() {
  };
 
  return (
-   <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-600 p-4 md:p-6">
+   <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-600 p-[2rem]">
      <div className="max-w-6xl mx-auto space-y-6">
        
        {/* User Stats Card */}
@@ -284,7 +284,7 @@ export default async function Leaderboard() {
                />
                <div>
                  <p className="font-semibold text-white">{currentUserData.name}</p>
-                 <p className="text-slate-400 text-sm">Investor</p>
+                 
                </div>
              </div>
            </div>
@@ -292,51 +292,58 @@ export default async function Leaderboard() {
        )}
 
        {/* Leaderboard */}
-       <div className="bg-slate-800/80 backdrop-blur-sm border border-slate-700 rounded-lg shadow-lg">
+       <div className="bg-slate-800/60 backdrop-blur-sm border border-slate-700 rounded-lg shadow-lg">
          <div className="p-6 pb-2">
            <h3 className="flex items-center gap-2 text-xl font-semibold text-white">
              <Trophy className="h-5 w-5 text-yellow-400" />
              Leaderboard
            </h3>
          </div>
-         <div className="p-6 pt-3 space-y-3">
-           {leaderboardData.length === 0 ? (
-             <div className="text-center py-8">
-               <div className="w-16 h-16 bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-4">
-                 <Trophy className="h-8 w-8 text-slate-400" />
+         <div className="p-6 pt-3 max-h-[42rem]  overflow-y-auto custom-scrollbar">
+           <div className="space-y-3">
+             {leaderboardData.length === 0 ? (
+               <div className="text-center py-8">
+                 <div className="w-16 h-16 bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                   <Trophy className="h-8 w-8 text-slate-400" />
+                 </div>
+                 <p className="text-slate-400 text-lg">No users found</p>
+                 <p className="text-slate-500 text-sm">Be the first to start trading!</p>
                </div>
-               <p className="text-slate-400 text-lg">No users found</p>
-               <p className="text-slate-500 text-sm">Be the first to start trading!</p>
-             </div>
-           ) : (
-             leaderboardData.map((user) => (
-               <div
-                 key={user.id}
-                 className={`flex items-center justify-between p-4 rounded-lg transition-all hover:shadow-md ${
-                   user.rank <= 3
-                     ? "bg-gradient-to-r from-yellow-900/30 to-amber-900/30 border border-yellow-600/30"
-                     : "bg-slate-700/50 hover:bg-slate-700/70"
-                 }`}
-               >
-                 <div className="flex items-center gap-3">
-                   <div className="flex items-center justify-center w-8 h-8">{getRankIcon(user.rank)}</div>
-                   <ProfilePicture 
-                     name={user.name} 
-                     image={user.image}
-                     size="h-10 w-10"
-                   />
-                   <div>
-                     <p className="font-semibold text-white">{user.name}</p>
+             ) : (
+               leaderboardData.map((user) => (
+                 <div
+                   key={user.id}
+                   className={`flex items-center justify-between p-4 rounded-lg  ${
+                     user.rank == 1
+                       ? "bg-gradient-to-r from-yellow-400/70 to-amber-700/20 "
+                       : user.rank == 2
+                       ? "bg-gradient-to-r from-gray-200/80 to-amber-700/20 "
+                       : user.rank == 3
+                       ? "bg-gradient-to-r from-amber-800/80 to-amber-700/20 "
+
+                       : "bg-[#0F172A] "
+                   }`}
+                 >
+                   <div className="flex items-center gap-3">
+                    <div className="flex items-center justify-center w-8 h-8 ">{getRankIcon(user.rank)}</div>
+                     <ProfilePicture 
+                       name={user.name} 
+                       image={user.image}
+                       size="h-13 w-13"
+                     />
+                     <div>
+                       <p className="font-semibold text-white">{user.name}</p>
+                       
+                     </div>
+                   </div>
+                   <div className="text-right">
+                     <p className="font-bold text-lg text-white">{formatCurrency(user.totalValue)}</p>
                      
                    </div>
                  </div>
-                 <div className="text-right">
-                   <p className="font-bold text-lg text-white">{formatCurrency(user.totalValue)}</p>
-                   
-                 </div>
-               </div>
-             ))
-           )}
+               ))
+             )}
+           </div>
          </div>
        </div>
      </div>

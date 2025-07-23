@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "User" ADD COLUMN     "lastCheckedValue" DOUBLE PRECISION DEFAULT 100000,
+ADD COLUMN     "password" TEXT,
+ADD COLUMN     "portfolioHistory" JSONB[] DEFAULT ARRAY[]::JSONB[],
+ALTER COLUMN "money" SET DEFAULT 100000;

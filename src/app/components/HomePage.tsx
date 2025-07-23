@@ -8,18 +8,18 @@ import { MarketNews } from './MarketNews';
 
 export function HomePage() {
   return (
-    <div className="min-h-screen py-2 xl:py-4 px-24 xl:px-64  to-slate-500">
+    <div className=" px-24 xl:px-58  to-slate-500">
       <div className="mx-auto">
         
-        <div className="grid grid-cols-11 grid-rows-[auto_1fr] gap-3.5 min-h-screen">
+        <div className="grid grid-cols-11 grid-rows-[auto_1fr] gap-6 ">
           {/* Top Row */}
           {/* Left Column - Market Summary and Top Movers */}
-          <div className="col-span-2 row-span-2 pr-3.5">
+          <div className="col-span-2 row-span-2 flex flex-col gap-4">
             <MarketSummary />
-            <div className=" rounded-lg mt-5">
+            <div className="flex-1">
               <TopStockMovers />
             </div>
-            </div>
+          </div>
 
           {/* Middle Column - Portfolio Chart */}
           <div className="col-span-11 lg:col-span-6 lg:row-span-1">
@@ -33,6 +33,7 @@ export function HomePage() {
 
           {/* Bottom Row - Market News <MarketNews /> */}
           <div className="col-span-11 lg:col-span-9">
+            <MarketNews />
             
           </div>
         </div>

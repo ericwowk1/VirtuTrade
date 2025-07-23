@@ -240,9 +240,9 @@ useEffect(() => {
   }
 
   return (
-    <div className="bg-slate-800/60 backdrop-blur-sm border border-slate-700 rounded-lg shadow-lg p-4">
+    <div className="bg-[#0F172A] backdrop-blur-sm border border-slate-700 rounded-lg shadow-lg p-4 ">
       <div className='flex justify-between'>
-      <div className='text-white text-xl '>Portfolio Value</div>
+      <div className='text-white text-2xl '>Portfolio Value</div>
       
       <div className="flex justify-end">
         <div className="flex items-center bg-slate-700/50 rounded-md p-1">
@@ -262,13 +262,13 @@ useEffect(() => {
         </div>
         </div>
       </div>
-      <div className="text-white text-3xl mb-4">{lastValue.toLocaleString('en-US', {
+      <div className="text-white text-2xl mb-4">{lastValue.toLocaleString('en-US', {
   style: 'currency',
   currency: 'USD'
 })}</div>
       
       
-      <div className="h-75">
+     <div className="h-64 sm:h-72 lg:h-80">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={data} margin={{ top: 5, right: 20, left: 30, bottom: 5 }}>
             <defs>

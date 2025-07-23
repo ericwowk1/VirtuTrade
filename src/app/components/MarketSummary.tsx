@@ -54,12 +54,12 @@ export async function MarketSummary() {
   };
 
   return (
-    <div className=" rounded-lg p-6 bg-slate-800/60 border border-slate-700 h-[23.5rem]">
-      <div className="border-b-2 border-gray-200 w-full">
-      <h2 className=" text-2xl text-white mb-4 text-center">Market Summary</h2>
+    <div className="rounded-lg p-6 pb-6 bg-slate-800/60 border border-slate-700 h-auto ">
+      <div className="border-b-2 border-white w-full">
+      <h2 className=" text-2xl text-white mb-4">Market Summary</h2>
       </div>
       <div className="space-y-3 ">
-        <div className="flex items-center  justify-between  p-3 mt-2 border-b-2 border-gray-600">
+        <div className="flex items-center  justify-between  p-3 border-b-2  bg-[#0F172A] rounded-lg mb-4">
           <div>
             <div className="font-medium text-white ">S&P 500</div>
             <div className="text-sm text-gray-400">SPY</div>
@@ -74,7 +74,7 @@ export async function MarketSummary() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between border-gray-600 border-b-2 border-[#0F172A] p-3 hover:bg-gray-750 transition-colors">
+        <div className="flex items-center justify-between  bg-[#0F172A] border-b-2 border-[#0F172A] p-3 hover:bg-gray-750 transition-colors mb-4 rounded-lg">
           <div>
             <div className="font-medium text-white">NASDAQ</div>
             <div className="text-sm text-gray-400">NDAQ</div>
@@ -89,7 +89,7 @@ export async function MarketSummary() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between border-gray-600 border-b-2 border-[#0F172A] p-3 hover:bg-gray-750 transition-colors">
+        <div className="flex items-center justify-between  bg-[#0F172A] border-b-2 border-[#0F172A] p-3 hover:bg-gray-750 transition-colors rounded-lg">
           <div>
             <div className="font-medium text-white">Dow Jones</div>
             <div className="text-sm text-gray-400">DIA</div>

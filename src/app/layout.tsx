@@ -27,7 +27,7 @@ export default function RootLayout({
         style={{ backgroundColor: "#0F172A" }}
       >
         <Providers>
-          <header className="w-full py-4 relative ">
+          <header className="">
             <NavMenu />
           </header>
           

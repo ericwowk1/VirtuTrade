@@ -23,7 +23,7 @@ export function LandingPage() {
   return (
     <div>
       {/* Hero container */}
-      <div className="w-full h-[90vh] relative">
+      <div className="w-full h-[95vh] relative">
         
         {/* Background layer with mask */}
         <div 
@@ -39,21 +39,22 @@ export function LandingPage() {
         
         {/* Content layer - unaffected by mask */}
         <div className="relative flex flex-col h-full">
-          <div className="flex flex-row items-center px-20 flex-1 mb-[10rem] ml-[5rem]">
+          <div className="flex flex-row items-center px-8 flex-1 mb-[12rem] ml-[3rem]">
             {/* Left side - content */}
             <div className="flex flex-col flex-1">
-                <h1 className="text-6xl font-bold text-white pb-4 ">
-  Master Stock Trading
+            <h1 className="text-7xl font-bold text-white pb-6">
+  Master Trading Without Risk.
 </h1>
-<h2 className="text-5xl font-bold text-white pb-6 ">
-  With NO Risk
-</h2>
-<p className="text-xl text-gray-100 pb-6  max-w-4xl">
-  VirtuTrade is your risk-free gateway to the markets. Practice real strategies, track your progress, and trade confidently with a simulated balance.
+<p className="text-2xl text-gray-100 max-w-4xl">
+  Experience real market conditions with zero financial risk. VirtuTrade uses live market data and gives you $100,000 in virtual funds to practice with. 
 </p>
-                
+<p className="text-2xl text-gray-100 max-w-4xl mt-4">
+Build confidence, test strategies, and develop winning skills before putting your real capital on the line. 
+</p>
+
+          
                 {/* Buttons Container */}
-                <div className="flex flex-row items-center gap-6 mt-8">
+                <div className="flex flex-row items-center gap-6 mt-18">
                   <a 
                     href="/api/auth/signin"
                     className="px-8 py-4 bg-gradient-to-r from-cyan-800 to-cyan-400 text-white font-bold rounded-lg shadow-xl hover:opacity-90 transition-opacity duration-200 text-lg"
@@ -69,7 +70,7 @@ export function LandingPage() {
                 </div>
             </div>
             {/* Right side - image */}
-            <div className="flex-1.5 flex mr-[17rem] ">
+            <div className="flex-1.5 flex mr-[15rem] ">
               <img className="h-130 object-contain animate-float" src="/homepagepicture.png" alt="Trading interface" />
             </div>
           </div>
@@ -77,7 +78,7 @@ export function LandingPage() {
           tsx<div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
   <a 
     href="#learn-more-section"
-    className="text-white text-lg mb-2 font-roboto block fade-in-up"
+    className="text-white text-2xl mb-2 font-roboto block fade-in-up"
   >
     Click to learn more
   </a>      
@@ -86,14 +87,14 @@ export function LandingPage() {
               className="cursor-pointer hover:scale-110 transition-transform duration-200 animate-bounce inline-block"
               aria-label="Scroll to learn more"
             >
-              <img src="/arrow.svg" alt="Scroll down arrow" className="w-8 h-8" />
+              <img src="/arrow.svg" alt="Scroll down arrow" className="w-12 h-12" />
             </a>
           </div>
         </div>
       </div>
       
       <div id="learn-more-section" className="min-h-screen bg-gray-900 p-8">
-        <div className="max-w-6xl mx-auto pt-20">
+        <div className="max-w-6xl mx-auto ">
           <h2 className="text-4xl font-bold text-white mb-4 text-center font-roboto fade-in-up">
   Why Choose VirtuTrade?
 </h2>
@@ -167,7 +168,7 @@ export function LandingPage() {
           <div className="flex flex-col items-center mt-20 fade-in-up">
             <a 
               href="#preview-section"
-              className="text-white text-lg mb-2 font-roboto block"
+              className="text-white text-2xl mb-2 font-roboto block fade-in-up"
             >
               See How It Works
             </a>   
@@ -176,7 +177,7 @@ export function LandingPage() {
               className="cursor-pointer hover:scale-110 transition-transform duration-200 animate-bounce inline-block"
               aria-label="Scroll to preview"
             >
-              <img src="/arrow.svg" alt="Scroll down arrow" className="w-8 h-8" />
+              <img src="/arrow.svg" alt="Scroll down arrow" className="w-12 h-12" />
             </a>
           </div>
         </div>
@@ -200,9 +201,9 @@ export function LandingPage() {
               <p className="text-gray-400 font-roboto mb-6">
                 Get a comprehensive view of the market and your portfolio at a glance.
               </p>
-              <div className="bg-gray-700 rounded-lg p-4 aspect-video flex items-center justify-center">
+              <div className="bg-gray-700 rounded-lg p-4  flex items-center justify-center">
                 <img 
-                  src="/dashboard-preview.png" 
+                  src="/homepage.jpg" 
                   alt="VirtuTrade Dashboard Preview" 
                   className="w-full h-full object-cover rounded"
                 />

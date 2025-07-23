@@ -79,7 +79,7 @@ export function TopStockMovers() {
   const currentData = activeTab === 'gainers' ? topGainers : topLosers;
 
   return (
-    <div className="bg-slate-800/60 rounded-xl p-4 border border-slate-700 h-[27rem] ">
+    <div className="bg-slate-800/60 rounded-xl p-4 border border-slate-700 ">
       <div className="flex items-center justify-between mb-4">
         <div className="border-b-2 border-white w-full">
         <h3 className="text-xl text-white mb-4">Top Market Movers</h3>
@@ -87,7 +87,7 @@ export function TopStockMovers() {
       </div>
 
       {/* Tab Navigation */}
-      <div className="flex space-x-1  bg-slate-900 rounded-lg p-1 mt-[1rem]">
+      <div className="flex space-x-1 bg-[#0F172A] rounded-lg p-1 mt-[1rem]">
         <button
           onClick={() => setActiveTab('gainers')}
           className={`flex items-center space-x-2 px-3 py-2  rounded-md text-sm font-medium transition-all duration-200 flex-1 justify-center ${
@@ -115,8 +115,8 @@ export function TopStockMovers() {
       {/* Content */}
       <div className="space-y-3 ">
         {currentData.map((stock, index) => (
-          <div key={stock.symbol} className="flex items-center justify-between mt-2 py-2 hover:bg-slate-700/30 rounded-lg px-2 transition-colors duration-200">
-            <div className="flex items-center space-x-3">
+          <div key={stock.symbol} className="flex items-center justify-between mt-2 py-2 hover:bg-slate-700/30 rounded-lg px-2 transition-colors duration-200 bg-[#0F172A]">
+            <div className="flex items-center space-x-3 ">
               <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
                 activeTab === 'gainers' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-red-500/20 text-red-400'
               }`}>
