@@ -68,7 +68,7 @@ export default function Ticker() {
   return (
   <div className="flex flex-row text-white min-h-screen">
     {/* First column - Stock info and chart */}
-    <div className="flex flex-col w-2/3 pl-32 py-12">
+    <div className="flex flex-col w-2/3 pl-[14rem] py-[3rem]">
       {/* Top row - Logo and basic info */}
       <div className="flex flex-row items-start mb-8">
         {stockData.logo && (
