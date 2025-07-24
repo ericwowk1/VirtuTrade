@@ -1,8 +1,8 @@
 // src/utils/portfolioCalculator.ts
-import { PrismaClient } from '@prisma/client';
+import { prisma } from "@/services/prisma";
 import axios from 'axios';
 
-const prisma = new PrismaClient();
+
 
 // Fetch current stock price from an API
 async function fetchStockPrice(symbol: string): Promise<number | null> {

@@ -2,10 +2,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/services/auth";
-import { PrismaClient } from "@/generated/prisma";
+import { prisma } from "@/services/prisma";
 import { getStockData } from '@/services/getStockData'; // ✅ Import the same function
 
-const prisma = new PrismaClient();
+
 
 interface StockData {
   c: number; // current price
