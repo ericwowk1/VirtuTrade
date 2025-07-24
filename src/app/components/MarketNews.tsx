@@ -83,7 +83,7 @@ export function MarketNews() {
       </div>
 
       {/* News List - Conditionally Scrollable */}
-      <div className="h-[17rem] overflow-y-auto custom-scrollbar">
+      <div className="h-[19rem] overflow-y-auto custom-scrollbar">
         <div className="space-y-1">
           {news.filter(article => article.images && article.images.length > 0).map((article) => (
             <article 

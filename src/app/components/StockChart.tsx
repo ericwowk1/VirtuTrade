@@ -115,7 +115,7 @@ useEffect(() => {
     const series = chart.addSeries(AreaSeries, {
         lineColor: '#2962FF',
         topColor: '#2962FF',
-        bottomColor: 'rgba(197, 101, 221, 0.28)',
+        bottomColor: 'rgba(35, 26, 167, 0.25)',
         lineWidth: 2,
     });
 

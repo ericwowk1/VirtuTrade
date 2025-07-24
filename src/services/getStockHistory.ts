@@ -30,34 +30,45 @@ export async function getStockHistory(symbol: string, timeRange: TimeRange): Pro
   const endDate = new Date();
   let startDate: Date;
   let timeframe: string;
+  let limit: number;
 
   switch (timeRange) {
     case '1D':
-      // For 1D, try current day first, then go back day by day until we find data
       return await get1DayDataWithFallback(symbol, apiKey!, apiSecret!);
       
     case '1M':
       startDate = new Date();
       startDate.setMonth(startDate.getMonth() - 1);
-      timeframe = '1Hour';
+      timeframe = '1H';  // Fixed: was '1Hour'
+      limit = 1000;      // ~30 days * 24 hours = 720 max
       break;
+      
     case '1Y':
       startDate = new Date();
       startDate.setFullYear(startDate.getFullYear() - 1);
-      timeframe = '1Day';
+      timeframe = '1D';  // Fixed: was '1Day'
+      limit = 500;       // 365 trading days + buffer
       break;
+      
     case 'ALL':
       startDate = new Date();
-      startDate.setFullYear(startDate.getFullYear() - 5);
-      timeframe = '1Week';
+      startDate.setFullYear(startDate.getFullYear() - 10); // Increased from 5 to 10 years
+      timeframe = '1W';  // Fixed: was '1Week'
+      limit = 1000;      // ~10 years * 52 weeks = 520 max
       break;
+      
     default:
       throw new Error('Invalid time range');
   }
 
-  // For non-1D timeframes, use existing logic
   const startDateISO = startDate.toISOString();
   const endDateISO = endDate.toISOString();
+
+  console.log(`Fetching ${symbol} for ${timeRange}:`);
+  console.log(`- Start: ${startDateISO}`);
+  console.log(`- End: ${endDateISO}`);
+  console.log(`- Timeframe: ${timeframe}`);
+  console.log(`- Limit: ${limit}`);
 
   try {
     const response = await axios.get<AlpacaResponse>(
@@ -68,7 +79,7 @@ export async function getStockHistory(symbol: string, timeRange: TimeRange): Pro
           timeframe,
           start: startDateISO,
           end: endDateISO,
-          limit: 100,
+          limit,
           adjustment: 'raw',
           feed: 'iex',
           sort: 'asc'
@@ -83,8 +94,13 @@ export async function getStockHistory(symbol: string, timeRange: TimeRange): Pro
     const bars = response.data.bars[symbol.toUpperCase()];
     
     if (!bars || bars.length === 0) {
+      console.log(`No bars returned for ${symbol}`);
       return [];
     }
+
+    console.log(`Received ${bars.length} bars for ${timeRange}`);
+    console.log(`First bar: ${bars[0].t} - $${bars[0].c}`);
+    console.log(`Last bar: ${bars[bars.length - 1].t} - $${bars[bars.length - 1].c}`);
 
     return bars.map((bar: AlpacaBar): ChartDataPoint => ({
       time: Math.floor(new Date(bar.t).getTime() / 1000),
@@ -95,12 +111,18 @@ export async function getStockHistory(symbol: string, timeRange: TimeRange): Pro
     console.error('Error fetching from Alpaca:', error);
     if (axios.isAxiosError(error)) {
       console.error('Alpaca API response:', error.response?.data);
+      console.error('Request URL:', error.config?.url);
+      console.error('Request params:', error.config?.params);
     }
     throw new Error('Failed to fetch stock data from Alpaca');
   }
 }
 
-// Special function for 1D that starts with today and keeps going back until it finds data
+
+
+
+
+
 async function get1DayDataWithFallback(symbol: string, apiKey: string, apiSecret: string): Promise<ChartDataPoint[]> {
   const maxDaysBack = 10; 
   
