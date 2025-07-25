@@ -256,7 +256,7 @@ export function PortfolioPerformanceChart() {
   }
 
   return (
-    <div className="bg-[#0F172A] backdrop-blur-sm border border-slate-700 rounded-lg shadow-lg p-4">
+    <div className="bg-[#0F172A] backdrop-blur-sm border border-slate-700 rounded-lg shadow-lg p-[2rem]">
       <div className='flex justify-between'>
         <div className='text-white text-2xl'>Portfolio Value</div>
         

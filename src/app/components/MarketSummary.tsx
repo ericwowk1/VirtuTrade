@@ -54,12 +54,12 @@ export async function MarketSummary() {
   };
 
   return (
-    <div className="rounded-lg p-6 pb-6 bg-slate-800/60 border border-slate-700 h-auto ">
+    <div className="rounded-lg p-[1rem]  bg-slate-800/60 border border-slate-700 h-auto ">
       <div className="border-b-2 border-white w-full">
       <h2 className=" text-2xl text-white mb-4">Market Summary</h2>
       </div>
-      <div className="space-y-3 ">
-        <div className="flex items-center  justify-between  p-3 border-b-2  bg-[#0F172A] rounded-lg mb-4">
+      <div className="space-y-3 pt-[1rem]">
+        <div className="flex items-center  justify-between  p-[1rem] border-b-2  bg-[#0F172A] rounded-lg mb-4">
           <div>
             <div className="font-medium text-white ">S&P 500</div>
             <div className="text-sm text-gray-400">SPY</div>

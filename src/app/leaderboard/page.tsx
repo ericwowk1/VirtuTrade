@@ -246,7 +246,7 @@ export default async function Leaderboard() {
  };
 
  return (
-   <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-600 p-[2rem]">
+   <div className="min-h-screen bg-[#0F172A] p-[2rem]">
      <div className="max-w-6xl mx-auto space-y-6">
        
        {/* User Stats Card */}

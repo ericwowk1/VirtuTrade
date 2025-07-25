@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface Position {
   symbol: string;
@@ -49,6 +50,7 @@ export function PositionOverview() {
   const [positions, setPositions] = useState<Position[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchPositions = async () => {
@@ -81,6 +83,11 @@ export function PositionOverview() {
     }
   };
 
+  const handleTradeClick = (symbol: string, name: string) => {
+    const encodedName = encodeURIComponent(name);
+    router.push(`/stocks/${symbol}?name=${encodedName}`);
+  };
+
   if (loading) {
     return (
       <div className="bg-slate-800/60 rounded-lg p-6 text-white">
@@ -99,7 +106,7 @@ export function PositionOverview() {
   }
 
   return (
-    <div className="bg-slate-800/60 rounded-lg p-4 text-white border border-slate-700 h-[27.5rem] ">
+    <div className="bg-slate-800/60 rounded-lg p-4 text-white border border-slate-700 ">
       <h3 className="text-2xl font-semibold mb-3">Positions Overview</h3>
       
       {positions.length === 0 ? (
@@ -109,17 +116,18 @@ export function PositionOverview() {
       ) : (
         <>
           {/* Header */}
-          <div className="grid grid-cols-[auto_1fr_1fr_1fr_1fr_1fr]  text-xs text-gray-400 border-b border-gray-600 mb-2">
+          <div className="grid grid-cols-[auto_1fr_1fr_1fr_1fr_1fr_auto] text-xs text-gray-400 border-b border-gray-600 mb-2">
             <div></div>
-            <div className="text-right">Symbol</div>
+            <div className="text-left pl-[2.5rem]">Symbol</div>
             <div className="text-center ml-4">Price</div>
             <div className="text-center">Value</div>
             <div className="text-left">1D Return</div>
             <div className="text-left">1M Chart</div>
+            <div className="text-left">Trade</div>
           </div>
 
           {/* Positions List */}
-          <div className="space-y-1 max-h-[21rem] overflow-y-auto custom-scrollbar ">
+          <div className="space-y-1 max-h-[14rem] overflow-y-auto custom-scrollbar ">
             {positions.map((position) => {
               const isPositive = position.change >= 0;
               const hasData = position.historicalPrices.length > 1;
@@ -129,7 +137,7 @@ export function PositionOverview() {
               return (
                 <div 
                   key={position.symbol} 
-                  className="grid grid-cols-[auto_1fr_1fr_1fr_1fr_1fr] gap-3 py-2 px-3 bg-[#0F172A] hover:bg-gray-700 rounded transition-colors duration-200 items-center"
+                  className="grid grid-cols-[auto_1fr_1fr_1fr_1fr_1fr_auto] gap-3 py-2 px-3 bg-[#0F172A] hover:bg-gray-700 rounded transition-colors duration-200 items-center"
                 >
                   {/* Company Logo */}
                   <div className="flex items-center">
@@ -145,8 +153,6 @@ export function PositionOverview() {
                   <div className="text-white text-sm font-medium ">
                     ${position.currentPrice.toFixed(2)}
                   </div>
-                  
-                 
                   
                   {/* Total Value */}
                   <div className="text-white text-sm font-medium">
@@ -178,6 +184,16 @@ export function PositionOverview() {
                         <span className="text-xs text-gray-400">--</span>
                       </div>
                     )}
+                  </div>
+
+                  {/* Trade Button */}
+                  <div className="flex justify-center">
+                    <button
+                      onClick={() => handleTradeClick(position.symbol, position.name)}
+                      className="px-3 py-1 text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 rounded transition-colors duration-200"
+                    >
+                      Trade
+                    </button>
                   </div>
                 </div>
               );

@@ -79,7 +79,7 @@ export function TopStockMovers() {
   const currentData = activeTab === 'gainers' ? topGainers : topLosers;
 
   return (
-    <div className="bg-slate-800/60 rounded-xl p-4 border border-slate-700 ">
+    <div className="bg-slate-800/60 rounded-xl p-4 border border-slate-700 h-[30rem]">
       <div className="flex items-center justify-between mb-4">
         <div className="border-b-2 border-white w-full">
         <h3 className="text-xl text-white mb-4">Top Market Movers</h3>

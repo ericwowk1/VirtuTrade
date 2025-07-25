@@ -1,5 +1,5 @@
 import React from 'react';
-import { PrismaClient } from "@/generated/prisma";
+import { prisma } from "@/services/prisma";
 import { getStockData } from "@/services/getStockData";
 import { getStockInfo } from "@/services/getStockInfo";
 
@@ -34,8 +34,6 @@ interface StockPositionsTableProps {
   userId: string;
 }
 
-const prisma = new PrismaClient();
-
 export async function getPositionsData(userId: string): Promise<Position[]> {
   try {
     const positions = await prisma.stock.findMany({
@@ -67,9 +65,9 @@ export async function StockPositionsTable({ userId }: StockPositionsTableProps) 
     
     if (positions.length === 0) {
       return (
-        <div className="bg-slate-800 rounded-lg p-6">
-          <h3 className="text-xl font-semibold text-white mb-4">Common Stock Positions</h3>
-          <div className="py-8 text-center text-gray-400">
+        <div className="bg-slate-800 rounded-lg p-4 h-full flex flex-col">
+          <h3 className="text-xl font-semibold text-white mb-4">Stock Positions</h3>
+          <div className="flex-1 flex items-center justify-center text-gray-400">
             No positions found
           </div>
         </div>
@@ -112,9 +110,9 @@ export async function StockPositionsTable({ userId }: StockPositionsTableProps) 
   } catch (error) {
     console.error('Error in StockPositionsTable:', error);
     return (
-      <div className="bg-slate-800 rounded-lg p-6">
-        <h3 className="text-xl font-semibold text-white mb-4">Common Stock Positions</h3>
-        <div className="py-8 text-center text-red-400">
+      <div className="bg-slate-800 rounded-lg p-4 h-full flex flex-col">
+        <h3 className="text-xl font-semibold text-white mb-4">Stock Positions</h3>
+        <div className="flex-1 flex items-center justify-center text-red-400">
           Error loading positions
         </div>
       </div>
@@ -134,8 +132,8 @@ export async function StockPositionsTable({ userId }: StockPositionsTableProps) 
     }
 
     const currentPrice: number = Math.round(stockData.c * 100) / 100; 
-  const shares: number = Number(position.quantity) || 0;
-  const avgPrice: number = Math.round(position.averagePrice * 100) / 100; 
+    const shares: number = Number(position.quantity) || 0;
+    const avgPrice: number = Math.round(position.averagePrice * 100) / 100; 
     const totalValue: number = shares * currentPrice;
     const totalCost: number = shares * avgPrice;
     
@@ -171,22 +169,22 @@ export async function StockPositionsTable({ userId }: StockPositionsTableProps) 
   };
 
 return (
-  <div className="bg-slate-800 rounded-lg p-8">
+  <div className="bg-gradient-to-br bg-slate-800 to-gray-900 rounded-xl p-6 shadow-lg border border-gray-600 h-full flex flex-col">
     <h3 className="text-2xl font-semibold text-white mb-6">Stock Positions</h3>
-    <div className="overflow-x-auto">
-      <table className="w-full text-base">
+    <div className="overflow-x-auto overflow-y-auto flex-1">
+      <table className="w-full text-sm min-w-max">
         <thead>
-          <tr className="text-gray-400 border-b border-gray-700 text-xl">
-            <th className="text-left py-4 px-3">Symbol</th>
-            <th className="text-left py-4 px-3">Company</th>
-            <th className="text-left py-4 px-3">Shares</th>
-            <th className="text-left py-4 px-3">Price</th>
-            <th className="text-left py-4 px-3">Avg. PPS</th>
-            <th className="text-left py-4 px-3">Value</th>
-            <th className="text-left py-4 px-3">$ Today</th>
-            <th className="text-left py-4 px-3">% Today</th>
-            <th className="text-left py-4 px-3">$ All-Time</th>
-            <th className="text-left py-4 px-3">% All-Time</th>
+          <tr className="text-gray-400 border-b border-gray-700 text-sm sticky top-0 bg-slate-800">
+            <th className="text-left py-5 px-2 whitespace-nowrap">Symbol</th>
+            <th className="text-left py-5 px-2 whitespace-nowrap">Company</th>
+            <th className="text-left py-5 px-2 whitespace-nowrap">Shares</th>
+            <th className="text-left py-5 px-2 whitespace-nowrap">Price</th>
+            <th className="text-left py-5 px-2 whitespace-nowrap">Avg. PPS</th>
+            <th className="text-left py-5 px-2 whitespace-nowrap">Value</th>
+            <th className="text-left py-5 px-2 whitespace-nowrap">$ Today</th>
+            <th className="text-left py-5 px-2 whitespace-nowrap">% Today</th>
+            <th className="text-left py-5 px-2 whitespace-nowrap">$ All-Time</th>
+            <th className="text-left py-5 px-2 whitespace-nowrap">% All-Time</th>
           </tr>
         </thead>
         <tbody className="text-white">
@@ -196,33 +194,33 @@ return (
             const metrics: Metrics = calculateMetrics(position, stockData);
             
             return (
-              <tr key={position.id} className="border-b border-gray-700">
-                <td className="py-4 px-3 text-purple-400 font-medium">
+              <tr key={position.id} className="border-b border-gray-700 hover:bg-slate-700/50">
+                <td className="py-5 px-2 text-purple-400 font-medium text-sm whitespace-nowrap">
                   {position.symbol}
                 </td>
-                <td className="py-4 px-3">
+                <td className="py-5 px-2 text-sm whitespace-nowrap max-w-[120px] truncate" title={stockInfo?.name}>
                   {stockInfo?.name || 'Loading...'}
                 </td>
-                <td className="py-4 px-3">{position.quantity}</td>
-                <td className="py-4 px-3">
+                <td className="py-5 px-2 text-sm whitespace-nowrap">{position.quantity}</td>
+                <td className="py-5 px-2 text-sm whitespace-nowrap">
                   {stockData ? formatCurrency(metrics.currentPrice) : 'Loading...'}
                 </td>
-                <td className="py-4 px-3">
+                <td className="py-5 px-2 text-sm whitespace-nowrap">
                   {formatCurrency(position.averagePrice || 0)}
                 </td>
-                <td className="py-4 px-3">
+                <td className="py-5 px-2 text-sm whitespace-nowrap">
                   {stockData ? formatCurrency(metrics.totalValue) : 'Loading...'}
                 </td>
-                <td className={`py-4 px-3 ${metrics.todayGainLoss >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                <td className={`py-5 px-2 text-sm whitespace-nowrap ${metrics.todayGainLoss >= 0 ? 'text-green-400' : 'text-red-400'}`}>
                   {stockData ? `${metrics.todayGainLoss >= 0 ? '+' : '-'}${formatCurrency(metrics.todayGainLoss)}` : 'Loading...'}
                 </td>
-                <td className={`py-4 px-3 ${metrics.todayGainLossPercent >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                <td className={`py-5 px-2 text-sm whitespace-nowrap ${metrics.todayGainLossPercent >= 0 ? 'text-green-400' : 'text-red-400'}`}>
                   {stockData ? formatPercent(metrics.todayGainLossPercent) : 'Loading...'}
                 </td>
-                <td className={`py-4 px-3 ${metrics.allTimeGainLoss >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                <td className={`py-5 px-2 text-sm whitespace-nowrap ${metrics.allTimeGainLoss >= 0 ? 'text-green-400' : 'text-red-400'}`}>
                   {stockData ? `${metrics.allTimeGainLoss >= 0 ? '+' : '-'}${formatCurrency(metrics.allTimeGainLoss)}` : 'Loading...'}
                 </td>
-                <td className={`py-4 px-3 ${metrics.allTimeGainLossPercent >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                <td className={`py-5 px-2 text-sm whitespace-nowrap ${metrics.allTimeGainLossPercent >= 0 ? 'text-green-400' : 'text-red-400'}`}>
                   {stockData ? formatPercent(metrics.allTimeGainLossPercent) : 'Loading...'}
                 </td>
               </tr>
