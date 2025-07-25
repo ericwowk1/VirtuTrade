@@ -26,23 +26,53 @@ export default function Ticker() {
   const [error, setError] = useState<string | null>(null);
   const [selectedPeriod, setSelectedPeriod] = useState<TimePeriod>('1D');
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`/api/stockApi?ticker=${encodeURIComponent(ticker)}`);
-        if (!response.ok) throw new Error('Failed to fetch');
-        const result = await response.json();
-        console.log("resulttt", result);
-        setStockData(result);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Unknown error');
-      } finally {
-        setLoading(false);
-      }
-    };
+ useEffect(() => {
+  const fetchInitialData = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(`/api/stockApi?ticker=${encodeURIComponent(ticker)}`);
+      if (!response.ok) throw new Error('Failed to fetch stock data');
+      const result = await response.json();
+      
+      setStockData(result);
+      setError(null);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An unknown error occurred');
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  fetchInitialData();
+}, [ticker]); // Only run when ticker changes
 
-    fetchData();
-  }, [ticker]);
+// Second useEffect - Price updates only
+useEffect(() => {
+  // Don't start interval until we have initial data
+  if (!stockData) return;
+  
+  const fetchPriceUpdate = async () => {
+    try {
+      const response = await fetch(`/api/stockApi?ticker=${encodeURIComponent(ticker)}&priceOnly=true`);
+      if (!response.ok) throw new Error('Failed to fetch stock data');
+      const result = await response.json();
+      
+      setStockData(prevData => ({
+        ...result,
+        logo: prevData!.logo,  // We know prevData exists because of the guard
+        name: prevData!.name
+      }));
+      
+      setError(null);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An unknown error occurred');
+    }
+  };
+  
+  const intervalId = setInterval(fetchPriceUpdate, 10000);
+  
+  return () => clearInterval(intervalId);
+}, [ticker, stockData]);
 
   if (loading) return (
     <div className="flex flex-row text-white">
@@ -60,64 +90,65 @@ export default function Ticker() {
       </div>
     </div>
   );
-
-  console.log("This is stockData object", stockData)
-
+  
   const timePeriods: TimePeriod[] = ['1D', '1M', '1Y', 'ALL'];
-   
+    
   return (
-  <div className="flex flex-row text-white min-h-screen">
-    {/* First column - Stock info and chart */}
-    <div className="flex flex-col w-2/3 pl-[14rem] py-[3rem]">
-      {/* Top row - Logo and basic info */}
-      <div className="flex flex-row items-start mb-8">
-        {stockData.logo && (
-          <img src={stockData.logo} alt={`${ticker} logo`} className="w-32 h-32 mr-8" />
-        )}
-        
-        <div className="flex flex-col">
-          <h1 className="text-4xl font-bold mb-2">{stockData.name || name} ({ticker})</h1>
-          <div className="flex flex-row items-center">
-            <h1 className="text-5xl font-semibold">${stockData.c.toFixed(2)}</h1>
-            {stockData.d < 0 ? 
-              <h1 className="text-red-500 text-2xl pl-6">$-{Math.abs(stockData.d).toFixed(2)} ({stockData.dp.toFixed(2)}%)</h1> : 
-              <h1 className="text-green-500 text-2xl pl-6">$+{stockData.d.toFixed(2)} ({stockData.dp.toFixed(2)}%)</h1>
-            }
+    <div className="flex flex-row text-white min-h-screen">
+      {/* First column - Stock info and chart */}
+      <div className="flex flex-col w-2/3 pl-[14rem] py-[3rem]">
+        {/* Top row - Logo and basic info */}
+        <div className="flex flex-row items-start mb-8">
+          {stockData.logo && (
+            <img src={stockData.logo} alt={`${ticker} logo`} className="w-32 h-32 mr-8" />
+          )}
+          
+          <div className="flex flex-col">
+            <h1 className="text-4xl font-bold mb-2">{stockData.name || name} ({ticker})</h1>
+            <div className="flex flex-row items-center">
+              <h1 className="text-5xl font-semibold">${stockData.c.toFixed(2)}</h1>
+              {stockData.d < 0 ? 
+                <h1 className="text-red-500 text-2xl pl-6">$-{Math.abs(stockData.d).toFixed(2)} ({stockData.dp.toFixed(2)}%)</h1> : 
+                <h1 className="text-green-500 text-2xl pl-6">$+{stockData.d.toFixed(2)} ({stockData.dp.toFixed(2)}%)</h1>
+              }
+            </div>
           </div>
+        </div>
+
+        {/* Chart */}
+        <div className="">
+  <StockChart 
+    ticker={ticker} 
+    period={selectedPeriod}
+    currentPrice={stockData.c}  
+  />
+</div>
+        {/* Time Period Buttons */}
+        <div className="flex flex-row gap-4 mt-6">
+          {timePeriods.map((period) => (
+            <button
+              key={period}
+              onClick={() => setSelectedPeriod(period)}
+              className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                selectedPeriod === period
+                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/25'
+                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white border border-gray-600'
+              }`}
+            >
+              {period === '1D' ? '1 Day' : 
+               period === '1M' ? '1 Month' : 
+               period === '1Y' ? '1 Year' : 
+               'All Time'}
+            </button>
+          ))}
         </div>
       </div>
 
-      {/* Chart */}
-      <div className="">
-        <StockChart ticker={ticker} period={selectedPeriod}/>
-      </div>
+      {/* Second column - Trading Widget */}
 
-      {/* Time Period Buttons */}
-      <div className="flex flex-row gap-4 mt-6">
-        {timePeriods.map((period) => (
-          <button
-            key={period}
-            onClick={() => setSelectedPeriod(period)}
-            className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
-  selectedPeriod === period
-    ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/25'
-    : 'bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white border border-gray-600'
-}`}
-          >
-            {period === '1D' ? '1 Day' : 
-             period === '1M' ? '1 Month' : 
-             period === '1Y' ? '1 Year' : 
-             'All Time'}
-          </button>
-        ))}
+      <div className="flex flex-col w-1/4 ml-12 py-12">
+        <TradingWidget ticker={ticker} currentPrice={stockData.c} logo={stockData.logo} name={stockData.name}/>
       </div>
     </div>
-
-    {/* Second column - Trading Widget */}
-    <div className="flex flex-col w-1/4 ml-12 py-12">
-      <TradingWidget ticker={ticker} currentPrice={stockData.c} logo={stockData.logo} name={stockData.name}/>
-    </div>
-  </div>
-);
- 
+  );
 }

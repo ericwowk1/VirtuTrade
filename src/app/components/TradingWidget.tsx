@@ -138,7 +138,7 @@ export function TradingWidget({ ticker, currentPrice, logo, name }: TradingWidge
         <div className="flex flex-col">
           
           <span className="text-white font-bold text-xl pl-4">{name}</span>
-          <div className="text-white font-bold text-xl pl-4">${currentPrice}</div>
+          <div className="text-white font-bold text-xl pl-4">${currentPrice.toFixed(2)}</div>
           
         </div>
         
@@ -179,7 +179,7 @@ export function TradingWidget({ ticker, currentPrice, logo, name }: TradingWidge
 
       {/* Order Type */}
       <div className="mb-4">
-        <label className="block text-gray-300 text-sm mb-2">Order Type</label>
+        <label className="block text-gray-300 text-sm mb-[1rem] mt-[1rem]">Order Type</label>
         <select 
           className="w-full bg-slate-700 text-white p-2 rounded border border-slate-600 focus:border-cyan-500 focus:outline-none text-sm"
         >

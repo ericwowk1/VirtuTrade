@@ -6,9 +6,10 @@ export type TimeRange = '1D' | '1M' | '1Y' | 'ALL';
 type StockChartProps = {
    ticker: string;
    period: TimeRange;
+   currentPrice?: number; // Add this
 };
 
-export function StockChart({ ticker, period }: StockChartProps) {
+export function StockChart({ ticker, period, currentPrice }: StockChartProps) {
    const chartContainerRef = useRef<HTMLDivElement>(null);
    const [chartData, setChartData] = useState<any[]>([]);
    const [isLoading, setIsLoading] = useState(true);
@@ -30,14 +31,41 @@ export function StockChart({ ticker, period }: StockChartProps) {
             
             console.log('Raw API response:', data);
             
-           const dataArray = data.values || data;
+            const dataArray = data.values || data;
 
             if (dataArray && dataArray.length > 0) {
                 const formattedData = dataArray.map((item: any) => ({
                     time: item.time,
                     value: item.value
                 }));
-                console.log('Formatted chart data:', formattedData.slice(0, 3));
+                
+                // ADD THIS SECTION - Append current price if available
+                if (currentPrice) {
+                    const currentTime = Math.floor(Date.now() / 1000); // Current timestamp in seconds
+                    const lastDataPoint = formattedData[formattedData.length - 1];
+                    
+                    // Only add if the current time is after the last data point
+                    if (!lastDataPoint || currentTime > lastDataPoint.time) {
+                        formattedData.push({
+                            time: currentTime,
+                            value: currentPrice
+                        });
+                    } else if (period === '1D' && lastDataPoint) {
+                        // For intraday, update the last point if it's within the same minute
+                        const timeDiff = currentTime - lastDataPoint.time;
+                        if (timeDiff < 60) { // Within same minute
+                            formattedData[formattedData.length - 1].value = currentPrice;
+                        } else {
+                            formattedData.push({
+                                time: currentTime,
+                                value: currentPrice
+                            });
+                        }
+                    }
+                }
+                // END OF ADDED SECTION
+                
+                console.log('Formatted chart data:', formattedData.slice(-3)); // Changed to show last 3 points
                 setChartData(formattedData);
             } else {
                 console.log('No data array found');
@@ -54,7 +82,7 @@ export function StockChart({ ticker, period }: StockChartProps) {
     if (ticker) {
         fetchData();
     }
-}, [ticker, period]);
+}, [ticker, period, currentPrice]);
 
 useEffect(() => {
     if (!chartContainerRef.current || chartData.length === 0) return;

@@ -24,36 +24,60 @@ async function makeAlpacaRequest(endpoint: string): Promise<any> {
   return response.json();
 }
 
-export async function getStockData(ticker: string) {
-  console.log('Fetching data for ticker:', ticker);
-  count = count + 1;
-  console.log("count", count)
+export async function getStockData(tickers: string | string[]) {
+  // Convert single ticker to array for uniform handling
+  const tickerArray = Array.isArray(tickers) ? tickers : [tickers];
+  const tickerString = tickerArray.join(',');
+  
+ 
   
   try {
-    const data = await makeAlpacaRequest(`/stocks/snapshots?symbols=${ticker}`);
     
-    if (!data[ticker]) {
-      throw new Error(`No data found for ticker: ${ticker}`);
+    const data = await makeAlpacaRequest(`/stocks/snapshots?symbols=${tickerString}`);
+    
+    // If single ticker was passed, return single result
+    if (!Array.isArray(tickers)) {
+      const ticker = tickers;
+      if (!data[ticker]) {
+        throw new Error(`No data found for ticker: ${ticker}`);
+      }
+      
+      const snapshot = data[ticker];
+      const currentPrice = snapshot.latestTrade?.p || snapshot.latestQuote?.ap || 0;
+      const previousClose = snapshot.prevDailyBar?.c || currentPrice;
+      
+      return {
+        c: currentPrice,
+        pc: previousClose,
+        d: currentPrice - previousClose,
+        dp: previousClose > 0 ? ((currentPrice - previousClose) / previousClose) * 100 : 0
+      };
     }
-
-    const snapshot = data[ticker];
-    const currentPrice = snapshot.latestTrade?.p || snapshot.latestQuote?.ap || 0;
-    const previousClose = snapshot.prevDailyBar?.c || currentPrice;
-
-    // Transform Alpaca response to match expected StockData interface
-    const stockData = {
-      c: currentPrice, // current price
-      pc: previousClose, // previous close
-      d: currentPrice - previousClose, // change amount
-      // Calculate percent change: ((Current Price - Previous Close) / Previous Close) * 100
-      dp: previousClose > 0 ? ((currentPrice - previousClose) / previousClose) * 100 : 0
-    };
-
-    console.log("Stock Data", stockData);
-    return stockData;
+    
+    // For multiple tickers, return an object with ticker symbols as keys
+    const results: Record<string, any> = {};
+    
+    for (const ticker of tickerArray) {
+      if (!data[ticker]) {
+        console.warn(`No data found for ticker: ${ticker}`);
+        continue;
+      }
+      
+      const snapshot = data[ticker];
+      const currentPrice = snapshot.latestTrade?.p || snapshot.latestQuote?.ap || 0;
+      const previousClose = snapshot.prevDailyBar?.c || currentPrice;
+      
+      results[ticker] = {
+        c: currentPrice,
+        pc: previousClose,
+        d: currentPrice - previousClose,
+        dp: previousClose > 0 ? ((currentPrice - previousClose) / previousClose) * 100 : 0
+      };
+    }
+    
+    return results;
   } catch (error) {
     console.error("Alpaca API Error:", error);
     throw error;
   }
 }
-
