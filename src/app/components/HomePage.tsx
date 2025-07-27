@@ -6,7 +6,7 @@ import { TopStockMovers } from './TopStockMovers';
 import { PortfolioPerformanceChart } from './PortfolioPerformanceChart'
 import { MarketNews } from './MarketNews';
 
-import {NoPositionAlert } from './NoPositionAlert';
+
 
 export function HomePage() {
  
