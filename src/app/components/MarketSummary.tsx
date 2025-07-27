@@ -1,3 +1,5 @@
+
+
 import React from 'react';
 import { getStockData } from '@/services/getStockData';
 

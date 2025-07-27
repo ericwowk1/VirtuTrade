@@ -6724,7 +6724,7 @@ export function TickerSearch() {
 
   return (
     <div className="relative w-3/7 ">
-      <Search className="absolute" />
+      <Search className="absolute " />
       <Autocomplete
         disablePortal
         options={options}
@@ -6820,7 +6820,7 @@ export function TickerSearch() {
         renderInput={(params) => (
           <TextField 
             {...params} 
-            placeholder="Search Stock Tickers..."
+            placeholder="Search Stocks to Start Trading..."
             sx={{
               '& .MuiOutlinedInput-root': {
                 backgroundColor: '#1e293b',
@@ -6853,7 +6853,7 @@ export function TickerSearch() {
         )}
       />
       <button className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 hover:bg-slate-700 rounded transition-colors duration-200">
-        <Search className="w-4 h-4 text-slate-400" />
+        <Search className="w-6 h-4 text-slate-400" />
       </button>
     </div>
   );

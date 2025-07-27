@@ -19,11 +19,12 @@ export async function GET(request: NextRequest) {
       // Only get stock info if priceOnly is not true
       let logo = null;
       let name = null;
+      let stockInfo = null;
 
       if (!priceOnly) {
          // Check if logo is already cached first
          const cachedLogoPath = await getCachedLogo(ticker);
-         const stockInfo = await getStockInfo(ticker);
+         stockInfo = await getStockInfo(ticker); // Store the full stockInfo
 
          // Handle logo caching
          logo = cachedLogoPath;
@@ -41,18 +42,18 @@ export async function GET(request: NextRequest) {
          }
       }
 
-      
       const result = {
-   ticker,
-   c: stockData.c,
-   pc: stockData.pc,
-   d: stockData.d,
-   dp: stockData.dp,
-   logo,
-   name,
-
-};
-console.log("result stockapi", result)
+         ticker,
+         c: stockData.c,
+         pc: stockData.pc,
+         d: stockData.d,
+         dp: stockData.dp,
+         logo,
+         name,
+         stockInfo // Include the full stockInfo object
+      };
+      
+      console.log("result stockapi", result);
 
       return Response.json(result);
    }

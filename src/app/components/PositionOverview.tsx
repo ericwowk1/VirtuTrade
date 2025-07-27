@@ -111,7 +111,8 @@ export function PositionOverview() {
       
       {positions.length === 0 ? (
         <div className="text-center py-8">
-          <p className="text-gray-400">No positions found</p>
+          <p className="text-red-500">No stocks in portfolio</p>
+         <p className="text-red-500">To start trading, enter a stock symbol in the search bar</p>
         </div>
       ) : (
         <>

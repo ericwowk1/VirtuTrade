@@ -70,9 +70,19 @@ export function MarketNews() {
     return null;
   };
 
-  const filteredNews = news.filter(article => article.images && article.images.length > 0);
-  const featuredArticle = filteredNews[0];
-  const remainingArticles = filteredNews.slice(1);
+  // Separate articles with and without images
+  const articlesWithImages = news.filter(article => article.images && article.images.length > 0);
+  const articlesWithoutImages = news.filter(article => !article.images || article.images.length === 0);
+
+  // If we have fewer than 4 articles with images, fill up with articles without images
+  let displayedArticles = [...articlesWithImages];
+  if (displayedArticles.length < 10) {
+    const needed = 10 - displayedArticles.length;
+    displayedArticles = [...displayedArticles, ...articlesWithoutImages.slice(0, needed)];
+  }
+
+  const featuredArticle = displayedArticles[0];
+  const remainingArticles = displayedArticles.slice(1);
 
   return (
     <div className="rounded-lg bg-slate-800/60 border border-slate-700 p-[1rem]  ">
@@ -157,7 +167,7 @@ export function MarketNews() {
                 rel="noopener noreferrer"
                 className="flex gap-3 p-2 rounded-lg hover:bg-gray-800/50 transition-all duration-200"
               >
-                {/* Article Image */}
+                {/* Article Image - Only show if image exists */}
                 {getImageUrl(article) && (
                   <div className="flex-shrink-0">
                     <img 
@@ -216,7 +226,7 @@ export function MarketNews() {
       </div>
 
       {/* No news fallback */}
-      {filteredNews.length === 0 && (
+      {displayedArticles.length === 0 && (
         <div className="flex-1 flex items-center justify-center">
           <p className="text-gray-500">No news articles available</p>
         </div>
