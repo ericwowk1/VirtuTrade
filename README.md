@@ -20,7 +20,7 @@
 <br>
 
 <div align="center">
-  <a href="#"> <img src="https://via.placeholder.com/800x450.png?text=Your+App+Screenshot+Here" alt="Project Screenshot">
+  <a href="#"> <img src="./public/logo.png" alt="VirtuTrade Logo">
   </a>
 </div>
 
