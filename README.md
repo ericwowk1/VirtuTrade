@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://storage.googleapis.com/generative-ai-public-data/hosted-images/1722127027376041.png" alt="VirtuTrade Hero Image">
+  <img src="./public/logo.png" alt="VirtuTrade Hero Image">
   <h1>VirtuTrade</h1>
   <p>A modern paper trading platform built with Next.js, TypeScript, and Tailwind CSS.</p>
 
