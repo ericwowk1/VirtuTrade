@@ -12,22 +12,16 @@ export default async function PortfolioPage() {
     redirect('/api/auth/signin');
   }
 
-
-
   return (
-    <div>
-      
-
-      <div className="grid grid-cols-2 gap-[2rem] py-[2rem] ">
-        <div className="pl-[2rem] ">
-        <PortfolioPieChart />
-</div>
-<div className="pr-[2rem] ">
-        <StockPositionsTable userId={session.user.id} />
+    <div className="w-full">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 md:gap-6 lg:gap-8 p-4 md:p-6 lg:p-8">
+        <div className="w-full">
+          <PortfolioPieChart />
+        </div>
+        <div className="w-full">
+          <StockPositionsTable userId={session.user.id} />
         </div>
       </div>
-
-      
     </div>
   );
 }

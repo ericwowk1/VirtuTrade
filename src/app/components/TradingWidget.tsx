@@ -131,7 +131,7 @@ export function TradingWidget({ ticker, currentPrice, logo, name }: TradingWidge
   const maxShares = getMaxShares();
 
   return (   
-    <div className="bg-slate-800 rounded-lg p-4 shadow-lg h-150">
+    <div className="bg-slate-800 rounded-lg p-4 shadow-lg ">
       {/* Header with ticker and price */}
       <div className="flex items-center mb-4">
         <img src={logo} alt={`${ticker} logo`} className="w-10 h-10 rounded-lg" />

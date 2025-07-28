@@ -59,7 +59,7 @@ function PortfolioStatsRow({ stats }: { stats: PortfolioStats }) {
       {/* Total Value */}
       <div className="bg-gradient-to-br bg-slate-800 to-gray-900 rounded-xl p-6 text-center shadow-lg border border-gray-600">
         <div className="text-sm font-medium text-gray-300 mb-2 uppercase tracking-wide">Total Value</div>
-        <div className="text-3xl font-bold text-white mb-1">
+        <div className="text-sm lg:text-2xl font-bold text-white mb-1">
           ${stats.totalValue.toLocaleString()}
         </div>
         
@@ -68,7 +68,7 @@ function PortfolioStatsRow({ stats }: { stats: PortfolioStats }) {
       {/* Total Gain/Loss */}
       <div className="bg-gradient-to-br bg-slate-800 to-gray-900 rounded-xl p-6 text-center shadow-lg border border-gray-600">
         <div className="text-sm font-medium text-gray-300 mb-2 uppercase tracking-wide">Total Gain/Loss</div>
-        <div className={`text-3xl font-bold mb-1 ${isGain ? 'text-emerald-400' : 'text-red-400'}`}>
+        <div className={`text-sm lg:text-2xl  font-bold mb-1 ${isGain ? 'text-emerald-400' : 'text-red-400'}`}>
           {isGain ? '+' : ''}${stats.totalGainLoss.toLocaleString()}
         </div>
         <div className={`text-xs font-medium ${isGain ? 'text-emerald-300' : 'text-red-300'}`}>
@@ -79,7 +79,7 @@ function PortfolioStatsRow({ stats }: { stats: PortfolioStats }) {
       {/* Buying Power */}
       <div className="bg-gradient-to-br bg-slate-800 to-gray-900 rounded-xl p-6 text-center shadow-lg border border-gray-600">
         <div className="text-sm font-medium text-gray-300 mb-2 uppercase tracking-wide">Buying Power</div>
-        <div className="text-3xl font-bold text-white mb-1">
+        <div className="text-sm lg:text-2xl  font-bold text-white mb-1">
           ${stats.buyingPower.toLocaleString()}
         </div>
        
@@ -110,30 +110,29 @@ useEffect(() => {
       const data = await response.json();
       const fetchedPositions = data.positions || [];
       
-      // Calculate total current value of all positions (including cash if it exists)
+    
       const totalCurrentValue = fetchedPositions.reduce((sum: number, pos: Position) => sum + pos.currentValue, 0);
       
-      // Filter out cash position for invested positions
+    
       const investedPositions = fetchedPositions.filter((pos: Position) => pos.symbol !== 'CASH');
       const totalInvestedValue = investedPositions.reduce((sum: number, pos: Position) => sum + pos.currentValue, 0);
       
-      // Get actual buying power from API data or calculate it
+      
       const cashPosition = fetchedPositions.find((pos: Position) => pos.symbol === 'CASH');
       const buyingPower = cashPosition ? cashPosition.currentValue : 0;
       
-      // Total value should be the sum of all position values (this should be 99342)
       const totalValue = totalCurrentValue;
       
-      // Calculate gain/loss (current total value - starting amount)
+     
       const totalGainLoss = totalValue - STARTING_AMOUNT;
       
-      // Create chart data
+    
       const chartPositions = investedPositions.map((pos: Position) => ({
         ...pos,
         percentage: (pos.currentValue / totalValue) * 100
       }));
       
-      // Add buying power as cash position if it's greater than 0
+ 
       if (buyingPower > 0) {
         const buyingPowerPosition: Position = {
           symbol: 'CASH',
@@ -232,85 +231,111 @@ useEffect(() => {
     );
   }
 
-  return (
+ return (
     <div className='flex flex-col'>
       <PortfolioStatsRow stats={portfolioStats} />
-      <div className="bg-gradient-to-br bg-slate-800 to-gray-900 rounded-xl p-8 text-white shadow-xl border border-gray-700">
-        <div className="flex items-center mb-8">
-          <h3 className="text-4xl font-bold tracking-wide">Portfolio Breakdown</h3>
+      <div className="bg-gradient-to-br bg-slate-800 to-gray-900 rounded-xl p-4 md:p-6 lg:p-8 text-white shadow-xl border border-gray-700">
+        <div className="flex items-center mb-4 md:mb-6 lg:mb-8">
+          <h3 className="text-2xl md:text-3xl lg:text-3xl font-bold tracking-wide">Portfolio Breakdown</h3>
         </div>
         
-        <div className="flex items-start gap-12">
-          {/* Enhanced Legend */}
-          <div className="flex-shrink-0 space-y-3 min-w-[300px] max-h-[500px] overflow-y-auto custom-scrollbar">
-            {chartData.map((position, index) => (
-              <div 
-                key={position.symbol} 
-                className={`flex items-center p-4 rounded-xl transition-all duration-200 cursor-pointer ${
-                  hoveredIndex === index 
-                    ? 'bg-gray-700/70 transform scale-105 shadow-lg' 
-                    : 'bg-gray-800/50 hover:bg-gray-700/50'
-                }`}
-                onMouseEnter={() => setHoveredIndex(index)}
-                onMouseLeave={() => setHoveredIndex(null)}
-              >
-                <div 
-                  className="w-5 h-5 rounded-full mr-4 shadow-md border-2 border-gray-600" 
-                  style={{ backgroundColor: COLORS[index % COLORS.length] }}
-                />
-                <div className="flex-1">
-                  <div className="text-lg font-semibold tracking-wide mb-1">
-                    {position.symbol === 'CASH' ? 'Cash Available' : position.symbol}
-                  </div>
-                  <div className="text-sm text-gray-300 font-medium">
-                    {position.percentage.toFixed(1)}% • ${position.currentValue.toLocaleString()}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Enhanced Chart */}
-          <div className="flex-1 flex items-center justify-center">
-            <div className="relative chart-container">
-              <ResponsiveContainer width={580} height={500}>
+        {/* Mobile-first layout */}
+        <div className="flex flex-col space-y-6">
+          {/* Chart - Shows first on mobile */}
+          <div className="w-full order-2 lg:order-1">
+            <div className="relative w-full mx-auto" style={{ height: '350px' }}>
+              <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
-                 <Pie
-  data={chartData}
-  cx="50%"
-  cy="50%"
-  innerRadius={110}
-  outerRadius={200}
-  paddingAngle={1}
-  dataKey="currentValue"
-  stroke="#374151"
-  strokeWidth={2}
-  label={({ symbol, percentage }) => {
-    // Only show label if the slice is large enough (e.g., > 5%)
-    if (percentage < 5) return '';
-    return symbol === 'CASH' ? 'CASH' : symbol;
-  }}
-  labelLine={true}
->
-  {chartData.map((entry, index) => (
-    <Cell 
-      key={`cell-${index}`} 
-      fill={COLORS[index % COLORS.length]}
-      className="hover:opacity-80 transition-opacity duration-200"
-    />
-  ))}
-</Pie>
-                 
+                  <Pie
+                    data={chartData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={60}
+                    outerRadius={120}
+                    paddingAngle={1}
+                    dataKey="currentValue"
+                    stroke="#374151"
+                    strokeWidth={2}
+                    label={({ symbol, percentage }) => {
+                      if (percentage < 5) return '';
+                      return symbol === 'CASH' ? 'CASH' : symbol;
+                    }}
+                    labelLine={true}
+                  >
+                    {chartData.map((entry, index) => (
+                      <Cell 
+                        key={`cell-${index}`} 
+                        fill={COLORS[index % COLORS.length]}
+                        className="hover:opacity-80 transition-opacity duration-200"
+                      />
+                    ))}
+                  </Pie>
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: '#1f2937', 
+                      border: '1px solid #374151',
+                      borderRadius: '8px',
+                      fontSize: '12px'
+                    }}
+                    formatter={(value: any) => `$${Number(value).toLocaleString()}`}
+                  />
                 </PieChart>
               </ResponsiveContainer>
-              
-              
+            </div>
+          </div>
+
+          {/* Legend - Shows second on mobile */}
+          <div className="w-full order-1 lg:order-2">
+            <div className="space-y-2 md:space-y-3 max-h-[400px] overflow-y-auto custom-scrollbar">
+              {chartData.map((position, index) => (
+                <div 
+                  key={position.symbol} 
+                  className={`flex items-center p-3 md:p-4 rounded-xl transition-all duration-200 cursor-pointer ${
+                    hoveredIndex === index 
+                      ? 'bg-gray-700/70 transform scale-105 shadow-lg' 
+                      : 'bg-gray-800/50 hover:bg-gray-700/50'
+                  }`}
+                  onMouseEnter={() => setHoveredIndex(index)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                >
+                  <div 
+                    className="w-4 h-4 md:w-5 md:h-5 rounded-full mr-3 md:mr-4 shadow-md border-2 border-gray-600 flex-shrink-0" 
+                    style={{ backgroundColor: COLORS[index % COLORS.length] }}
+                  />
+                  <div className="flex-1 min-w-0">
+                    <div className="text-base md:text-lg font-semibold tracking-wide mb-1 truncate">
+                      {position.symbol === 'CASH' ? 'Cash Available' : position.symbol}
+                    </div>
+                    <div className="text-xs md:text-sm text-gray-300 font-medium">
+                      {position.percentage.toFixed(1)}% • ${position.currentValue.toLocaleString()}
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
-      </div>
 
-      
+        {/* Desktop layout - side by side */}
+        <style jsx>{`
+          @media (min-width: 1024px) {
+            .flex.flex-col.space-y-6 {
+              display: flex;
+              flex-direction: row;
+              gap: 3rem;
+              align-items: flex-start;
+            }
+            .flex.flex-col.space-y-6 > div:first-child {
+              flex: 1;
+            }
+            .flex.flex-col.space-y-6 > div:last-child {
+              flex-shrink: 0;
+              min-width: 300px;
+              max-width: 350px;
+            }
+          }
+        `}</style>
+      </div>
     </div>
   );
 }

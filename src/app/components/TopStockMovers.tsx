@@ -123,14 +123,14 @@ export function TopStockMovers() {
               </div>
               <div>
                 <div className="text-white font-medium">{stock.symbol}</div>
-                <div className="text-slate-400 text-sm">{formatPrice(stock.price)}</div>
+                <div className="text-slate-400 text-sm 2xl:text-xs">{formatPrice(stock.price)}</div>
               </div>
             </div>
             <div className="text-right">
-              <div className={`font-medium ${activeTab === 'gainers' ? 'text-emerald-400' : 'text-red-400'}`}>
+              <div className={`font-medium lg:text-sm xl:text-sm 2xl:text-lg ${activeTab === 'gainers' ? 'text-emerald-400' : 'text-red-400'}`}>
                 {activeTab === 'gainers' ? '+' : ''}{formatPercent(stock.percent_change)}
               </div>
-              <div className={`text-sm ${activeTab === 'gainers' ? 'text-emerald-400' : 'text-red-400'}`}>
+              <div className={`text-sm lg:text-sm xl:text-xs 2xl:text-[10px] ${activeTab === 'gainers' ? 'text-emerald-400' : 'text-red-400'}`}>
                 {activeTab === 'gainers' ? '+' : '-'}{formatChange(stock.change)}
               </div>
             </div>

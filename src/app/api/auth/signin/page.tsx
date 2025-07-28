@@ -66,30 +66,21 @@ export default function SignIn() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex flex-col lg:flex-row">
       {/* Left side - Auth Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
-        <div className="w-full max-w-md">
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-4 sm:p-6 md:p-8 min-h-screen lg:min-h-0">
+        <div className="w-full max-w-sm sm:max-w-md">
           {/* Logo and Header */}
-          <div className="mb-8">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
-                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
-                </svg>
-              </div>
-              <h1 className="text-2xl font-bold text-white">VirtuTrade</h1>
-            </div>
-            <h2 className="text-3xl font-bold text-white mb-2">Get Started</h2>
-            
+          <div className="mb-6 sm:mb-8">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">Get Started</h2>
           </div>
 
           {/* Google Sign Up Button */}
           <button
             onClick={() => signIn("google", { callbackUrl: "/" })}
-            className="w-full flex items-center justify-center gap-3 bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white px-4 py-3 rounded-lg font-medium transition-all duration-200 mb-6"
+            className="w-full flex items-center justify-center gap-2 sm:gap-3 bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg font-medium transition-all duration-200 mb-4 sm:mb-6 text-sm sm:text-base"
           >
-            <svg className="w-5 h-5" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24">
               <path
                 fill="#4285F4"
                 d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -111,27 +102,27 @@ export default function SignIn() {
           </button>
 
           {/* Divider */}
-          <div className="relative mb-6">
+          <div className="relative mb-4 sm:mb-6">
             <div className="absolute inset-0 flex items-center">
               <span className="w-full border-t border-slate-600" />
             </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-3 bg-slate-900 text-slate-400">Or</span>
+            <div className="relative flex justify-center text-xs sm:text-sm">
+              <span className="px-2 sm:px-3 bg-slate-900 text-slate-400">Or</span>
             </div>
           </div>
 
           {/* Error message */}
           {error && (
-            <div className="mb-4 p-3 bg-red-900/50 border border-red-500/50 text-red-300 rounded-lg">
+            <div className="mb-3 sm:mb-4 p-2.5 sm:p-3 bg-red-900/50 border border-red-500/50 text-red-300 rounded-lg text-sm">
               {error}
             </div>
           )}
 
           {/* Credentials Form */}
-          <form onSubmit={handleCredentialsSubmit} className="space-y-4">
+          <form onSubmit={handleCredentialsSubmit} className="space-y-3 sm:space-y-4">
             {isSignUp && (
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-slate-200 mb-2">
+                <label htmlFor="name" className="block text-xs sm:text-sm font-medium text-slate-200 mb-1.5 sm:mb-2">
                   Name
                 </label>
                 <input
@@ -140,14 +131,14 @@ export default function SignIn() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required={isSignUp}
-                  className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm sm:text-base"
                   placeholder="Enter your full name"
                 />
               </div>
             )}
             
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-slate-200 mb-2">
+              <label htmlFor="email" className="block text-xs sm:text-sm font-medium text-slate-200 mb-1.5 sm:mb-2">
                 Email
               </label>
               <input
@@ -156,13 +147,13 @@ export default function SignIn() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm sm:text-base"
                 placeholder="Enter your email"
               />
             </div>
             
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-slate-200 mb-2">
+              <label htmlFor="password" className="block text-xs sm:text-sm font-medium text-slate-200 mb-1.5 sm:mb-2">
                 Password
               </label>
               <input
@@ -171,13 +162,15 @@ export default function SignIn() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 text-sm sm:text-base"
                 placeholder="Enter your password"
               />
             </div>
-            <p className="text-slate-400">
+            
+            <p className="text-slate-400 text-sm sm:text-base">
               Already have an account?{" "}
               <button
+                type="button"
                 onClick={() => {
                   setIsSignUp(!isSignUp);
                   setError("");
@@ -187,43 +180,74 @@ export default function SignIn() {
                 {isSignUp ? "Log in" : "Sign up"}
               </button>
             </p>
+            
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 text-white px-4 py-3 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 text-white px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
             >
               {loading ? "Loading..." : (isSignUp ? "Sign Up" : "Sign In")}
             </button>
           </form>
-
-          
         </div>
       </div>
 
       {/* Right side - Hero Content */}
-      <div className="hidden lg:flex lg:w-1/2 items-center justify-center p-8 bg-gradient-to-br from-slate-800 to-slate-700">
-        <div className="text-center max-w-lg">
-          <h2 className="text-4xl font-bold text-white mb-4">
+      <div className="hidden lg:flex lg:w-1/2 items-center justify-center p-8 xl:p-12 bg-gradient-to-br from-slate-800 to-slate-700">
+        <div className="text-center max-w-xl">
+          <h2 className="text-3xl xl:text-4xl font-bold text-white mb-4">
             Trading Journal for the{" "}
             <span className="text-blue-400">people</span>.
           </h2>
-          <p className="text-slate-300 text-lg leading-relaxed">
-            A free and ad free trading journal that's fast, easy to use and comprehensive enough to 
+          <p className="text-slate-300 text-base xl:text-lg leading-relaxed mb-6 xl:mb-8">
+            A free and ad free trading platform that's fast, easy to use and comprehensive enough to 
             integrate into your daily routine.
           </p>
           
           {/* Mock Dashboard Preview */}
-          <div className="mt-8 p-4 bg-slate-900/50 rounded-xl border border-slate-600 backdrop-blur-sm">
-            <div className="text-left">
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-slate-400 text-sm">Portfolio Value</span>
-                <span className="text-green-400 text-sm">+2.4%</span>
-              </div>
-              <div className="text-2xl font-bold text-white mb-4">$16,664.99</div>
-              <div className="h-16 bg-gradient-to-r from-blue-500/20 to-green-500/20 rounded-lg flex items-end">
-                <div className="w-full h-8 bg-blue-500/40 rounded-sm"></div>
-              </div>
+          <div className="relative">
+            <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl xl:rounded-2xl shadow-2xl overflow-hidden border border-slate-600/50">
+              <img 
+                src="/stockpageview.jpg" 
+                alt="Trading dashboard preview" 
+                className="w-full h-auto object-cover"
+              />
+              {/* Optional: Add a subtle overlay for better integration */}
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/20 to-transparent pointer-events-none"></div>
             </div>
+            
+            {/* Optional: Add some decorative elements */}
+            <div className="absolute -top-2 -right-2 w-3 h-3 xl:w-4 xl:h-4 bg-blue-500 rounded-full blur-sm opacity-60"></div>
+            <div className="absolute -bottom-2 -left-2 w-4 h-4 xl:w-6 xl:h-6 bg-blue-400 rounded-full blur-md opacity-40"></div>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Hero Section - Shows below form on mobile */}
+      <div className="lg:hidden w-full p-4 sm:p-6 bg-gradient-to-br from-slate-800 to-slate-700">
+        <div className="text-center max-w-md mx-auto">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4">
+            Trading Journal for the{" "}
+            <span className="text-blue-400">people</span>.
+          </h2>
+          <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-4 sm:mb-6">
+            A free and ad free trading platform that's fast, easy to use and comprehensive enough to 
+            integrate into your daily routine.
+          </p>
+          
+          {/* Mock Dashboard Preview for Mobile */}
+          <div className="relative">
+            <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-lg sm:rounded-xl shadow-xl overflow-hidden border border-slate-600/50">
+              <img 
+                src="/stockpageview.jpg" 
+                alt="Trading dashboard preview" 
+                className="w-full h-auto object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/20 to-transparent pointer-events-none"></div>
+            </div>
+            
+            <div className="absolute -top-1 -right-1 w-2 h-2 sm:w-3 sm:h-3 bg-blue-500 rounded-full blur-sm opacity-60"></div>
+            <div className="absolute -bottom-1 -left-1 w-3 h-3 sm:w-4 sm:h-4 bg-blue-400 rounded-full blur-md opacity-40"></div>
           </div>
         </div>
       </div>
