@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Providers from "./components/providers";
 import { NavMenu } from "./components/NavMenu";
+import { Analytics } from "@vercel/analytics/next"
 import "./globals.css";
 
 
@@ -34,6 +35,7 @@ export default function RootLayout({
           
           <main className="">
             {children}
+             <Analytics />
           </main>
         </Providers>
       </body>
