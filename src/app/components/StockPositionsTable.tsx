@@ -9,6 +9,7 @@ interface Position {
   symbol: string;
   quantity: number;
   averagePrice: number;
+  purchasedAt: Date;
 }
 
 interface StockData {
@@ -44,7 +45,8 @@ export async function getPositionsData(userId: string): Promise<Position[]> {
         id: true,
         symbol: true,
         quantity: true,
-        averagePrice: true
+        averagePrice: true,
+        purchasedAt: true
       }
     });
     return positions;
@@ -140,10 +142,24 @@ export async function StockPositionsTable({ userId }: StockPositionsTableProps) 
     const allTimeGainLoss: number = totalValue - totalCost;
     const allTimeGainLossPercent: number = totalCost > 0 ? (allTimeGainLoss / totalCost) * 100 : 0;
     
-    // For today's change - using pre-calculated daily percent change
-    const previousClose: number = stockData.pc || currentPrice;
-    const todayGainLoss: number = shares * (currentPrice - previousClose);
-    const todayGainLossPercent: number = stockData.dp || 0;
+    // Check if stock was purchased today
+    const today = new Date();
+    const purchaseDate = new Date(position.purchasedAt);
+    const isPurchasedToday = today.toDateString() === purchaseDate.toDateString();
+    
+    let todayGainLoss: number;
+    let todayGainLossPercent: number;
+    
+    if (isPurchasedToday) {
+      // For stocks purchased today, calculate gain/loss from purchase price
+      todayGainLoss = shares * (currentPrice - avgPrice);
+      todayGainLossPercent = avgPrice > 0 ? ((currentPrice - avgPrice) / avgPrice) * 100 : 0;
+    } else {
+      // For stocks purchased before today, use the API's daily change
+      const previousClose: number = stockData.pc || currentPrice;
+      todayGainLoss = shares * (currentPrice - previousClose);
+      todayGainLossPercent = stockData.dp || 0;
+    }
 
     return {
       currentPrice,

@@ -105,11 +105,13 @@ if (pathname == '/' && session) {
         
         {/* Logo */}
         <div className="h-60 w-60 sm:h-60 sm:w-60 md:h-70 md:w-70 lg:h-45 lg:w-45  xl:w-60 xl:h-60 2xl:h-80  2xl:w-80">
-          <img 
-            src="/logo.png" 
-            alt="VirtuTrade Logo"
-            className="h-full w-full object-contain" 
-          />
+          <a href="/">
+  <img 
+    src="/logo.png" 
+    alt="VirtuTrade Logo"
+    className="h-full w-full object-contain" 
+  />
+</a>
         </div>
 
         {/* Desktop Layout */}
@@ -226,11 +228,13 @@ if (pathname == '/' && session) {
         
         {/* Logo */}
         <div className="h-60 w-60 sm:h-55 sm:w-50 lg:h-30 lg:w-30 xl:h-80 xl:w-80">
-          <img 
-            src="/logo.png" 
-            alt="VirtuTrade Logo"
-            className="h-full w-full object-contain" 
-          />
+          <a href="/">
+  <img 
+    src="/logo.png" 
+    alt="VirtuTrade Logo"
+    className="h-full w-full object-contain" 
+  />
+</a>
         </div>
 
         {/* Desktop Layout */}

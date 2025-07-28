@@ -60,7 +60,7 @@ function PortfolioStatsRow({ stats }: { stats: PortfolioStats }) {
       <div className="bg-gradient-to-br bg-slate-800 to-gray-900 rounded-xl p-6 text-center shadow-lg border border-gray-600">
         <div className="text-sm font-medium text-gray-300 mb-2 uppercase tracking-wide">Total Value</div>
         <div className="text-sm lg:text-2xl font-bold text-white mb-1">
-          ${stats.totalValue.toLocaleString()}
+          ${stats.totalValue.toFixed(2).toLocaleString()}
         </div>
         
       </div>
@@ -80,7 +80,7 @@ function PortfolioStatsRow({ stats }: { stats: PortfolioStats }) {
       <div className="bg-gradient-to-br bg-slate-800 to-gray-900 rounded-xl p-6 text-center shadow-lg border border-gray-600">
         <div className="text-sm font-medium text-gray-300 mb-2 uppercase tracking-wide">Buying Power</div>
         <div className="text-sm lg:text-2xl  font-bold text-white mb-1">
-          ${stats.buyingPower.toLocaleString()}
+          ${stats.buyingPower.toFixed(2).toLocaleString()}
         </div>
        
       </div>

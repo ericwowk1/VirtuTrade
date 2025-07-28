@@ -55,12 +55,13 @@ export async function executeTrade({ userId, ticker, shares, price, type }: Trad
         (existingStock.averagePrice * existingStock.quantity) + (price * shares)
       ) / totalShares;
       
-      // Update existing position
+      // Update existing position with new purchasedAt timestamp
       await prisma.stock.update({
         where: { id: existingStock.id },
         data: {
           quantity: totalShares,
-          averagePrice: newAveragePrice
+          averagePrice: newAveragePrice,
+          purchasedAt: new Date() // Update timestamp when adding more shares
         }
       });
     } else {
@@ -70,7 +71,8 @@ export async function executeTrade({ userId, ticker, shares, price, type }: Trad
           userId,
           symbol: ticker,
           quantity: shares,
-          averagePrice: price
+          averagePrice: price,
+          purchasedAt: new Date() // Explicitly set purchasedAt
         }
       });
     }

@@ -5718,6 +5718,7 @@ export namespace Prisma {
     quantity: number | null
     averagePrice: number | null
     userId: string | null
+    purchasedAt: Date | null
   }
 
   export type StockMaxAggregateOutputType = {
@@ -5726,6 +5727,7 @@ export namespace Prisma {
     quantity: number | null
     averagePrice: number | null
     userId: string | null
+    purchasedAt: Date | null
   }
 
   export type StockCountAggregateOutputType = {
@@ -5734,6 +5736,7 @@ export namespace Prisma {
     quantity: number
     averagePrice: number
     userId: number
+    purchasedAt: number
     _all: number
   }
 
@@ -5754,6 +5757,7 @@ export namespace Prisma {
     quantity?: true
     averagePrice?: true
     userId?: true
+    purchasedAt?: true
   }
 
   export type StockMaxAggregateInputType = {
@@ -5762,6 +5766,7 @@ export namespace Prisma {
     quantity?: true
     averagePrice?: true
     userId?: true
+    purchasedAt?: true
   }
 
   export type StockCountAggregateInputType = {
@@ -5770,6 +5775,7 @@ export namespace Prisma {
     quantity?: true
     averagePrice?: true
     userId?: true
+    purchasedAt?: true
     _all?: true
   }
 
@@ -5865,6 +5871,7 @@ export namespace Prisma {
     quantity: number
     averagePrice: number
     userId: string
+    purchasedAt: Date
     _count: StockCountAggregateOutputType | null
     _avg: StockAvgAggregateOutputType | null
     _sum: StockSumAggregateOutputType | null
@@ -5892,6 +5899,7 @@ export namespace Prisma {
     quantity?: boolean
     averagePrice?: boolean
     userId?: boolean
+    purchasedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["stock"]>
 
@@ -5901,6 +5909,7 @@ export namespace Prisma {
     quantity?: boolean
     averagePrice?: boolean
     userId?: boolean
+    purchasedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["stock"]>
 
@@ -5910,6 +5919,7 @@ export namespace Prisma {
     quantity?: boolean
     averagePrice?: boolean
     userId?: boolean
+    purchasedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["stock"]>
 
@@ -5919,9 +5929,10 @@ export namespace Prisma {
     quantity?: boolean
     averagePrice?: boolean
     userId?: boolean
+    purchasedAt?: boolean
   }
 
-  export type StockOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "symbol" | "quantity" | "averagePrice" | "userId", ExtArgs["result"]["stock"]>
+  export type StockOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "symbol" | "quantity" | "averagePrice" | "userId" | "purchasedAt", ExtArgs["result"]["stock"]>
   export type StockInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -5943,6 +5954,7 @@ export namespace Prisma {
       quantity: number
       averagePrice: number
       userId: string
+      purchasedAt: Date
     }, ExtArgs["result"]["stock"]>
     composites: {}
   }
@@ -6372,6 +6384,7 @@ export namespace Prisma {
     readonly quantity: FieldRef<"Stock", 'Int'>
     readonly averagePrice: FieldRef<"Stock", 'Float'>
     readonly userId: FieldRef<"Stock", 'String'>
+    readonly purchasedAt: FieldRef<"Stock", 'DateTime'>
   }
     
 
@@ -6857,7 +6870,8 @@ export namespace Prisma {
     symbol: 'symbol',
     quantity: 'quantity',
     averagePrice: 'averagePrice',
-    userId: 'userId'
+    userId: 'userId',
+    purchasedAt: 'purchasedAt'
   };
 
   export type StockScalarFieldEnum = (typeof StockScalarFieldEnum)[keyof typeof StockScalarFieldEnum]
@@ -7243,6 +7257,7 @@ export namespace Prisma {
     quantity?: IntFilter<"Stock"> | number
     averagePrice?: FloatFilter<"Stock"> | number
     userId?: StringFilter<"Stock"> | string
+    purchasedAt?: DateTimeFilter<"Stock"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
@@ -7252,6 +7267,7 @@ export namespace Prisma {
     quantity?: SortOrder
     averagePrice?: SortOrder
     userId?: SortOrder
+    purchasedAt?: SortOrder
     user?: UserOrderByWithRelationInput
   }
 
@@ -7264,6 +7280,7 @@ export namespace Prisma {
     quantity?: IntFilter<"Stock"> | number
     averagePrice?: FloatFilter<"Stock"> | number
     userId?: StringFilter<"Stock"> | string
+    purchasedAt?: DateTimeFilter<"Stock"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
 
@@ -7273,6 +7290,7 @@ export namespace Prisma {
     quantity?: SortOrder
     averagePrice?: SortOrder
     userId?: SortOrder
+    purchasedAt?: SortOrder
     _count?: StockCountOrderByAggregateInput
     _avg?: StockAvgOrderByAggregateInput
     _max?: StockMaxOrderByAggregateInput
@@ -7289,6 +7307,7 @@ export namespace Prisma {
     quantity?: IntWithAggregatesFilter<"Stock"> | number
     averagePrice?: FloatWithAggregatesFilter<"Stock"> | number
     userId?: StringWithAggregatesFilter<"Stock"> | string
+    purchasedAt?: DateTimeWithAggregatesFilter<"Stock"> | Date | string
   }
 
   export type UserCreateInput = {
@@ -7586,6 +7605,7 @@ export namespace Prisma {
     symbol: string
     quantity: number
     averagePrice: number
+    purchasedAt?: Date | string
     user: UserCreateNestedOneWithoutStocksInput
   }
 
@@ -7595,6 +7615,7 @@ export namespace Prisma {
     quantity: number
     averagePrice: number
     userId: string
+    purchasedAt?: Date | string
   }
 
   export type StockUpdateInput = {
@@ -7602,6 +7623,7 @@ export namespace Prisma {
     symbol?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     averagePrice?: FloatFieldUpdateOperationsInput | number
+    purchasedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutStocksNestedInput
   }
 
@@ -7611,6 +7633,7 @@ export namespace Prisma {
     quantity?: IntFieldUpdateOperationsInput | number
     averagePrice?: FloatFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
+    purchasedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StockCreateManyInput = {
@@ -7619,6 +7642,7 @@ export namespace Prisma {
     quantity: number
     averagePrice: number
     userId: string
+    purchasedAt?: Date | string
   }
 
   export type StockUpdateManyMutationInput = {
@@ -7626,6 +7650,7 @@ export namespace Prisma {
     symbol?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     averagePrice?: FloatFieldUpdateOperationsInput | number
+    purchasedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StockUncheckedUpdateManyInput = {
@@ -7634,6 +7659,7 @@ export namespace Prisma {
     quantity?: IntFieldUpdateOperationsInput | number
     averagePrice?: FloatFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
+    purchasedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -8034,6 +8060,7 @@ export namespace Prisma {
     quantity?: SortOrder
     averagePrice?: SortOrder
     userId?: SortOrder
+    purchasedAt?: SortOrder
   }
 
   export type StockAvgOrderByAggregateInput = {
@@ -8047,6 +8074,7 @@ export namespace Prisma {
     quantity?: SortOrder
     averagePrice?: SortOrder
     userId?: SortOrder
+    purchasedAt?: SortOrder
   }
 
   export type StockMinOrderByAggregateInput = {
@@ -8055,6 +8083,7 @@ export namespace Prisma {
     quantity?: SortOrder
     averagePrice?: SortOrder
     userId?: SortOrder
+    purchasedAt?: SortOrder
   }
 
   export type StockSumOrderByAggregateInput = {
@@ -8604,6 +8633,7 @@ export namespace Prisma {
     symbol: string
     quantity: number
     averagePrice: number
+    purchasedAt?: Date | string
   }
 
   export type StockUncheckedCreateWithoutUserInput = {
@@ -8611,6 +8641,7 @@ export namespace Prisma {
     symbol: string
     quantity: number
     averagePrice: number
+    purchasedAt?: Date | string
   }
 
   export type StockCreateOrConnectWithoutUserInput = {
@@ -8708,6 +8739,7 @@ export namespace Prisma {
     quantity?: IntFilter<"Stock"> | number
     averagePrice?: FloatFilter<"Stock"> | number
     userId?: StringFilter<"Stock"> | string
+    purchasedAt?: DateTimeFilter<"Stock"> | Date | string
   }
 
   export type UserCreateWithoutAccountsInput = {
@@ -8951,6 +8983,7 @@ export namespace Prisma {
     symbol: string
     quantity: number
     averagePrice: number
+    purchasedAt?: Date | string
   }
 
   export type AccountUpdateWithoutUserInput = {
@@ -9018,6 +9051,7 @@ export namespace Prisma {
     symbol?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     averagePrice?: FloatFieldUpdateOperationsInput | number
+    purchasedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StockUncheckedUpdateWithoutUserInput = {
@@ -9025,6 +9059,7 @@ export namespace Prisma {
     symbol?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     averagePrice?: FloatFieldUpdateOperationsInput | number
+    purchasedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StockUncheckedUpdateManyWithoutUserInput = {
@@ -9032,6 +9067,7 @@ export namespace Prisma {
     symbol?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     averagePrice?: FloatFieldUpdateOperationsInput | number
+    purchasedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

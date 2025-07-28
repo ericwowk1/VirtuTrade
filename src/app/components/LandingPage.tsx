@@ -207,9 +207,9 @@ export function LandingPage() {
             Get a comprehensive view of the market and your portfolio at a glance.
           </p>
         </div>
-        <div className="relative group cursor-pointer" onClick={() => window.open('/homepage.jpg', '_blank')}>
+        <div className="relative group cursor-pointer" onClick={() => window.open('/homepage.JPG', '_blank')}>
           <img 
-            src="/homepage.jpg" 
+            src="/homepage.JPG" 
             alt="VirtuTrade Dashboard Preview" 
             className="w-full h-full rounded-lg shadow-2xl group-hover:shadow-cyan-500/20 transition-all duration-300 group-hover:scale-[1.02]"
           />
@@ -225,9 +225,9 @@ export function LandingPage() {
             Track your performance with in-depth portfolio analytics and insights.
           </p>
         </div>
-        <div className="relative group cursor-pointer" onClick={() => window.open('/portfolioview.jpg', '_blank')}>
+        <div className="relative group cursor-pointer" onClick={() => window.open('/portfolioview.JPG', '_blank')}>
           <img 
-            src="/portfolioview.jpg" 
+            src="/portfolioview.JPG" 
             alt="Portfolio Analysis Preview" 
             className="w-full h-full rounded-lg shadow-2xl group-hover:shadow-cyan-500/20 transition-all duration-300 group-hover:scale-[1.02]"
           />

@@ -196,7 +196,7 @@ export default function SignIn() {
       <div className="hidden lg:flex lg:w-1/2 items-center justify-center p-8 xl:p-12 bg-gradient-to-br from-slate-800 to-slate-700">
         <div className="text-center max-w-xl">
           <h2 className="text-3xl xl:text-4xl font-bold text-white mb-4">
-            Trading Journal for the{" "}
+            Trading Platform for the{" "}
             <span className="text-blue-400">people</span>.
           </h2>
           <p className="text-slate-300 text-base xl:text-lg leading-relaxed mb-6 xl:mb-8">
@@ -208,7 +208,7 @@ export default function SignIn() {
           <div className="relative">
             <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl xl:rounded-2xl shadow-2xl overflow-hidden border border-slate-600/50">
               <img 
-                src="/stockpageview.jpg" 
+                src="/stockpageview.JPG" 
                 alt="Trading dashboard preview" 
                 className="w-full h-auto object-cover"
               />

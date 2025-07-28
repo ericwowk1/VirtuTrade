@@ -118,7 +118,7 @@ const getMarketBounds = () => {
 export function PortfolioPerformanceChart() {
   const [data, setData] = useState<HistoryData[]>([]);
   const [loading, setLoading] = useState(true);
-  const [timeRange, setTimeRange] = useState<TimeRange>('1W');
+  const [timeRange, setTimeRange] = useState<TimeRange>('1D');
   const [lastValue, setLastValue] = useState<number>(0);
   const [chartColor, setChartColor] = useState('#10b981');
 
@@ -320,7 +320,12 @@ export function PortfolioPerformanceChart() {
               }}
               stroke="#9ca3af"
               fontSize={12}
-              interval={timeRange === '1Y' ? 30 : 'preserveStartEnd'}
+              interval={timeRange === '1Y' ? 30 :
+                timeRange === '1D' ? 2 :
+                timeRange === '1W' ? 0 :
+                 'preserveStartEnd'
+                
+              }
             />
             <YAxis 
               tickFormatter={(num) => {
