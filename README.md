@@ -26,7 +26,6 @@
 </div>
 
 ---
-
 ## ✨ Key Features
 
 -   🔐 **User Authentication:** Secure sign-up and login with Oauth 2.0.
@@ -34,8 +33,6 @@
 -   💼 **Portfolio Management:** Track your assets, monitor performance, and review trade history.
 
 ---
-
-
 ## 🖼️ Screenshots
  HomePage
 ![HomePage](public/homepage.JPG)
