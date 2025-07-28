@@ -19,12 +19,6 @@
 > VirtuTrade is a sleek, real time paper trading simulator designed for both beginners and enthusiasts. It provides a risk free environment to learn the ropes of the stock market and manage a virtual portfolio.
 
 <br>
-
-<div align="center">
-  <a href="#"> <img src="./public/logo.png" alt="Project Screenshot">
-  </a>
-</div>
-
 ---
 ## ✨ Key Features
 
