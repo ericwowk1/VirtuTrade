@@ -1,9 +1,9 @@
 <div align="center">
  
   <h1>VirtuTrade</h1>
- <h2>Visit VirtuTrade! <a href="https://virtutrade.vercel.app/">virtutrade.vercel.app</a>   </h2>
+ <h2>Visit VirtuTrade - <a href="https://virtutrade.vercel.app/">virtutrade.vercel.app</a>   </h2>
  <h3>""</h3>
-  <p>A modern paper trading platform built with Next.js, TypeScript, and Tailwind CSS.</p>
+  <p>A modern paper trading platform built with Next.js, TypeScript, React, and Tailwind CSS.</p>
 
   <div>
     <img src="https://img.shields.io/github/stars/ericwowk1/VirtuTrade?style=for-the-badge&logo=github" alt="Stars Badge"/>
