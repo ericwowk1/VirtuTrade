@@ -38,7 +38,7 @@
 
 ## 🖼️ Screenshots
  HomePage
-![Alt Text](public/homepage.jpg)
+![HomePage](public/homepage.JPG)
 
 
 ## 📬 Contact
