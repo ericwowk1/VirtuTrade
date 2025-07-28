@@ -37,18 +37,8 @@
 
 
 ## 🖼️ Screenshots
-
-| Dashboard                               | Portfolio Page                          |
-| --------------------------------------- | --------------------------------------- |
-| <a href="#"> <img src="./public/homepage" alt="HomePage">
-  </a> | <img src="./public/portfolioview.jpg" alt="Portfolio View"> |
-
-| Trading Interface                       
-| --------------------------------------- 
-| <img src="./public/stockpageview.jpg" alt="Trading UI">
-
----
-
+ HomePage
+![Alt Text](public/homepage.jpg)
 
 
 ## 📬 Contact
