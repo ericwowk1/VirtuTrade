@@ -160,7 +160,7 @@ if (pathname == '/' && session) {
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden fixed inset-0 z-50 bg-white bg-opacity-10 backdrop-blur-sm" onClick={closeMobileMenu}>
+        <div className="lg:hidden fixed inset-0 z-50  bg-opacity-50 backdrop-blur-sm" onClick={closeMobileMenu}>
           <div className="fixed inset-y-0 right-0 w-64 bg-[#101828] shadow-xl" onClick={(e) => e.stopPropagation()}>
             <div className="flex flex-col h-full">
               {/* Mobile Menu Header */}
