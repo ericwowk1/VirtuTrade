@@ -20,7 +20,7 @@
 <br>
 
 <div align="center">
-  <a href="#"> <img src="https://via.placeholder.com/800x450.png?text=Your+App+Screenshot+Here" alt="Project Screenshot">
+  <a href="#"> <img src="logo.png" alt="Project Screenshot">
   </a>
 </div>
 
