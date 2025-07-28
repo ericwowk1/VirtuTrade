@@ -40,7 +40,8 @@
 
 | Dashboard                               | Portfolio Page                          |
 | --------------------------------------- | --------------------------------------- |
-| <img src="./public/homepage.jpg" alt="Dashboard View"> | <img src="./public/portfolioview.jpg" alt="Portfolio View"> |
+| <a href="#"> <img src="./public/homepage" alt="HomePage">
+  </a> | <img src="./public/portfolioview.jpg" alt="Portfolio View"> |
 
 | Trading Interface                       
 | --------------------------------------- 
