@@ -227,7 +227,7 @@ export default function SignIn() {
       <div className="lg:hidden w-full p-4 sm:p-6 bg-gradient-to-br from-slate-800 to-slate-700">
         <div className="text-center max-w-md mx-auto">
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4">
-            Trading Journal for the{" "}
+            Trading Platform for the{" "}
             <span className="text-blue-400">people</span>.
           </h2>
           <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-4 sm:mb-6">
