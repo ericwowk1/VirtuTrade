@@ -40,6 +40,15 @@
  HomePage
 ![HomePage](public/homepage.JPG)
 
+ Portfolio Page
+![Portfolio](public/portfolioview.JPG)
+
+Stock Page
+![Stock Page](public/stockpageview.JPG)
+
+
+
+
 
 ## 📬 Contact
 
