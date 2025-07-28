@@ -1,7 +1,8 @@
 <div align="center">
  
   <h1>VirtuTrade</h1>
- <a href="https://virtutrade.vercel.app/">Visit VirtuTrade!</a>
+ <h2><a href="https://virtutrade.vercel.app/">Visit VirtuTrade!</a></h2>
+ <h3>"https://virtutrade.vercel.app/"</h3>
   <p>A modern paper trading platform built with Next.js, TypeScript, and Tailwind CSS.</p>
 
   <div>
