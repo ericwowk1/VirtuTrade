@@ -61,7 +61,7 @@ export function LandingPage() {
           Start Trading For Free
         </a>
         <a 
-          href="#learn-more-section"
+          href="#preview-section"
           className="px-4 py-3 sm:px-2 sm:py-2 md:px-6 md:py-2 lg:px-8 lg:py-4 bg-gray-800 text-white font-bold rounded-lg shadow-lg hover:bg-gray-700 transition-colors duration-200 text-xs md:text-sm lg:text-lg whitespace-nowrap"
         >
           Learn More
@@ -82,13 +82,13 @@ export function LandingPage() {
           {/* Bottom arrow section */}
           <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
             <a 
-              href="#learn-more-section"
+              href="#preview-section"
               className="text-white sm:text-md md:text-md md:text-md lg:text-2xl mb-2 font-roboto block fade-in-up"
             >
               Click to learn more
             </a>      
             <a 
-              href="#learn-more-section"
+              href="#preview-section"
               className="cursor-pointer hover:scale-110 transition-transform duration-200 animate-bounce inline-block md:mb-4 "
               aria-label="Scroll to learn more"
             >
@@ -97,99 +97,10 @@ export function LandingPage() {
           </div>
         </div>
       </div>
-      <div id="learn-more-section" className=" bg-gray-900 p-8">
-        <div className="">
-          <h2 className="text-xl md:text-4xl font-bold text-white mb-4 text-center font-roboto fade-in-up">
-  Why Choose VirtuTrade?
-</h2>
-<p className="text-md md:text-lg text-gray-300 text-center font-roboto mb-16 max-w-3xl mx-auto fade-in-up">
-  Inexperienced traders can practice risk-free before investing real money.<br />
-  Best of all, it's completely free and unlimited - no subscriptions or paywalls.<br />
-  Practice until you're confident.
-</p>
-
-          
-          {/* Features Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8 mt-2 md:mt-12 sm:w-[25rem] md:w-[40rem] lg:w-[50rem] mx-auto">
-            {/* Feature 1 */}
-            <div className="bg-gray-800 p-2 md:p-8 rounded-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 fade-in-up">
-              <div className="text-cyan-400 mb-4">
-                <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-white mb-4 font-roboto">Real Market Data</h3>
-              <p className="text-gray-400 font-roboto">
-                Trade with live market prices across thousands of stocks. Your virtual portfolio mirrors real market conditions for authentic practice.
-              </p>
-            </div>
-
-            {/* Feature 2 */}
-            <div className="bg-gray-800 p-8 rounded-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 fade-in-up">
-              <div className="text-cyan-400 mb-4">
-                <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-white mb-4 font-roboto">Smart Analytics</h3>
-              <p className="text-gray-400 font-roboto">
-                Track your performance with charts and detailed transaction insights. Learn from every trade with comprehensive portfolio analytics.
-              </p>
-            </div>
-
-            {/* Feature 3 */}
-            <div className="bg-gray-800 p-8 rounded-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 fade-in-up">
-              <div className="text-cyan-400 mb-4">
-                <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-white mb-4 font-roboto">Virtual Portfolio</h3>
-              <p className="text-gray-400 font-roboto">
-                Start with $100,000 in virtual funds. Build and manage your portfolio risk-free while developing real trading skills.
-              </p>
-            </div>
-
-         
-          
-            {/* Feature 6 */}
-            <div className="bg-gray-800 p-8 rounded-lg shadow-xl hover:shadow-2xl transition-shadow duration-300 fade-in-up">
-              <div className="text-cyan-400 mb-4">
-                <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-white mb-4 font-roboto">Free Forever</h3>
-              <p className="text-gray-400 font-roboto">
-                VirtuTrade is completely free. No hidden fees, no premium tiers - just pure trading practice for everyone.
-              </p>
-            </div>
-          </div>
-
-     
-          
-     {/* Second Arrow Section */}
-          <div className="flex flex-col items-center mt-20 fade-in-up">
-            <a 
-              href="#preview-section"
-              className="text-white text-2xl mb-2 font-roboto block fade-in-up"
-            >
-              See How It Works
-            </a>   
-            <a 
-              href="#preview-section"
-              className="cursor-pointer hover:scale-110 transition-transform duration-200 animate-bounce inline-block"
-              aria-label="Scroll to preview"
-            >
-              <img src="/arrow.svg" alt="Scroll down arrow" className="w-12 h-12" />
-            </a>
-          </div>
-        </div>
-      </div>
 
       {/* Dashboard Preview Section */}
 <div id="preview-section" className="min-h-screen bg-gray-900 p-4 md:p-8">
-  <div className="max-w-7xl mx-auto pt-3 md:pt-20">
+  <div className="max-w-7xl mx-auto pt-3 md:pt-8">
     <h2 className="text-xl md:text-4xl font-bold text-white mb-4 text-center font-roboto fade-in-up">
       Experience the Power of VirtuTrade
     </h2>
@@ -253,7 +164,8 @@ export function LandingPage() {
     </div>
   </div>
 </div>
+
+      
     </div>
   );
 }
-   
