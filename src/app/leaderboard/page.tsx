@@ -17,6 +17,8 @@ export default async function Leaderboard() {
 
  // Get current user's balance and rank
  const getCurrentUserData = async () => {
+   if (!session?.user?.id) return null;
+   
    try {
      const currentUser = await prisma.user.findUnique({
        where: {
