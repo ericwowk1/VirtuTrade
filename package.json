@@ -24,18 +24,21 @@
     "framer-motion": "^12.23.6",
     "lightweight-charts": "^5.0.7",
     "lucide-react": "^0.522.0",
-    "next": "^15.3.0",
+    "next": "^15.3.6",
     "next-auth": "^4.24.11",
-    "peerview": "file:",
     "postgres": "^3.4.7",
     "prisma": "^6.7.0",
-    "react": "^19.1.0",
+    "react": "^19.1.4",
     "react-bootstrap": "^2.10.10",
-    "react-dom": "^19.1.0",
+    "react-dom": "^19.1.4",
     "react-hook-form": "^7.56.3",
     "react-select": "^5.10.1",
     "react-sparklines": "^1.7.0",
     "recharts": "^2.15.4"
+  },
+  "overrides": {
+    "react": "^19.1.4",
+    "react-dom": "^19.1.4"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -45,7 +48,7 @@
     "@types/react-dom": "^19",
     "@types/react-sparklines": "^1.7.5",
     "eslint": "^9",
-    "eslint-config-next": "15.3.0",
+    "eslint-config-next": "15.3.6",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

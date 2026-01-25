@@ -1,8 +1,10 @@
 'use client';
 
 import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 import { GetBalance } from "@/app/components/GetBalance";
 import { TrendingUp, DollarSign, Wallet } from "lucide-react"
+import Link from "next/link";
 
 interface TradingWidgetProps {
   ticker: string;
@@ -12,6 +14,7 @@ interface TradingWidgetProps {
 }
 
 export function TradingWidget({ ticker, currentPrice, logo, name }: TradingWidgetProps) {
+  const { data: session } = useSession();
   const [shares, setShares] = useState<string>("");
   const [tradeType, setTradeType] = useState<"buy" | "sell">("buy");
   const [tradeStatus, setTradeStatus] = useState<{
@@ -26,6 +29,8 @@ export function TradingWidget({ ticker, currentPrice, logo, name }: TradingWidge
   const estimatedCost = sharesNumber * currentPrice;
 
   useEffect(() => {
+    if (!session?.user?.id) return;
+    
     fetch('/api/balanceApi')
       .then(res => {
         if (!res.ok) throw new Error('Failed to fetch');
@@ -33,20 +38,20 @@ export function TradingWidget({ ticker, currentPrice, logo, name }: TradingWidge
       })
       .then(data => setBalance(data.balance))
       .catch(console.error)
-  }, []);
+  }, [session]);
 
   // Fetch owned shares when ticker or trade status changes
   useEffect(() => {
-    if (ticker) {
-      fetch(`/api/ownedShares?ticker=${ticker}`)
-        .then(res => {
-          if (!res.ok) throw new Error('Failed to fetch');
-          return res.json();
-        })
-        .then(data => setOwnedShares(data.ownedShares))
-        .catch(console.error);
-    }
-  }, [ticker, tradeStatus]);
+    if (!session?.user?.id || !ticker) return;
+    
+    fetch(`/api/ownedShares?ticker=${ticker}`)
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to fetch');
+        return res.json();
+      })
+      .then(data => setOwnedShares(data.ownedShares))
+      .catch(console.error);
+  }, [ticker, tradeStatus, session]);
 
   const getMaxShares = () => {
     if (tradeType === 'buy' && balance) {
@@ -129,6 +134,49 @@ export function TradingWidget({ ticker, currentPrice, logo, name }: TradingWidge
 };
 
   const maxShares = getMaxShares();
+
+  if (!session?.user?.id) {
+    return (
+      <div className="bg-slate-800/60 rounded-lg p-4 border border-slate-700">
+        {/* Header */}
+        <div className="flex items-center mb-4 pb-3 border-b border-slate-600">
+          <img src={logo} alt={`${ticker} logo`} className="w-10 h-10 rounded-lg bg-white" />
+          <div className="ml-3">
+            <div className="text-white font-semibold text-lg">{name}</div>
+            <div className="text-gray-400 text-sm">{ticker}</div>
+          </div>
+          <div className="ml-auto text-right">
+            <div className="text-white font-bold text-xl">${currentPrice.toFixed(2)}</div>
+          </div>
+        </div>
+        
+        {/* Buy/Sell Tabs (visual only) */}
+        <div className="flex space-x-1 bg-[#0F172A] rounded-lg p-1 mb-4">
+          <div className="flex-1 text-center py-2 rounded-md bg-green-600 text-white text-sm font-medium">
+            Buy
+          </div>
+          <div className="flex-1 text-center py-2 rounded-md text-slate-400 text-sm font-medium">
+            Sell
+          </div>
+        </div>
+
+        <div className="bg-[#0F172A] rounded-lg p-4">
+          <p className="text-gray-400 text-center text-sm mb-4">
+            Sign in to start trading {ticker}
+          </p>
+          <Link 
+            href="/api/auth/signin"
+            className="block w-full text-center py-2.5 bg-blue-700 hover:bg-greenn-900 text-white font-medium rounded transition-colors"
+          >
+            Sign In to Trade
+          </Link>
+          <p className="text-gray-500 text-xs text-center mt-3">
+            Get $100,000 virtual cash to practice trading with.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (   
     <div className="bg-slate-800 rounded-lg p-4 shadow-lg ">

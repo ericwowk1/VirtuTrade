@@ -277,65 +277,41 @@ export default function Ticker() {
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 md:gap-6">
           {/* Company Profile Section */}
           {stockData.stockInfo && (
-            <div className="bg-gray-800/30 backdrop-blur-sm rounded-xl lg:rounded-2xl p-4 md:p-6 border border-gray-700/50 hover:border-gray-600/50 transition-all duration-300">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 md:w-10 md:h-10 bg-blue-500/20 rounded-lg md:rounded-xl flex items-center justify-center">
-                  <svg className="w-5 h-5 md:w-6 md:h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-                    />
-                  </svg>
-                </div>
-                <h2 className="text-lg md:text-xl font-bold text-blue-400">Company Overview</h2>
+            <div className="bg-slate-800/60 rounded-lg p-4 border border-slate-700">
+              <div className="border-b-2 border-white w-full mb-4">
+                <h2 className="text-xl text-white mb-3">Company Overview</h2>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
-                <div className="space-y-3 md:space-y-4">
-                  <div className="group">
-                    <h3 className="text-xs font-medium text-gray-400 mb-1 uppercase tracking-wider">Industry</h3>
-                    <p className="text-sm md:text-base text-white font-medium group-hover:text-blue-300 transition-colors">
-                      {stockData.stockInfo.finnhubIndustry}
-                    </p>
-                  </div>
-                  <div className="group">
-                    <h3 className="text-xs font-medium text-gray-400 mb-1 uppercase tracking-wider">Exchange</h3>
-                    <p className="text-sm md:text-base text-white font-medium group-hover:text-blue-300 transition-colors">
-                      {stockData.stockInfo.exchange}
-                    </p>
-                  </div>
-                  <div className="group">
-                    <h3 className="text-xs font-medium text-gray-400 mb-1 uppercase tracking-wider">Website</h3>
-                    <a
-                      href={stockData.stockInfo.weburl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm md:text-base text-blue-400 hover:text-blue-300 transition-colors duration-200 underline decoration-blue-400/30 hover:decoration-blue-300 font-medium break-all"
-                    >
-                      {stockData.stockInfo.weburl.replace("https://", "").replace("www.", "")}
-                    </a>
-                  </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-[#0F172A] rounded-lg p-3">
+                  <span className="text-xs text-gray-400 block mb-1">Industry</span>
+                  <span className="text-sm text-white">{stockData.stockInfo.finnhubIndustry}</span>
                 </div>
-                <div className="space-y-3 md:space-y-4">
-                  <div className="group">
-                    <h3 className="text-xs font-medium text-gray-400 mb-1 uppercase tracking-wider">Market Cap</h3>
-                    <p className="text-base md:text-lg text-white font-bold group-hover:text-green-300 transition-colors">
-                      {formatMarketCap(stockData.stockInfo.marketCapitalization)}
-                    </p>
-                  </div>
-                  <div className="group">
-                    <h3 className="text-xs font-medium text-gray-400 mb-1 uppercase tracking-wider">Shares Outstanding</h3>
-                    <p className="text-sm md:text-base text-white font-medium group-hover:text-blue-300 transition-colors">
-                      {formatSharesOutstanding(stockData.stockInfo.shareOutstanding)}
-                    </p>
-                  </div>
-                  <div className="group">
-                    <h3 className="text-xs font-medium text-gray-400 mb-1 uppercase tracking-wider">IPO Date</h3>
-                    <p className="text-sm md:text-base text-white font-medium group-hover:text-blue-300 transition-colors">
-                      {formatIpoDate(stockData.stockInfo.ipo)}
-                    </p>
-                  </div>
+                <div className="bg-[#0F172A] rounded-lg p-3">
+                  <span className="text-xs text-gray-400 block mb-1">Market Cap</span>
+                  <span className="text-sm text-white font-medium">{formatMarketCap(stockData.stockInfo.marketCapitalization)}</span>
+                </div>
+                <div className="bg-[#0F172A] rounded-lg p-3">
+                  <span className="text-xs text-gray-400 block mb-1">Exchange</span>
+                  <span className="text-sm text-white">{stockData.stockInfo.exchange}</span>
+                </div>
+                <div className="bg-[#0F172A] rounded-lg p-3">
+                  <span className="text-xs text-gray-400 block mb-1">Shares Outstanding</span>
+                  <span className="text-sm text-white">{formatSharesOutstanding(stockData.stockInfo.shareOutstanding)}</span>
+                </div>
+                <div className="bg-[#0F172A] rounded-lg p-3">
+                  <span className="text-xs text-gray-400 block mb-1">IPO Date</span>
+                  <span className="text-sm text-white">{formatIpoDate(stockData.stockInfo.ipo)}</span>
+                </div>
+                <div className="bg-[#0F172A] rounded-lg p-3">
+                  <span className="text-xs text-gray-400 block mb-1">Website</span>
+                  <a
+                    href={stockData.stockInfo.weburl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-blue-400 hover:text-blue-300 truncate block"
+                  >
+                    {stockData.stockInfo.weburl.replace("https://", "").replace("www.", "")}
+                  </a>
                 </div>
               </div>
             </div>
@@ -343,36 +319,24 @@ export default function Ticker() {
 
           {/* Financial Metrics Section */}
           {basicFinancials && (
-            <div className="bg-gray-800/30 backdrop-blur-sm rounded-xl lg:rounded-2xl p-4 md:p-6 border border-gray-700/50 hover:border-gray-600/50 transition-all duration-300">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 md:w-10 md:h-10 bg-blue-500/20 rounded-lg md:rounded-xl flex items-center justify-center">
-                  <svg className="w-5 h-5 md:w-6 md:h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                    />
-                  </svg>
-                </div>
-                <h2 className="text-lg md:text-xl font-bold text-blue-400">Key Financial Metrics</h2>
+            <div className="bg-slate-800/60 rounded-lg p-4 border border-slate-700">
+              <div className="border-b-2 border-white w-full mb-4">
+                <h2 className="text-xl text-white mb-3">Key Metrics</h2>
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {keyMetrics.slice(0, 8).map((metric, index) => (
-                  <div
-                    key={index}
-                    className="group bg-gray-700/30 rounded-lg md:rounded-xl p-2 md:p-3 border border-gray-600/30 hover:border-gray-500/50 hover:bg-gray-700/50 transition-all duration-300 hover:scale-105"
-                  >
-                    <div className="text-center">
-                      <span className="text-xs text-gray-400 mb-1 block font-medium uppercase tracking-wider">{metric.label}</span>
-                      <span className={`text-xs md:text-sm font-bold ${metric.color} group-hover:scale-110 transition-transform duration-200 inline-block`}>
-                        {metric.format === "percentage"
-                          ? formatFinancialValue(metric.value, true)
-                          : metric.format === "currency"
-                          ? formatFinancialValue(metric.value, false, true)
-                          : formatFinancialValue(metric.value)}
-                      </span>
-                    </div>
+                  <div key={index} className="bg-[#0F172A] rounded-lg p-3">
+                    <span className="text-xs text-gray-400 block mb-1">{metric.label}</span>
+                    <span className={`text-sm font-medium ${
+                      metric.label.includes('High') ? 'text-green-400' : 
+                      metric.label.includes('Low') ? 'text-red-400' : 'text-white'
+                    }`}>
+                      {metric.format === "percentage"
+                        ? formatFinancialValue(metric.value, true)
+                        : metric.format === "currency"
+                        ? formatFinancialValue(metric.value, false, true)
+                        : formatFinancialValue(metric.value)}
+                    </span>
                   </div>
                 ))}
               </div>

@@ -1,8 +1,10 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { TrendingUp } from 'lucide-react';
+import Link from 'next/link';
 
 // Define the shape of our historical data points
 interface HistoryData {
@@ -116,6 +118,7 @@ const getMarketBounds = () => {
 };
 
 export function PortfolioPerformanceChart() {
+  const { data: session } = useSession();
   const [data, setData] = useState<HistoryData[]>([]);
   const [loading, setLoading] = useState(true);
   const [timeRange, setTimeRange] = useState<TimeRange>('1D');
@@ -123,6 +126,11 @@ export function PortfolioPerformanceChart() {
   const [chartColor, setChartColor] = useState('#10b981');
 
   useEffect(() => {
+    if (!session?.user?.id) {
+      setLoading(false);
+      return;
+    }
+
     const fetchAndProcessHistory = async () => {
       setLoading(true);
       try {
@@ -235,7 +243,32 @@ export function PortfolioPerformanceChart() {
     };
 
     fetchAndProcessHistory();
-  }, [timeRange]);
+  }, [timeRange, session]);
+
+  if (!session?.user?.id) {
+    return (
+      <div className="bg-slate-800/60 border border-slate-700 rounded-lg p-4 h-96">
+        <div className="border-b-2 border-white w-full mb-4">
+          <h3 className="text-2xl text-white mb-3">Portfolio Performance</h3>
+        </div>
+        <div className="bg-[#0F172A] rounded-lg h-[calc(100%-4rem)] flex flex-col items-center justify-center p-6">
+          <TrendingUp className="w-8 h-8 text-slate-500 mb-3" />
+          <p className="text-gray-400 text-sm text-center mb-2">
+            Sign in to track your portfolio over time
+          </p>
+          <p className="text-cyan-400 text-sm text-center mb-5">
+            You can browse stocks without an account — just use the search bar
+          </p>
+          <Link 
+            href="/api/auth/signin"
+            className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded transition-colors"
+          >
+            Sign In
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   if (loading) {
     return (

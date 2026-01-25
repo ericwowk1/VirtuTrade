@@ -6723,7 +6723,7 @@ export function TickerSearch() {
   };
 
   return (
-    <div className="relative w-3/7 ">
+    <div className="relative w-6/7 ">
       <Search className="absolute " />
       <Autocomplete
         disablePortal

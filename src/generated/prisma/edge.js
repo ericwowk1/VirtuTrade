@@ -175,7 +175,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "c:\\Users\\13479\\Desktop\\VirtuTrade\\src\\generated\\prisma",
+      "value": "C:\\Users\\Eric\\Desktop\\VirtuTrade\\src\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -189,12 +189,11 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "c:\\Users\\13479\\Desktop\\VirtuTrade\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\Eric\\Desktop\\VirtuTrade\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null,
-    "schemaEnvPath": "../../../.env"
+    "rootEnvPath": null
   },
   "relativePath": "../../../prisma",
   "clientVersion": "6.7.0",

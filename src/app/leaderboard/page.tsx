@@ -3,7 +3,6 @@ import { prisma } from '@/services/prisma';
 import { getStockData } from '@/services/getStockData';
 import { authOptions } from "@/services/auth";
 import { getServerSession } from "next-auth/next";
-import { redirect } from 'next/navigation';
 import { TrendingUp, DollarSign, Wallet, Trophy, Medal, Award } from "lucide-react";
 
 interface StockData {
@@ -15,10 +14,6 @@ interface StockData {
 
 export default async function Leaderboard() {
  const session = await getServerSession(authOptions);
- 
- if (!session || !session.user?.id) {
-   redirect('/'); // or wherever your login page is
- }
 
  // Get current user's balance and rank
  const getCurrentUserData = async () => {
@@ -167,8 +162,8 @@ export default async function Leaderboard() {
        })
      );
 
-     // Sort by total portfolio value and get top 5
-     const sortedUsers = usersWithPortfolioValue.sort((a, b) => b.totalValue - a.totalValue).slice(0, 5);
+    // Sort by total portfolio value
+    const sortedUsers = usersWithPortfolioValue.sort((a, b) => b.totalValue - a.totalValue);
 
      return sortedUsers.map((user, index) => ({
        rank: index + 1,
@@ -187,7 +182,7 @@ export default async function Leaderboard() {
  };
 
  const [currentUserData, leaderboardData] = await Promise.all([
-   getCurrentUserData(),
+   session?.user?.id ? getCurrentUserData() : Promise.resolve(null),
    getTopUsers()
  ]);
 
@@ -246,44 +241,35 @@ export default async function Leaderboard() {
  };
 
  return (
-   <div className="min-h-screen bg-[#0F172A] p-4 sm:p-6 lg:px-44 xl:px-66">
+   <div className="min-h-screen p-4 sm:p-6 lg:px-44 xl:px-66">
      <div className="max-w-6xl mx-auto space-y-4 sm:space-y-6">
        
        {/* User Stats Card */}
        {currentUserData && (
-         <div className="bg-slate-800/80 backdrop-blur-sm border border-slate-700 rounded-lg shadow-lg p-4 sm:p-6">
-           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-             <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-8 gap-4 sm:gap-0">
-               <div className="flex items-center space-x-3">
-                 <div className="bg-amber-500 rounded-full p-2 sm:p-3 ">
-                   <Trophy className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
-                 </div>
-                 <div>
-                   <p className="text-slate-400 text-xs sm:text-sm font-medium">Your Rank</p>
-                   <p className="text-2xl sm:text-3xl font-bold text-amber-400">#{currentUserData.rank}</p>
-                 </div>
-               </div>
-
-               <div className="hidden sm:block h-12 w-px bg-slate-600"></div>
-
-               <div className="flex items-center space-x-3">
-                 <div className="bg-emerald-500 rounded-full p-2 sm:p-3">
-                   <TrendingUp className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
-                 </div>
-                 <div>
-                   <p className="text-slate-400 text-xs sm:text-sm font-medium">Portfolio Value</p>
-                   <p className="text-2xl sm:text-3xl font-bold text-emerald-400">{formatCurrency(currentUserData.totalValue)}</p>
-                 </div>
-               </div>
+         <div className="bg-slate-800/60 border border-slate-700 rounded-lg p-4 sm:p-6">
+           <div className="border-b-2 border-white w-full mb-4">
+             <h3 className="text-xl text-white mb-3">Your Stats</h3>
+           </div>
+           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+             <div className="bg-[#0F172A] rounded-lg p-4">
+               <p className="text-gray-400 text-xs sm:text-sm">Your Rank</p>
+               <p className="text-xl sm:text-2xl font-bold text-amber-400">#{currentUserData.rank}</p>
              </div>
-
-             <div className="flex items-center space-x-3 self-start sm:self-auto">
-               <ProfilePicture 
-                 name={currentUserData.name} 
-                 image={currentUserData.image}
-               />
-               <div>
-                 <p className="font-semibold text-white text-sm sm:text-base">{currentUserData.name}</p>
+             <div className="bg-[#0F172A] rounded-lg p-4">
+               <p className="text-gray-400 text-xs sm:text-sm">Portfolio Value</p>
+               <p className="text-xl sm:text-2xl font-bold text-emerald-400">{formatCurrency(currentUserData.totalValue)}</p>
+             </div>
+             <div className="bg-[#0F172A] rounded-lg p-4 col-span-2 sm:col-span-1">
+               <div className="flex items-center gap-3">
+                 <ProfilePicture 
+                   name={currentUserData.name} 
+                   image={currentUserData.image}
+                   size="w-10 h-10"
+                 />
+                 <div>
+                   <p className="text-gray-400 text-xs">Logged in as</p>
+                   <p className="font-medium text-white text-sm">{currentUserData.name}</p>
+                 </div>
                </div>
              </div>
            </div>
@@ -291,56 +277,61 @@ export default async function Leaderboard() {
        )}
 
        {/* Leaderboard */}
-       <div className="bg-slate-800/60 backdrop-blur-sm border border-slate-700 rounded-lg shadow-lg">
-         <div className="p-4 sm:p-6 pb-2 sm:pb-2">
-           <h3 className="flex items-center gap-2 text-lg sm:text-xl font-semibold text-white">
-             <Trophy className="h-4 w-4 sm:h-5 sm:w-5 text-yellow-400" />
-             Leaderboard
-           </h3>
+       <div className="bg-slate-800/60 border border-slate-700 rounded-lg p-4 sm:p-6">
+         <div className="border-b-2 border-white w-full mb-4">
+           <h3 className="text-xl text-white mb-3">Leaderboard</h3>
          </div>
-         <div className="p-4 sm:p-6 pt-3 max-h-[32rem] sm:max-h-[42rem] overflow-y-auto custom-scrollbar">
-           <div className="space-y-2 sm:space-y-3">
-             {leaderboardData.length === 0 ? (
-               <div className="text-center py-8">
-                 <div className="w-16 h-16 bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-4">
-                   <Trophy className="h-8 w-8 text-slate-400" />
-                 </div>
-                 <p className="text-slate-400 text-lg">No users found</p>
-                 <p className="text-slate-500 text-sm">Be the first to start trading!</p>
-               </div>
-             ) : (
-               leaderboardData.map((user) => (
+         
+         {leaderboardData.length === 0 ? (
+           <div className="bg-[#0F172A] rounded-lg p-8 text-center">
+             <p className="text-gray-400">No users found</p>
+             <p className="text-gray-500 text-sm">Be the first to start trading!</p>
+           </div>
+         ) : (
+           <div className="space-y-2">
+             {/* Header row */}
+             <div className="grid grid-cols-[auto_1fr_auto] gap-3 px-3 py-2 text-xs text-gray-400">
+               <div className="w-8">Rank</div>
+               <div>Trader</div>
+               <div className="text-right">Portfolio Value</div>
+             </div>
+             
+             {/* User rows */}
+             <div className="space-y-2 max-h-[500px] overflow-y-auto custom-scrollbar">
+               {leaderboardData.map((user) => (
                  <div
                    key={user.id}
-                   className={`flex items-center justify-between p-3 sm:p-4 rounded-lg ${
-                     user.rank == 1
-                       ? "bg-gradient-to-r from-yellow-400/70 to-amber-700/20"
-                       : user.rank == 2
-                       ? "bg-gradient-to-r from-gray-200/80 to-amber-700/20"
-                       : user.rank == 3
-                       ? "bg-gradient-to-r from-amber-800/80 to-amber-700/20"
-                       : "bg-[#0F172A]"
-                   }`}
+                   className="grid grid-cols-[auto_1fr_auto] gap-3 items-center p-3 rounded-lg bg-[#0F172A] hover:bg-slate-700/50 transition-colors"
                  >
-                   <div className="flex items-center gap-2 sm:gap-3">
-                    <div className="flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8">{getRankIcon(user.rank)}</div>
+                   <div className="w-8 flex items-center justify-center">
+                     {user.rank <= 3 ? (
+                       getRankIcon(user.rank)
+                     ) : (
+                       <span className="text-sm text-gray-400">#{user.rank}</span>
+                     )}
+                   </div>
+                   <div className="flex items-center gap-3 min-w-0">
                      <ProfilePicture 
                        name={user.name} 
                        image={user.image}
-                       size="h-10 w-10 sm:h-13 sm:w-13"
+                       size="w-9 h-9"
                      />
-                     <div>
-                       <p className="font-semibold text-white text-sm sm:text-base">{user.name}</p>
-                     </div>
+                     <span className="font-medium text-white text-sm truncate">{user.name}</span>
                    </div>
                    <div className="text-right">
-                     <p className="font-bold text-base sm:text-lg text-white">{formatCurrency(user.totalValue)}</p>
+                     <span className={`font-semibold text-sm ${
+                       user.rank === 1 ? 'text-yellow-400' : 
+                       user.rank === 2 ? 'text-gray-300' : 
+                       user.rank === 3 ? 'text-amber-500' : 'text-white'
+                     }`}>
+                       {formatCurrency(user.totalValue)}
+                     </span>
                    </div>
                  </div>
-               ))
-             )}
+               ))}
+             </div>
            </div>
-         </div>
+         )}
        </div>
      </div>
    </div>

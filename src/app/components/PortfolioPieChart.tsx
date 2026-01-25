@@ -1,7 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
+import Link from 'next/link';
 
 interface Position {
   symbol: string;
@@ -95,12 +97,18 @@ export function PortfolioPieChart() {
     totalGainLoss: 0,
     buyingPower: 0
   });
+  const { data: session } = useSession();
   const [chartData, setChartData] = useState<Position[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
 useEffect(() => {
+  if (!session?.user?.id) {
+    setLoading(false);
+    return;
+  }
+
   const fetchPositions = async () => {
     try {
       const response = await fetch('/api/Piechart');
@@ -159,7 +167,31 @@ useEffect(() => {
   };
 
   fetchPositions();
-}, []);
+}, [session]);
+
+  if (!session?.user?.id) {
+    return (
+      <div className="bg-slate-800/60 rounded-xl p-6 border border-slate-700 min-h-[400px]">
+        <div className="border-b-2 border-white w-full mb-6">
+          <h3 className="text-2xl text-white mb-3">Portfolio Breakdown</h3>
+        </div>
+        <div className="bg-[#0F172A] rounded-lg p-8 flex flex-col items-center justify-center min-h-[280px]">
+          <div className="w-32 h-32 rounded-full border-4 border-slate-600 border-dashed flex items-center justify-center mb-5">
+            <span className="text-slate-500 text-sm">No data</span>
+          </div>
+          <p className="text-gray-400 text-sm text-center mb-5">
+            Sign in to view your portfolio allocation
+          </p>
+          <Link 
+            href="/api/auth/signin"
+            className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded transition-colors"
+          >
+            Sign In
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   if (loading) {
     return (

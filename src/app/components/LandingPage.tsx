@@ -55,7 +55,7 @@ export function LandingPage() {
       {/* Buttons Container */}
       <div className="flex flex-row items-center gap-6 mt-8 pl-6">
         <a 
-          href="/api/auth/signin"
+          href="/"
           className="px-2 py-3 sm:px-2 sm:py-2 sm:py-2 md:px-6 md:py-2 lg:px-8 lg:py-4 bg-gradient-to-r from-cyan-800 to-cyan-400 text-white font-bold rounded-lg shadow-xl hover:opacity-90 transition-opacity duration-200 text-xs md:text-sm lg:text-lg whitespace-nowrap"
         >
           Start Trading For Free

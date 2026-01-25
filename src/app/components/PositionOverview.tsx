@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import Link from 'next/link';
 
 interface Position {
   symbol: string;
@@ -51,8 +53,14 @@ export function PositionOverview() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const { data: session } = useSession();
 
   useEffect(() => {
+    if (!session?.user?.id) {
+      setLoading(false);
+      return;
+    }
+
     const fetchPositions = async () => {
       try {
         setLoading(true);
@@ -71,7 +79,7 @@ export function PositionOverview() {
       }
     };
     fetchPositions();
-  }, []);
+  }, [session]);
 
   const formatValue = (value: number) => {
     if (value >= 1000000) {
@@ -105,14 +113,39 @@ export function PositionOverview() {
     );
   }
 
+  if (!session?.user?.id) {
+    return (
+      <div className="bg-slate-800/60 rounded-lg p-4 text-white border border-slate-700">
+        <div className="border-b-2 border-white w-full mb-4">
+          <h3 className="text-2xl font-semibold mb-3">Positions Overview</h3>
+        </div>
+        <div className="bg-[#0F172A] rounded-lg p-6">
+          <div className="text-center py-4">
+            <p className="text-white font-medium mb-2">No positions yet</p>
+            <p className="text-gray-400 text-md
+             mb-5">
+              Get $100,000 virtual cash to practice trading with when signing up.
+            </p>
+            <Link 
+              href="/api/auth/signin"
+              className="inline-block px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded transition-colors"
+            >
+              Sign In to Trade
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-slate-800/60 rounded-lg p-4 text-white border border-slate-700 ">
       <h3 className="text-2xl font-semibold mb-3">Positions Overview</h3>
       
       {positions.length === 0 ? (
         <div className="text-center py-8">
-          <p className="text-red-500">No stocks in portfolio</p>
-         <p className="text-red-500">To start trading, enter a stock symbol in the search bar</p>
+          <p className="text-gray-400">No stocks in portfolio</p>
+         <p className="text-gray-400">To start trading, enter a stock symbol in the search bar</p>
         </div>
       ) : (
         <>
